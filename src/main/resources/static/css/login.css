@@ -1,0 +1,95 @@
+body
+{
+	background: url(../img/background.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.head
+{
+	width:100%;
+	display: flex;
+	justify-content: center;
+}
+.top
+{
+	width:6.67rem;
+	height:9.66rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	
+}
+.head span
+{
+	font-size: 1.303rem;
+	color:#4a4a49;
+	font-family:"楷体";
+}
+.mid
+{
+	display: flex;
+	justify-content: center;
+	height: 10.074rem;
+}
+.form
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+.form input
+{
+	width:17.48rem;
+	height:2.37rem;
+	font-size: 0.94rem;
+	color:#7d7c7b;
+	font-family: "楷体";
+	border: 0;
+	background:rgba(255,255,255,0.6);
+}
+.form #load
+{
+	width:17.48rem;
+	height:2.37rem;
+	font-family: "楷体";
+	font-size: 0.98rem;
+	font-weight: bold;
+	background-color: #f5b915;
+	color:#fff;
+	border: 0;
+	cursor: pointer;
+}
+.forget
+{
+	display: flex;
+	justify-content: center;
+}
+.form a,.third-load a
+{
+	font-size: 0.71rem;
+	color: #f5b915;
+	cursor: pointer;
+}
+.form span
+{
+	color: #f5b915;
+}
+.footer
+{
+	width:17.78rem;
+	height:7.76rem;
+	margin: 0 auto;
+	border-top: 0.059rem #b5b5b5 solid;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+.third-app
+{
+	width:17.78rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
