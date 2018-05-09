@@ -1,4 +1,4 @@
-package com.xust.healthotwechat.Enum;
+package com.xust.healthotwechat.enums;
 
 import lombok.Getter;
 
