@@ -13,9 +13,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CustodyUserMapper {
 
     /**插入一条记录.*/
-    @Insert("insert into custody_user(openid,phone,idcard,username,password," +
+    @Insert("insert into custody_user(phone,idcard,username,password," +
             "headimgurl,sex,age,custody_openid,custody_relationship) " +
-            "values(#{openid},#{phone},#{idcard},#{username},#{password}," +
+            "values(#{phone},#{idcard},#{username},#{password}," +
             "#{headimgurl},#{sex},#{age},#{custodyOpenid},#{custodyRelationship})")
     int insert(CustodyUser custodyUser);
 }

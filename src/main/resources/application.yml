@@ -31,11 +31,12 @@ mapper:
 wechat:
   appid:  wx0061c96846bcbf03
   secret: f4cc9ee4b4f35011a423bd9a7124ba9e
-  token:  evildoer_xiaoxu;
+  token:  evildoer_xiaoxu
 
   url:
     accesstokenUrl: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
     menuCreateUrl:  https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN
+    openidUrl: https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE
 
 
 

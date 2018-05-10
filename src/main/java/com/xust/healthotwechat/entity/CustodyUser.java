@@ -14,8 +14,6 @@ public class CustodyUser {
     /**id*/
     private Integer id;
 
-    /**监护人openid*/
-    private String openid;
 
     /**监护人手机号码*/
     private String phone;
@@ -38,8 +36,8 @@ public class CustodyUser {
     /**监护人年龄*/
     private Integer age;
 
-    /**被监护人openid*/
-    private String custodyOpenid;
+    /**被监护人phone*/
+    private String custodyphone;
 
     /**与被监护人的关系*/
     private String custodyRelationship;

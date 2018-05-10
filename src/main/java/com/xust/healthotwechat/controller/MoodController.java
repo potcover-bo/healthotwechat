@@ -73,12 +73,12 @@ public class MoodController {
 
     /**
      * 查询心情历史记录
-     * @param openid
+     * @param phone
      * @return
      */
     @RequestMapping("/history")
     @ResponseBody
-    public String history(@RequestParam("openid")String openid){
+    public String history(@RequestParam("phone")String phone){
         Map<String,Object> resultMap = new HashMap<>();
 
         List<MoodDto> historyList = new ArrayList<>();
@@ -86,7 +86,7 @@ public class MoodController {
         Gson gson = new Gson();
 
         try {
-            historyList = moodFacadeService.findMoodListByOpenid(openid);
+            historyList = moodFacadeService.findMoodListByOpenid(phone);
 
             if(historyList == null || historyList.size() == 0){
                 resultMap.put("message","用户历史记录为空");

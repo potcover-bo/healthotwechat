@@ -17,8 +17,8 @@ public class Medicine {
     /**id*/
     private Integer id;
 
-    /**openid 关联用户*/
-    private String openid;
+    /**phone 关联用户*/
+    private String phone;
 
     /**早晨药物名字*/
     private String morningMedicine;

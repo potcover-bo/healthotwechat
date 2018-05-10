@@ -30,11 +30,11 @@ public class SleepingService {
 
 
     /**
-     * 根据openid查询历史记录
-     * @param openid
+     * 根据phone查询历史记录
+     * @param phone
      * @return
      */
-    public List<Sleeping> findSleepingListByOpenid(@Param("openid")String openid){
-        return sleepingMapper.findSleepingListByOpenid(openid);
+    public List<Sleeping> findSleepingList(@Param("phone")String phone){
+        return sleepingMapper.findSleepingList(phone);
     }
 }

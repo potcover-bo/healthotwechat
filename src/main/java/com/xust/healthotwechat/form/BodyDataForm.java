@@ -11,8 +11,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 public class BodyDataForm {
 
-    @NotEmpty(message = "openid不能为空")
-    private String openid;
+    @NotEmpty(message = "phone不能为空")
+    private String phone;
 
     @NotEmpty(message = "体重不能为空")
     private String weight;

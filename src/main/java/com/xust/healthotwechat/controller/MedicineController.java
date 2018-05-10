@@ -42,9 +42,7 @@ public class MedicineController {
 
         /**表单校验异常*/
         if (bindingResult.hasErrors()){
-            String errorMessage = bindingResult.getAllErrors().toString();
-            log.error("表单校验异常={}",errorMessage);
-            throw  new RuntimeException(errorMessage);
+            throw  new RuntimeException(bindingResult.getAllErrors().toString());
         }
 
         try {

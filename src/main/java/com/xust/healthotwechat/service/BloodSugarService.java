@@ -30,11 +30,11 @@ public class BloodSugarService {
 
 
     /**
-     * 根据openid查询历史记录
-     * @param openid
+     * 根据phone查询历史记录
+     * @param phone
      * @return
      */
-    public List<BloodSugar> findBloodSugarListByOpenid(@Param("openid")String openid){
-        return bloodSugarMapper.findBloodSugarListByOpenid(openid);
+    public List<BloodSugar> findBloodSugarList(@Param("phone")String phone){
+        return bloodSugarMapper.findBloodSugarList(phone);
     }
 }

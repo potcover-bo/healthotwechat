@@ -16,9 +16,6 @@ public class User {
     /**id*/
     private Integer id;
 
-    /**用户openid*/
-    private String openid;
-
     /**用户手机号码*/
     private String phone;
 

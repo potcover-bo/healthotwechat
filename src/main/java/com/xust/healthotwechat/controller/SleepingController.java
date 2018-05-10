@@ -62,12 +62,12 @@ public class SleepingController {
 
     /**
      * 查询睡眠历史记录
-     * @param openid
+     * @param phone
      * @return
      */
     @RequestMapping("/history")
     @ResponseBody
-    public String history(@RequestParam("openid")String openid){
+    public String history(@RequestParam("phone")String phone){
         Map<String,Object> resultMap = new HashMap<>();
 
         List<SleepingDto> histtoryList = new ArrayList<>();
@@ -75,7 +75,7 @@ public class SleepingController {
         Gson gson = new Gson();
 
         try {
-            histtoryList = sleepingFacadeService.findSleepingListByOpenid(openid);
+            histtoryList = sleepingFacadeService.findSleepingListByOpenid(phone);
         }catch (Exception e){
             log.error("查询睡眠情况={}",e.getMessage());
         }

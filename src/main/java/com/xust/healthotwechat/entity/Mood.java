@@ -17,8 +17,8 @@ public class Mood {
     /**id*/
     private Integer id;
 
-    /**openid 关联用户*/
-    private String openid;
+    /**phone 关联用户*/
+    private String phone;
 
     /**早上心情 1为良好 2为一般 3为差*/
     private String morningMood;

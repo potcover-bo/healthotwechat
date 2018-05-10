@@ -17,7 +17,7 @@ public class Sleeping {
     private Integer id;
 
     /**openid 关联用户*/
-    private String openid;
+    private String phone;
 
     /**午睡时间 单位为小时*/
     private String noonTime;

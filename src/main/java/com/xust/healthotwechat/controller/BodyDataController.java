@@ -67,12 +67,12 @@ public class BodyDataController {
 
     /**
      * 根据openid查询历史记录   绘制图标
-     * @param openid
+     * @param phone
      * @return
      */
     @RequestMapping("/history")
     @ResponseBody
-    public String history(@RequestParam("openid")String openid){
+    public String history(@RequestParam("phone")String phone){
 
         Gson gson = new Gson();
         Map<String,Object> resultMap = new HashMap<>();
@@ -81,7 +81,7 @@ public class BodyDataController {
         try {
 
             /**查询历史记录*/
-            historyList = bodyDataFacadeService.findBodyDataListByOpenid(openid);
+            historyList = bodyDataFacadeService.findBodyDataListByOpenid(phone);
 
         }catch (Exception e){
             log.error(e.getMessage());

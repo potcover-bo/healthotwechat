@@ -33,10 +33,10 @@ public class BloodPressureService {
 
     /**
      * 根据openid查询最近十条历史记录
-     * @param openid
+     * @param phone
      * @return
      */
-    public List<BloodPressure> findBloodPressureList(String openid){
-        return bloodPressureMapper.findBloodPressureList(openid);
+    public List<BloodPressure> findBloodPressureList(String phone){
+        return bloodPressureMapper.findBloodPressureList(phone);
     }
 }

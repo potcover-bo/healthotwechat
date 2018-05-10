@@ -16,9 +16,9 @@ public interface UserMapper {
 
 
     /**插入一条记录*/
-    @Insert("insert into user(openid,phone,idcard,headimgurl,username,password," +
+    @Insert("insert into user(phone,idcard,headimgurl,username,password," +
             "sex,age,custody_phone) " +
-            "values(#{openid},#{phone},#{idcard},#{headimgurl},#{username},#{password}," +
+            "values(#{phone},#{idcard},#{headimgurl},#{username},#{password}," +
             "#{sex},#{age},#{custodyPhone})")
     int insert(User user);
 

@@ -44,7 +44,7 @@ public class BodyDataFacadeService {
       /**检查用户当天是否已经录入数据*/
 
       try {
-          String key = bodyDataForm.getOpenid()+"bodyData";
+          String key = bodyDataForm.getPhone()+"bodyData";
 
           /**数据转换*/
           BodyData bodyData = bodyDataConvertService.formToEntity(bodyDataForm);
@@ -71,12 +71,12 @@ public class BodyDataFacadeService {
 
     /**
      * 查询身体数据历史记录
-     * @param openid
+     * @param phone
      * @return
      */
-    public List<BodyDataDto>  findBodyDataListByOpenid(@Param("openid") String openid){
+    public List<BodyDataDto>  findBodyDataListByOpenid(@Param("phone") String phone){
 
-        List<BodyData> bodyDataList = bodyDataService.findBodyDataListByOpenid(openid);
+        List<BodyData> bodyDataList = bodyDataService.findBodyDataList(phone);
 
         List<BodyDataDto> bodyDataDtoList = new ArrayList<>();
         try {

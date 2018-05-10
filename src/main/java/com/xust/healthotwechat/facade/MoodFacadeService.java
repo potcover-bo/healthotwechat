@@ -47,7 +47,7 @@ public class MoodFacadeService {
     @Transactional
     public int entry(MoodForm moodForm){
 
-        String key = moodForm.getOpenid()+"mood";
+        String key = moodForm.getPhone()+"mood";
         try {
             /**用户当天已经录入*/
             if (redisTemplate.opsForValue().get(key) != null){
@@ -72,16 +72,16 @@ public class MoodFacadeService {
 
     /**
      * 心情历史记录查询
-     * @param openid
+     * @param phone
      * @return
      */
-    public List<MoodDto> findMoodListByOpenid(@Param("openid")String openid){
+    public List<MoodDto> findMoodListByOpenid(@Param("phone")String phone){
         List<MoodDto> historyList = new ArrayList<>();
 
         try {
 
             /**查询历史记录*/
-            List<Mood> moodList = moodService.findMoodListByOpenid(openid);
+            List<Mood> moodList = moodService.findMoodList(phone);
 
             if(moodList==null || moodList.size()==0){
                 throw  new HealthOTWechatException(HealthOTWechatErrorCode.DATA_NO_EXIST.getCode(),

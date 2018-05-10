@@ -47,7 +47,7 @@ public class SleepingFacadeService {
 
         try{
 
-            String key = sleepingForm.getOpenid()+"sleeping";
+            String key = sleepingForm.getPhone()+"sleeping";
 
             /**用户当天已经录入*/
             if (redisTemplate.opsForValue().get(key) != null){
@@ -75,16 +75,16 @@ public class SleepingFacadeService {
 
     /**
      * 查询历史记录
-     * @param openid
+     * @param phone
      * @return
      */
-    public List<SleepingDto> findSleepingListByOpenid(@Param("openid")String openid){
+    public List<SleepingDto> findSleepingListByOpenid(@Param("phone")String phone){
 
         List<SleepingDto> histotyList = new ArrayList<>();
 
         try {
             /**查询历史记录*/
-            List<Sleeping> sleepingList = sleepingService.findSleepingListByOpenid(openid);
+            List<Sleeping> sleepingList = sleepingService.findSleepingList(phone);
 
             /**判断是否有历史记录*/
             if (sleepingList == null || sleepingList.size() == 0){

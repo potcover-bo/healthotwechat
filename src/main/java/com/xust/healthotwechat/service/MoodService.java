@@ -31,10 +31,10 @@ public class MoodService {
 
     /**
      * 查询历史记录
-     * @param openid
+     * @param phone
      * @return
      */
-    public List<Mood> findMoodListByOpenid(@Param("openid")String openid) {
-        return moodMapper.findMoodListByOpenid(openid);
+    public List<Mood> findMoodList(@Param("phone")String phone) {
+        return moodMapper.findMoodList(phone);
     }
 }

@@ -49,7 +49,7 @@ public class BloodSugarFacadeService {
 
 
         try {
-            String key = bloodSugarForm.getOpenid()+"bloodSugar";
+            String key = bloodSugarForm.getPhone()+"bloodSugar";
 
             /**用户当天已经录入过血压*/
             if(redisTemplate.opsForValue().get(key) != null){
@@ -78,16 +78,16 @@ public class BloodSugarFacadeService {
     /**
      * 查询血糖历史记录
      *
-     * @param openid
+     * @param phone
      * @return
      */
-    public List<BloodSugarDto> findBloodSugarListByOpenid(String openid){
+    public List<BloodSugarDto> findBloodSugarListByOpenid(String phone){
         List<BloodSugarDto> historyList = new ArrayList<>();
 
         try {
 
             /**查询历史记录*/
-            List<BloodSugar> bloodSugarList = bloodSugarService.findBloodSugarListByOpenid(openid);
+            List<BloodSugar> bloodSugarList = bloodSugarService.findBloodSugarList(phone);
 
             if(bloodSugarList==null || bloodSugarList.size()==0){
                 throw  new HealthOTWechatException(HealthOTWechatErrorCode.DATA_NO_EXIST.getCode(),

@@ -42,7 +42,7 @@ public class MedicineFacadeService {
 
         try {
 
-            String key = medicineForm.getOpenid()+"_medicine";
+            String key = medicineForm.getPhone()+"_medicine";
 
             /**用户当天已经录入*/
             if (redisTemplate.opsForValue().get(key) != null){

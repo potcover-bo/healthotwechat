@@ -15,21 +15,21 @@ import java.util.List;
 public interface SleepingMapper {
 
     /**插入一条记录*/
-    @Insert("insert into sleeping(openid,noon_time,night_time,create_time) " +
-            "values(#{openid},#{noonTime},#{nightTime},#{createTime})")
+    @Insert("insert into sleeping(phone,noon_time,night_time,create_time) " +
+            "values(#{phone},#{noonTime},#{nightTime},#{createTime})")
     int insert(Sleeping sleeping);
 
 
 
     /**根据openid查询历史记录*/
-    @Select("select openid,noon_time,night_time,create_time from sleeping where openid = #{openid} " +
+    @Select("select phone,noon_time,night_time,create_time from sleeping where phone = #{phone} " +
             "order by create_time desc limit 10")
     @Results({
-            @Result(property = "openid", column = "openid"),
+            @Result(property = "phone", column = "phone"),
             @Result(property = "noonTime", column = "noon_time"),
             @Result(property = "nightTime", column = "nightT_time"),
             @Result(property = "createTime", column = "create_time"),
     })
-    List<Sleeping> findSleepingListByOpenid(@Param("openid")String openid);
+    List<Sleeping> findSleepingList(@Param("phone")String phone);
 
 }

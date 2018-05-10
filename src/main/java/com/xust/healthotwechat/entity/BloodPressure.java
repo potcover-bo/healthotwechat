@@ -16,8 +16,8 @@ public class BloodPressure {
     /**id*/
     private Integer id;
 
-    /**openid 关联用户*/
-    private String openid;
+    /**phone 关联用户*/
+    private String phone;
 
     /**高压*/
     private String highPressure;

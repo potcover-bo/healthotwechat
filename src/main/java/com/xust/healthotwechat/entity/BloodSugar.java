@@ -16,8 +16,8 @@ public class BloodSugar {
     /**id*/
     private Integer id;
 
-    /**openid 关联用户*/
-    private String openid;
+    /**phone 关联用户*/
+    private String phone;
 
     /**血糖值*/
     private String bloodSugarValue;

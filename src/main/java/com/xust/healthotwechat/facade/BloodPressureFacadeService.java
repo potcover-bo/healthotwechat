@@ -51,7 +51,7 @@ public class BloodPressureFacadeService {
 
         try {
 
-            String key = bloodPressureForm.getOpenid()+"bloodPressure";
+            String key = bloodPressureForm.getPhone()+"bloodPressure";
 
             /**用户当天已经录入过血压*/
             if(redisTemplate.opsForValue().get(key)!=null){
@@ -79,17 +79,17 @@ public class BloodPressureFacadeService {
     /**
      * 查询血压历史记录  用于绘制曲线
      *
-     * @param openid
+     * @param phone
      * @return
      */
-    public List<BloodPressureDto> findBloodPressureList(String openid){
+    public List<BloodPressureDto> findBloodPressureList(String phone){
 
         List<BloodPressureDto> historyList = new ArrayList<>();
 
         try {
 
             /**查询历史记录*/
-            List<BloodPressure> bloodPressureList = bloodPressureService.findBloodPressureList(openid);
+            List<BloodPressure> bloodPressureList = bloodPressureService.findBloodPressureList(phone);
 
             if(bloodPressureList==null || bloodPressureList.size()==0){
                 throw  new HealthOTWechatException(HealthOTWechatErrorCode.DATA_NO_EXIST.getCode(),

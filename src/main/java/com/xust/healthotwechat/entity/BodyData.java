@@ -16,8 +16,8 @@ public class BodyData {
     /**id*/
     private Integer id;
 
-    /** openid 关联用户*/
-    private String openid;
+    /** phone 关联用户*/
+    private String phone;
 
     /** 体重  单位为千克*/
     private String weight;

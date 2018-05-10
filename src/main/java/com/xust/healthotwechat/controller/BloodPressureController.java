@@ -49,8 +49,7 @@ public class BloodPressureController {
 
         /**参数校验出错*/
         if (bindingResult.hasErrors()){
-            throw  new HealthOTWechatException(HealthOTWechatErrorCode.BLOOD_PRESSURE_ENTRY_ERROE.getCode(),
-                                            HealthOTWechatErrorCode.BLOOD_PRESSURE_ENTRY_ERROE.getMessage());
+            throw  new RuntimeException(bindingResult.getAllErrors().toString());
         }
 
 
@@ -68,12 +67,12 @@ public class BloodPressureController {
 
     /**
      * 查询血压的历史记录  用于绘制曲线
-     * @param openid
+     * @param phone
      * @return
      */
     @ResponseBody
     @RequestMapping("/history")
-    public String getData(@RequestParam("openid") String openid){
+    public String getData(@RequestParam("phone") String phone){
 
         Gson gson = new Gson();
 
@@ -82,7 +81,7 @@ public class BloodPressureController {
         List<BloodPressureDto> historyList = new ArrayList<>();
         try {
 
-            historyList = bloodPressureFacadeService.findBloodPressureList(openid);
+            historyList = bloodPressureFacadeService.findBloodPressureList(phone);
             resultMap.put("data",historyList);
         }catch (HealthOTWechatException e){
             log.error("查询历史记录={}",e.getMessage());

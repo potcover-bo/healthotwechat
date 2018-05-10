@@ -40,8 +40,7 @@ public class BloodSugarController {
 
         /**参数校验出错*/
         if(bindingResult.hasErrors()){
-            throw new HealthOTWechatException(HealthOTWechatErrorCode.BLOOD_SUGAR_ENTRY_ERROE.getCode(),
-                    HealthOTWechatErrorCode.BLOOD_SUGAR_ENTRY_ERROE.getMessage());
+            throw  new RuntimeException(bindingResult.getAllErrors().toString());
         }
 
         try {
@@ -58,7 +57,7 @@ public class BloodSugarController {
 
     @RequestMapping("history")
     @ResponseBody
-    public String getData(@RequestParam("openid") String openid){
+    public String getData(@RequestParam("phone") String phone){
         Gson gson = new Gson();
 
 
@@ -67,7 +66,7 @@ public class BloodSugarController {
         List<BloodSugarDto> historyList = new ArrayList<>();
         try {
 
-            historyList = bloodSugarFacadeService.findBloodSugarListByOpenid(openid);
+            historyList = bloodSugarFacadeService.findBloodSugarListByOpenid(phone);
             resultMap.put("data",historyList);
         }catch (HealthOTWechatException e){
             log.error("查询历史记录={}",e.getMessage());

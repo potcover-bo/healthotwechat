@@ -20,4 +20,7 @@ public class WechatUrlConfig {
 
     /**创建菜单的url*/
     private String menuCreateUrl;
+
+    /**创建openid的url*/
+    private String openidUrl;
 }

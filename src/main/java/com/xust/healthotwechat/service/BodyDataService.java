@@ -31,11 +31,11 @@ public class BodyDataService {
 
 
     /**
-     * 根据openid查询最近十条历史记录
-     * @param openid
+     * 根据phone查询最近十条历史记录
+     * @param phone
      * @return
      */
-    public List<BodyData> findBodyDataListByOpenid(@Param("openid") String openid){
-        return bodyDataMapper.findBodyDataListByOpenid(openid);
+    public List<BodyData> findBodyDataList(@Param("phone") String phone){
+        return bodyDataMapper.findBodyDataList(phone);
     }
 }

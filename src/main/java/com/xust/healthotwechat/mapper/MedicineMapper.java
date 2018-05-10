@@ -14,9 +14,9 @@ public interface MedicineMapper {
 
 
     /**插入一条数据*/
-    @Insert("insert into medicine(openid,morning_medicine,morning_number,noon_medicine," +
+    @Insert("insert into medicine(morning_medicine,morning_number,noon_medicine," +
             "noon_number,night_medicine,night_number,create_time) " +
-            "values(#{openid},#{morningMedicine},#{morningNumber},#{noonMedicine}," +
+            "values(#{morningMedicine},#{morningNumber},#{noonMedicine}," +
             "#{noonNumber},#{nightMedicine},#{nightNumber},#{createTime})")
     int insert(Medicine medicine);
 }
