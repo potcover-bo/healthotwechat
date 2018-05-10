@@ -1,27 +1,42 @@
 package com.xust.healthotwechat.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 /**
- * Created by evildoerdb_ on 2018/5/4
- *
- * 微信controller
+ * Created by evildoerdb_ on 2018/5/10
  */
-
-@RestController
-@RequestMapping("/weixin")
+@RequestMapping("/wechat")
+@Controller
 @Slf4j
 public class WechatController {
 
+    /**
+     * 微信测试号的认定
+     *
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/portal")
+    public void portal(HttpServletRequest request,HttpServletResponse response) throws Exception{
 
-    @GetMapping("/auth")
-    public void auth(@RequestParam("code") String code){
-        log.info("进入auth方法");
-        log.info("code={}",code);
-        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx4515d9a78b58b900&secret=SECRET&code="+code+"&grant_type=authorization_code";
+//        String signature = request.getParameter("signature");
+//        String timestamp = request.getParameter("timestamp");
+//        String nonce = request.getParameter("nonce");
+        String echostr = request.getParameter("echostr");
+
+
+
+        PrintWriter pw = response.getWriter();
+        pw.append(echostr);
+        pw.flush();
     }
+
+
 }
