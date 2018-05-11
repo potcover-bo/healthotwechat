@@ -1,3 +1,5 @@
+
+--数据库语句
 -- 血压表
 CREATE TABLE `blood_pressure` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
