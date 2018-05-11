@@ -68,15 +68,15 @@ public class WechatUtils {
         List<Button> sub_button1 = new ArrayList<>();
 
         /**一级子菜单*/
-        ViewButton button11 = generateViewButton("录入血压","view","http://www.baidu.com");
+        ViewButton button11 = generateViewButton("录入血压","view","http://dou.natapp1.cc/index.html");
 
-        ViewButton button12 = generateViewButton("录入血糖","view","http://www.baidu.com");
+        ViewButton button12 = generateViewButton("录入血糖","view","http://dou.natapp1.cc/index.html");
 
-        ViewButton button13 = generateViewButton("录入心情","view","http://www.baidu.com");
+        ViewButton button13 = generateViewButton("录入心情","view","http://dou.natapp1.cc/index.html");
 
-        ViewButton button14 = generateViewButton("身体指数","view","http://www.baidu.com");
+        ViewButton button14 = generateViewButton("身体指数","view","http://dou.natapp1.cc/index.html");
 
-        ViewButton button15 = generateViewButton("睡眠和服药","view","http://www.baidu.com");
+        ViewButton button15 = generateViewButton("睡眠和服药","view","http://dou.natapp1.cc/index.html");
 
 
         /**加入一级子菜单列表*/
@@ -99,9 +99,9 @@ public class WechatUtils {
         List<Button> sub_button2 = new ArrayList<>();
 
         /**二级子菜单*/
-        ViewButton button21 = generateViewButton("血压曲线","view","http://www.baidu.com");
+        ViewButton button21 = generateViewButton("血压曲线","view","http://dou.natapp1.cc/index.html");
 
-        ViewButton button22 = generateViewButton("血糖曲线","view","http://www.baidu.com");
+        ViewButton button22 = generateViewButton("血糖曲线","view","http://www.github.com");
 
         ViewButton button23 = generateViewButton("心情","view","http://www.baidu.com");
 
@@ -129,7 +129,7 @@ public class WechatUtils {
 
         //三级子菜单列表
         List<Button> sub_button3 = new ArrayList<>();
-        ViewButton button31 = generateViewButton("我的账号","view","http://www.baidu.com");
+        ViewButton button31 = generateViewButton("我的账号","view","http://dou.natapp1.cc/index.html");
         ClickButton button32 = new ClickButton();
         button32.setName("关于我们");
         button32.setType("click");

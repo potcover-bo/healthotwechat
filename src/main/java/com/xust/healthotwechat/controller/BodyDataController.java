@@ -1,11 +1,13 @@
 package com.xust.healthotwechat.controller;
 
 import com.google.gson.Gson;
+import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.BodyDataDto;
 import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
 import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.BodyDataFacadeService;
 import com.xust.healthotwechat.form.BodyDataForm;
+import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,22 +74,21 @@ public class BodyDataController {
      */
     @RequestMapping("/history")
     @ResponseBody
-    public String history(@RequestParam("phone")String phone){
+    public ResultVO<List<BodyDataDto>> history(@RequestParam("phone")String phone){
 
-        Gson gson = new Gson();
-        Map<String,Object> resultMap = new HashMap<>();
 
-        List<BodyDataDto> historyList = new ArrayList<>();
+        List<BodyDataDto> historyList;
         try {
 
             /**查询历史记录*/
             historyList = bodyDataFacadeService.findBodyDataListByOpenid(phone);
 
         }catch (Exception e){
-            log.error(e.getMessage());
-        }
-        resultMap.put("data",historyList);
+            log.error("【查询身体数据异常】={}",e.getMessage());
 
-        return gson.toJson(resultMap);
+            return ResultVOUtils.error("60003",e.getMessage());
+        }
+
+        return ResultVOUtils.success(historyList);
     }
 }

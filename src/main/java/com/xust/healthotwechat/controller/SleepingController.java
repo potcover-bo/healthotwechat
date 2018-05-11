@@ -1,11 +1,13 @@
 package com.xust.healthotwechat.controller;
 
 import com.google.gson.Gson;
+import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.SleepingDto;
 import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
 import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.SleepingFacadeService;
 import com.xust.healthotwechat.form.SleepingForm;
+import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,21 +69,20 @@ public class SleepingController {
      */
     @RequestMapping("/history")
     @ResponseBody
-    public String history(@RequestParam("phone")String phone){
-        Map<String,Object> resultMap = new HashMap<>();
+    public ResultVO<List<SleepingDto>> history(@RequestParam("phone")String phone){
 
-        List<SleepingDto> histtoryList = new ArrayList<>();
+        List<SleepingDto> historyList;
 
-        Gson gson = new Gson();
 
         try {
-            histtoryList = sleepingFacadeService.findSleepingListByOpenid(phone);
+            historyList = sleepingFacadeService.findSleepingListByOpenid(phone);
+
         }catch (Exception e){
             log.error("查询睡眠情况={}",e.getMessage());
+            return ResultVOUtils.error("60005",e.getMessage());
         }
 
-        resultMap.put("data",histtoryList);
 
-        return gson.toJson(resultMap);
+        return ResultVOUtils.success(historyList);
     }
 }

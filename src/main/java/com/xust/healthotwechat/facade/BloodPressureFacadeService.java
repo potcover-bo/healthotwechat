@@ -91,7 +91,7 @@ public class BloodPressureFacadeService {
             /**查询历史记录*/
             List<BloodPressure> bloodPressureList = bloodPressureService.findBloodPressureList(phone);
 
-            if(bloodPressureList==null || bloodPressureList.size()==0){
+            if( bloodPressureList==null || bloodPressureList.size()==0){
                 throw  new HealthOTWechatException(HealthOTWechatErrorCode.DATA_NO_EXIST.getCode(),
                                             HealthOTWechatErrorCode.DATA_NO_EXIST.getMessage());
             }
@@ -101,10 +101,9 @@ public class BloodPressureFacadeService {
 
 
         }catch (Exception e){
-            log.error("血压历史记录查询={}",e.getMessage());
+            log.error("血压历史记录查询={}",phone+":"+e.getMessage());
+            throw e;
         }
-
-
 
         return historyList;
     }

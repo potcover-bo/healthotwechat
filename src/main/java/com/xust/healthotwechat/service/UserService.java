@@ -22,8 +22,18 @@ public class UserService {
      * @param user
      * @return
      */
-    int insert(User user){
+    public int insert(User user){
         return userMapper.insert(user);
+    }
+
+
+    /**
+     * 根据手机号码查询用户信息
+     * @param phone
+     * @return
+     */
+    public User findUserByPhone(String phone){
+        return userMapper.finfUserByPhone(phone);
     }
 
 

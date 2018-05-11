@@ -32,10 +32,10 @@ public class User {
     private String password;
 
     /**用户性别 1位男性 2位女性 0为未知*/
-    private Integer sex;
+    private String sex;
 
     /**用户年龄*/
-    private Integer age;
+    private String age;
 
     /**监护人手机号码*/
     private String custodyPhone;

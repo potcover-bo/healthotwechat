@@ -89,7 +89,8 @@ public class BodyDataFacadeService {
             bodyDataDtoList = bodyDataConvertService.entityToDto(bodyDataList);
 
         }catch (Exception e){
-            log.error("查询身体数据历史记录={}",e.getMessage());
+            log.error("查询身体数据历史记录={}",phone+":"+e.getMessage());
+            throw e;
         }
 
         return bodyDataDtoList;

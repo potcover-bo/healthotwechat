@@ -1,11 +1,12 @@
 package com.xust.healthotwechat.controller;
 
 import com.google.gson.Gson;
+import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.BloodPressureDto;
-import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
 import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.BloodPressureFacadeService;
 import com.xust.healthotwechat.form.BloodPressureForm;
+import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by evildoerdb_ on 2018/5/8
@@ -49,15 +47,21 @@ public class BloodPressureController {
 
         /**参数校验出错*/
         if (bindingResult.hasErrors()){
-            throw  new RuntimeException(bindingResult.getAllErrors().toString());
+            log.error("【录入血压】参数不正确 bloodPressureForm={}",bloodPressureForm);
+            throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
 
 
         try {
+
             bloodPressureFacadeService.entryBloodPressure(bloodPressureForm);
 
 
         }catch (HealthOTWechatException e){
+            log.error("录入血压={}",e.getMessage());
+
+        }catch (Exception e){
+
             log.error("录入血压={}",e.getMessage());
         }
 
@@ -72,24 +76,24 @@ public class BloodPressureController {
      */
     @ResponseBody
     @RequestMapping("/history")
-    public String getData(@RequestParam("phone") String phone){
+    public ResultVO<List<BloodPressureDto>> getData(@RequestParam("phone") String phone){
 
-        Gson gson = new Gson();
 
-        Map<String,Object> resultMap = new HashMap<>();
 
-        List<BloodPressureDto> historyList = new ArrayList<>();
+
+        List<BloodPressureDto> historyList;
         try {
 
             historyList = bloodPressureFacadeService.findBloodPressureList(phone);
-            resultMap.put("data",historyList);
-        }catch (HealthOTWechatException e){
-            log.error("查询历史记录={}",e.getMessage());
-        }
-        catch (Exception e){
-            log.info("查询数据出错");
+
+
+        } catch (Exception e){
+
+            log.error("【查询历史记录异常】={}",e.getMessage());
+            return ResultVOUtils.error("60001",e.getMessage());
         }
 
-        return gson.toJson(resultMap);
+        return ResultVOUtils.success(historyList);
+
     }
 }

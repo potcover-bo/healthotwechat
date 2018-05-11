@@ -22,7 +22,8 @@ public enum HealthOTWechatErrorCode {
     BODY_DATA_ENTRY_ERROE("10005","录入身体指数出错"),
     SLEEPING_DATA_ENTRY_ERROE("10006","录入睡眠数据出错"),
     MOOD_DATA_ENTRY_ERROE("10007","录入心情数据出错"),
-    MEDICINE_DATA_ENTRY_ERROE("10008","录入服药数据出错")
+    MEDICINE_DATA_ENTRY_ERROE("10008","录入服药数据出错"),
+    USER_REGISTER_ERROE("10009","用户注册出错")
     ;
 
     private String code;

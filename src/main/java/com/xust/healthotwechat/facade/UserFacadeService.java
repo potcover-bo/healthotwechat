@@ -1,5 +1,9 @@
 package com.xust.healthotwechat.facade;
 
+import com.xust.healthotwechat.convert.UserConvertService;
+import com.xust.healthotwechat.entity.User;
+import com.xust.healthotwechat.exception.HealthOTWechatException;
+import com.xust.healthotwechat.form.UserForm;
 import com.xust.healthotwechat.service.UserService;
 import com.xust.healthotwechat.utils.SmsUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -17,32 +21,53 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
-public class UserFacadeService {
+public class  UserFacadeService {
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserConvertService userConvertService;
 
     @Autowired
     private RedisTemplate redisTemplate;
 
 
-    @Transactional
     public boolean login(String username,String password){
 
         return true;
     }
 
 
+
+    @Transactional
+    public int register(UserForm userForm){
+
+        try {
+            /**数据转换*/
+            User user = userConvertService.formToEntity(userForm);
+
+            /**数据库加入数据*/
+            return userService.insert(user);
+
+        }catch (Exception e){
+            log.error("注册异常={}",e.getMessage());
+        }
+
+        return -1;
+    }
+
     /**
-     * 生成验证码  并存放到redis中去
+     * 根据手机号码查询用户是否存在
      * @param phone
-     * @return
+     * @return true 用户已经存在 false 用户不存在
      */
+    public boolean userIsExist(String phone){
 
-    public String verificationCode(String phone){
-        String code = SmsUtils.verificationCode();
-
-        return  code;
+        User user = userService.findUserByPhone(phone);
+        if(user !=null ){
+            return true;
+        }
+        return false;
     }
 }

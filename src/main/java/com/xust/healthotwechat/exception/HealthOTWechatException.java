@@ -20,4 +20,9 @@ public class HealthOTWechatException extends RuntimeException {
         super(message);
         this.code = code;
     }
+
+    public HealthOTWechatException(HealthOTWechatErrorCode healthOTWechatErrorCode){
+        super(healthOTWechatErrorCode.getMessage());
+        this.code = healthOTWechatErrorCode.getCode();
+    }
 }

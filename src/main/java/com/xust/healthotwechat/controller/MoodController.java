@@ -1,11 +1,13 @@
 package com.xust.healthotwechat.controller;
 
 import com.google.gson.Gson;
+import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.MoodDto;
 import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
 import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.MoodFacadeService;
 import com.xust.healthotwechat.form.MoodForm;
+import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -78,26 +80,20 @@ public class MoodController {
      */
     @RequestMapping("/history")
     @ResponseBody
-    public String history(@RequestParam("phone")String phone){
-        Map<String,Object> resultMap = new HashMap<>();
+    public ResultVO<List<MoodDto>> history(@RequestParam("phone")String phone){
 
         List<MoodDto> historyList = new ArrayList<>();
 
-        Gson gson = new Gson();
 
         try {
             historyList = moodFacadeService.findMoodListByOpenid(phone);
 
-            if(historyList == null || historyList.size() == 0){
-                resultMap.put("message","用户历史记录为空");
-            }
-            resultMap.put("data",historyList);
 
         }catch (Exception e){
             log.error("查询心情历史记录={}",e.getMessage());
-            resultMap.put("message","对不起，查询出错 请重新录入或者继续进行查询");
+            return ResultVOUtils.error("60004",e.getMessage());
         }
 
-        return gson.toJson(resultMap);
+        return ResultVOUtils.success(historyList);
     }
 }

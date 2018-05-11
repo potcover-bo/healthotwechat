@@ -8,7 +8,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,7 +27,8 @@ public class InitMenuController implements ApplicationRunner {
 
     @ResponseBody
     @RequestMapping("/config")
-    public String config(){
+    public void config(){
+
 
         /**获取accesstoken*/
         AccessTokenModel accessTokenModel =wechatUtils.getAccessToken();
@@ -37,13 +37,14 @@ public class InitMenuController implements ApplicationRunner {
         MenuCreateModel menu = wechatUtils.createMenu(accessTokenModel.getAccess_token());
 
         if(menu.getErrcode().equals("0")){
-            return "哈哈哈 成功了";
+            System.out.println("哈哈哈 成功了");
         }
-        return "23333333333";
+        System.out.println("23333333333");
     }
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
+
         System.out.println("欢迎使用健康管理项目");
         System.out.println("项目启动了。。。。哈哈哈");
     }

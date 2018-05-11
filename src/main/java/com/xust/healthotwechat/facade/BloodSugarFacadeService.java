@@ -89,7 +89,7 @@ public class BloodSugarFacadeService {
             /**查询历史记录*/
             List<BloodSugar> bloodSugarList = bloodSugarService.findBloodSugarList(phone);
 
-            if(bloodSugarList==null || bloodSugarList.size()==0){
+            if( bloodSugarList == null || bloodSugarList.size()==0){
                 throw  new HealthOTWechatException(HealthOTWechatErrorCode.DATA_NO_EXIST.getCode(),
                         HealthOTWechatErrorCode.DATA_NO_EXIST.getMessage());
             }
@@ -99,7 +99,8 @@ public class BloodSugarFacadeService {
 
 
         }catch (Exception e){
-            log.error("血压历史记录查询={}",e.getMessage());
+            log.error("血压历史记录查询={}",phone+":"+e.getMessage());
+            throw e;
         }
 
         return historyList;

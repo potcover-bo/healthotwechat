@@ -96,7 +96,8 @@ public class SleepingFacadeService {
             histotyList = sleepingConvertService.entityToDto(sleepingList);
 
         }catch (Exception e){
-            log.error("查询睡眠历史数据={}",e.getMessage());
+            log.error("查询睡眠历史数据={}",phone+":"+e.getMessage());
+            throw e;
         }
         return histotyList;
     }

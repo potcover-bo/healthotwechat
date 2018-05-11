@@ -93,7 +93,8 @@ public class MoodFacadeService {
 
 
         }catch (Exception e){
-            log.error("心情历史记录查询={}",e.getMessage());
+            log.error("心情历史记录查询={}",phone+":"+e.getMessage());
+            throw e;
         }
 
         return historyList;

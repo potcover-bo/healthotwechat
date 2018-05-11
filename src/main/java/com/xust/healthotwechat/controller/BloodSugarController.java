@@ -1,11 +1,13 @@
 package com.xust.healthotwechat.controller;
 
 import com.google.gson.Gson;
+import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.BloodSugarDto;
 import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
 import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.BloodSugarFacadeService;
 import com.xust.healthotwechat.form.BloodSugarForm;
+import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,26 +57,30 @@ public class BloodSugarController {
     }
 
 
-    @RequestMapping("history")
+    /**
+     * 查询血糖历史记录
+     * @param phone
+     * @return
+     */
+    @RequestMapping("/history")
     @ResponseBody
-    public String getData(@RequestParam("phone") String phone){
-        Gson gson = new Gson();
+    public ResultVO<List<BloodSugarDto>> getData(@RequestParam("phone") String phone){
 
 
-        Map<String,Object> resultMap = new HashMap<>();
 
-        List<BloodSugarDto> historyList = new ArrayList<>();
+        List<BloodSugarDto> historyList ;
         try {
 
             historyList = bloodSugarFacadeService.findBloodSugarListByOpenid(phone);
-            resultMap.put("data",historyList);
-        }catch (HealthOTWechatException e){
-            log.error("查询历史记录={}",e.getMessage());
-        }
-        catch (Exception e){
-            log.info("查询数据出错");
-        }
 
-        return gson.toJson(resultMap);
+
+
+        } catch (Exception e){
+
+            log.error("【查询历史记录异常】={}",e.getMessage());
+
+            return ResultVOUtils.error("60002",e.getMessage());
+        }
+        return ResultVOUtils.success(historyList);
     }
 }
