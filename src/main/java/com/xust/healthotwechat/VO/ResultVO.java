@@ -12,7 +12,7 @@ import lombok.Data;
 public class ResultVO<T> {
 
     /**返回状态码*/
-    private String code;
+    private Integer code;
 
     /**返回信息*/
     private String message;

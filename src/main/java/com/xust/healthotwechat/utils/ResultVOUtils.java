@@ -18,7 +18,7 @@ public class ResultVOUtils {
     public static ResultVO success(Object object){
         ResultVO resultVO = new ResultVO();
 
-        resultVO.setCode("0");
+        resultVO.setCode(0);
         resultVO.setMessage("成功");
         resultVO.setData(object);
         return resultVO;
@@ -33,17 +33,30 @@ public class ResultVOUtils {
     }
 
     /**
-     * 失败的响应返回
+     * 失败的响应返回 加跳转的url
      * @param code
      * @param message
      * @return
      */
-    public static ResultVO error(String code,String message){
+    public static <T> ResultVO error(Integer code,String message,T data){
         ResultVO resultVO = new ResultVO();
 
         resultVO.setCode(code);
         resultVO.setMessage(message);
-
+        resultVO.setData(data);
         return resultVO;
     }
+
+    /**
+     * 失败响应返回
+     * @param code
+     * @param message
+     * @return
+     */
+    public static  ResultVO error(Integer code,String message){
+
+        return error(code,message);
+    }
+
+
 }

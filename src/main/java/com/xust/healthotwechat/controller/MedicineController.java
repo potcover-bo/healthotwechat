@@ -1,17 +1,18 @@
 package com.xust.healthotwechat.controller;
 
+import com.google.gson.Gson;
+import com.xust.healthotwechat.VO.AjaxResultVo;
 import com.xust.healthotwechat.facade.MedicineFacadeService;
 import com.xust.healthotwechat.form.MedicineForm;
+import com.xust.healthotwechat.utils.AjaxResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 /**
  * Created by evildoerdb_ on 2018/5/9
@@ -19,7 +20,7 @@ import java.util.Map;
  * 药物controller
  */
 
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/medicine")
 public class MedicineController {
@@ -35,9 +36,12 @@ public class MedicineController {
      * @return
      */
     @PostMapping("/entry")
-    public ModelAndView entry(@Valid MedicineForm medicineForm,
-                              BindingResult bindingResult, Map<String,Object> map){
+    public String entry(@Valid MedicineForm medicineForm,
+                              BindingResult bindingResult){
 
+        Gson gson = new Gson();
+
+        AjaxResultVo resultVo;
 
         /**表单校验异常*/
         if (bindingResult.hasErrors()){
@@ -47,17 +51,14 @@ public class MedicineController {
         try {
 
             medicineFacadeService.entry(medicineForm);
-            map.put("message","成功了");
-            map.put("url","index.html");
+            resultVo = AjaxResultVOUtils.success();
 
 
         }catch (Exception e){
             log.error("录入服药数据异常={}",medicineForm.getPhone()+e.getMessage());
-            map.put("message",e.getMessage());
-            map.put("url","index.html");
-            return new ModelAndView("common/error",map);
+            resultVo = AjaxResultVOUtils.error(e.getMessage());
         }
 
-        return new ModelAndView("common/success",map);
+        return gson.toJson(resultVo);
     }
 }

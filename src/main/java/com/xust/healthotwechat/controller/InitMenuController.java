@@ -43,7 +43,7 @@ public class InitMenuController implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments applicationArguments) throws Exception {
+    public void run(ApplicationArguments applicationArguments) {
 
         System.out.println("欢迎使用健康管理项目");
         System.out.println("项目启动了。。。。哈哈哈");

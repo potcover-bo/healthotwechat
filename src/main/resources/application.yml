@@ -38,6 +38,9 @@ wechat:
     menuCreateUrl:  https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN
     openidUrl: https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE
 
+#日志
+
+
 
 
 

@@ -111,7 +111,7 @@ public class UserController {
 
         }catch (Exception e){
             log.error("【发送验证码失败】={}",e.getMessage());
-           return ResultVOUtils.error("233","发送验证码失败，请重新发送");
+           return ResultVOUtils.error(233,"发送验证码失败，请重新发送");
         }
 
         return ResultVOUtils.success();

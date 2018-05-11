@@ -1,27 +1,27 @@
 package com.xust.healthotwechat.controller;
 
+import com.google.gson.Gson;
+import com.xust.healthotwechat.VO.AjaxResultVo;
 import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.BloodPressureDto;
 import com.xust.healthotwechat.facade.BloodPressureFacadeService;
 import com.xust.healthotwechat.form.BloodPressureForm;
+import com.xust.healthotwechat.utils.AjaxResultVOUtils;
 import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by evildoerdb_ on 2018/5/8
  *
  * 血压controller
  */
-@Controller
+@RestController
 @RequestMapping("/bloodpressure")
 @Slf4j
 public class BloodPressureController {
@@ -38,9 +38,12 @@ public class BloodPressureController {
      * @param bindingResult
      */
     @PostMapping("/entry")
-    public ModelAndView entryBloodPressure(@Valid BloodPressureForm bloodPressureForm,
-                                           BindingResult bindingResult,
-                                           Map<String,Object> map){
+    public String entryBloodPressure(@Valid BloodPressureForm bloodPressureForm,
+                                           BindingResult bindingResult){
+
+        Gson gson = new Gson();
+
+        AjaxResultVo resultVo;
 
         /**参数校验出错*/
         if (bindingResult.hasErrors()){
@@ -52,20 +55,16 @@ public class BloodPressureController {
         try {
 
             bloodPressureFacadeService.entryBloodPressure(bloodPressureForm);
-            map.put("url","index.html");
-            map.put("message","录入成功");
+            resultVo = AjaxResultVOUtils.success();
 
 
         }catch (Exception e){
 
             log.error("录入血压={}",bloodPressureForm.getPhone()+e.getMessage());
-            map.put("url","index.html");
-            map.put("message",e.getMessage());
-
-            return new ModelAndView("common/error",map);
+            resultVo = AjaxResultVOUtils.error(e.getMessage());
         }
 
-        return new ModelAndView("common/success",map);
+        return gson.toJson(resultVo);
     }
 
 
@@ -74,7 +73,6 @@ public class BloodPressureController {
      * @param phone
      * @return
      */
-    @ResponseBody
     @GetMapping("/history")
     public ResultVO<List<BloodPressureDto>> getData(@RequestParam("phone") String phone){
 
@@ -90,7 +88,7 @@ public class BloodPressureController {
         } catch (Exception e){
 
             log.error("【查询历史记录异常】={}",e.getMessage());
-            return ResultVOUtils.error("60001",e.getMessage());
+            return ResultVOUtils.error(60001,e.getMessage());
         }
 
         return ResultVOUtils.success(historyList);
