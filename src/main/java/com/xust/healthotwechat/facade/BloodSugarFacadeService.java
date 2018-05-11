@@ -68,10 +68,10 @@ public class BloodSugarFacadeService {
 
         }catch (Exception e){
             log.error("录入血糖异常={}",e.getMessage());
+            throw e;
 
         }
 
-        return  -1;
     }
 
 

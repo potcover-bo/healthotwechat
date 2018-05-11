@@ -65,8 +65,8 @@ public class MoodFacadeService {
             return moodService.insert(mood);
         }catch (Exception e){
             log.error("录入心情数据异常={}",e.getMessage());
+            throw e;
         }
-       return -1;
     }
 
 

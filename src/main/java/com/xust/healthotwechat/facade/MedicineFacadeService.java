@@ -60,7 +60,7 @@ public class MedicineFacadeService {
             return medicineService.insert(medicine);
         }catch (Exception e){
             log.error("录入服药数据异常={}",e.getMessage());
+            throw e;
         }
-        return -1;
     }
 }

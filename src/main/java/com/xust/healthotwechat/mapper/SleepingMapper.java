@@ -27,7 +27,7 @@ public interface SleepingMapper {
     @Results({
             @Result(property = "phone", column = "phone"),
             @Result(property = "noonTime", column = "noon_time"),
-            @Result(property = "nightTime", column = "nightT_time"),
+            @Result(property = "nightTime", column = "night_time"),
             @Result(property = "createTime", column = "create_time"),
     })
     List<Sleeping> findSleepingList(@Param("phone")String phone);

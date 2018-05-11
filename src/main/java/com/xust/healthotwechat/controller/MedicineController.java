@@ -1,17 +1,17 @@
 package com.xust.healthotwechat.controller;
 
-import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
-import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.MedicineFacadeService;
 import com.xust.healthotwechat.form.MedicineForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * Created by evildoerdb_ on 2018/5/9
@@ -34,32 +34,30 @@ public class MedicineController {
      * @param bindingResult
      * @return
      */
-    @RequestMapping("/entry")
+    @PostMapping("/entry")
     public ModelAndView entry(@Valid MedicineForm medicineForm,
-                              BindingResult bindingResult){
+                              BindingResult bindingResult, Map<String,Object> map){
 
-        ModelAndView modelAndView = new ModelAndView();
 
         /**表单校验异常*/
         if (bindingResult.hasErrors()){
-            throw  new RuntimeException(bindingResult.getAllErrors().toString());
+            throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
 
         try {
-            /**录入数据*/
-            int result = medicineFacadeService.entry(medicineForm);
 
-            if(result == -1){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.MEDICINE_DATA_ENTRY_ERROE.getCode(),
-                        HealthOTWechatErrorCode.MEDICINE_DATA_ENTRY_ERROE.getMessage());
-            }
+            medicineFacadeService.entry(medicineForm);
+            map.put("message","成功了");
+            map.put("url","index.html");
 
-            modelAndView.setViewName("redirect:/index.html");
+
         }catch (Exception e){
-            log.error("录入服药数据异常={}",e.getMessage());
-            modelAndView.setViewName("redirect:/error.html");
+            log.error("录入服药数据异常={}",medicineForm.getPhone()+e.getMessage());
+            map.put("message",e.getMessage());
+            map.put("url","index.html");
+            return new ModelAndView("common/error",map);
         }
 
-        return modelAndView;
+        return new ModelAndView("common/success",map);
     }
 }

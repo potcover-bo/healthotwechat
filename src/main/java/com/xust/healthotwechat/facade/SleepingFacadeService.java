@@ -66,11 +66,8 @@ public class SleepingFacadeService {
 
         }catch (Exception e){
             log.error("录入睡眠数据={}",e.getMessage());
+            throw e;
         }
-
-
-        return -1;
-
     }
 
     /**
@@ -80,7 +77,7 @@ public class SleepingFacadeService {
      */
     public List<SleepingDto> findSleepingListByOpenid(@Param("phone")String phone){
 
-        List<SleepingDto> histotyList = new ArrayList<>();
+        List<SleepingDto> histotyList;
 
         try {
             /**查询历史记录*/

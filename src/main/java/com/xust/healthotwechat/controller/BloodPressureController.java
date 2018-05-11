@@ -1,9 +1,7 @@
 package com.xust.healthotwechat.controller;
 
-import com.google.gson.Gson;
 import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.BloodPressureDto;
-import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.BloodPressureFacadeService;
 import com.xust.healthotwechat.form.BloodPressureForm;
 import com.xust.healthotwechat.utils.ResultVOUtils;
@@ -11,14 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by evildoerdb_ on 2018/5/8
@@ -43,7 +39,8 @@ public class BloodPressureController {
      */
     @PostMapping("/entry")
     public ModelAndView entryBloodPressure(@Valid BloodPressureForm bloodPressureForm,
-                                   BindingResult bindingResult){
+                                           BindingResult bindingResult,
+                                           Map<String,Object> map){
 
         /**参数校验出错*/
         if (bindingResult.hasErrors()){
@@ -55,17 +52,20 @@ public class BloodPressureController {
         try {
 
             bloodPressureFacadeService.entryBloodPressure(bloodPressureForm);
+            map.put("url","index.html");
+            map.put("message","录入成功");
 
-
-        }catch (HealthOTWechatException e){
-            log.error("录入血压={}",e.getMessage());
 
         }catch (Exception e){
 
-            log.error("录入血压={}",e.getMessage());
+            log.error("录入血压={}",bloodPressureForm.getPhone()+e.getMessage());
+            map.put("url","index.html");
+            map.put("message",e.getMessage());
+
+            return new ModelAndView("common/error",map);
         }
 
-        return new ModelAndView("redirect:/index.html");
+        return new ModelAndView("common/success",map);
     }
 
 
@@ -75,7 +75,7 @@ public class BloodPressureController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/history")
+    @GetMapping("/history")
     public ResultVO<List<BloodPressureDto>> getData(@RequestParam("phone") String phone){
 
 

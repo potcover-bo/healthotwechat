@@ -62,10 +62,10 @@ public class BodyDataFacadeService {
          return bodyDataService.insert(bodyData);
       }catch (Exception e){
           log.error("录入身体数据异常={}",e.getMessage());
+          throw e;
 
       }
 
-      return -1;
     }
 
 

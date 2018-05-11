@@ -11,9 +11,12 @@ import lombok.Data;
 @Data
 public class ResultVO<T> {
 
+    /**返回状态码*/
     private String code;
 
+    /**返回信息*/
     private String message;
 
+    /**返回数据*/
     private T data;
 }

@@ -16,7 +16,7 @@ public enum HealthOTWechatErrorCode {
 
     BLOOD_PRESSURE_ENTRY_ERROE("10000","录入血压出错"),
     DATA_CONVERT_ERROR("10001","数据转换出错"),
-    ALREADY_ENTRY_DATA("10002","用户当天已经录入过数据"),
+    ALREADY_ENTRY_DATA("10002","当天已经录入过数据"),
     DATA_NO_EXIST("10003","您没有录入过任何数据"),
     BLOOD_SUGAR_ENTRY_ERROE("10004","录入血糖出错"),
     BODY_DATA_ENTRY_ERROE("10005","录入身体指数出错"),

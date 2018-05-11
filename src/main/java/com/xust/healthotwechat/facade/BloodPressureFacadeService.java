@@ -69,10 +69,11 @@ public class BloodPressureFacadeService {
             return bloodPressureService.intsert(bloodPressure);
 
         }catch (Exception e){
+
             log.error("录入血压异常={}",e.getMessage());
+            throw e;
         }
 
-        return  -1;
     }
 
 

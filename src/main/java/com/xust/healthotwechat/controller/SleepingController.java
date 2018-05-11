@@ -1,10 +1,7 @@
 package com.xust.healthotwechat.controller;
 
-import com.google.gson.Gson;
 import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.SleepingDto;
-import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
-import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.SleepingFacadeService;
 import com.xust.healthotwechat.form.SleepingForm;
 import com.xust.healthotwechat.utils.ResultVOUtils;
@@ -12,15 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,27 +31,26 @@ public class SleepingController {
 
     @PostMapping("/entry")
     public ModelAndView entry(@Valid SleepingForm sleepingForm,
-                        BindingResult bindingResult){
+                        BindingResult bindingResult,Map<String,Object> map){
         if (bindingResult.hasErrors()){
-            throw new RuntimeException(bindingResult.getAllErrors().toString());
+            throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
 
         try {
 
-            /**进行录入*/
-            int result =  sleepingFacadeService.entry(sleepingForm);
+            sleepingFacadeService.entry(sleepingForm);
+            map.put("message","成功了");
+            map.put("url","index.html");
 
-            if (-1 == result){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.SLEEPING_DATA_ENTRY_ERROE.getCode(),
-                        HealthOTWechatErrorCode.SLEEPING_DATA_ENTRY_ERROE.getMessage());
-            }
 
         }catch (Exception e){
-            log.error("睡眠数据录入异常={}",e.getMessage());
-            return new ModelAndView("redirect:/error.html");
+            log.error("睡眠数据录入异常={}",sleepingForm.getPhone()+e.getMessage());
+            map.put("message",e.getMessage());
+            map.put("url","index.html");
+            return new ModelAndView("common/error",map);
 
         }
-        return new ModelAndView("redirect:/index.html");
+        return new ModelAndView("common/success",map);
     }
 
     /**
@@ -67,7 +58,7 @@ public class SleepingController {
      * @param phone
      * @return
      */
-    @RequestMapping("/history")
+    @GetMapping("/history")
     @ResponseBody
     public ResultVO<List<SleepingDto>> history(@RequestParam("phone")String phone){
 
