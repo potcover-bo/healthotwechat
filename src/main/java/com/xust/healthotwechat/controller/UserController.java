@@ -62,10 +62,10 @@ public class UserController {
             }
 
             /**校验验证码是否正确*/
-//            if (!checkValidateCode(userForm.getValidateCode(),userForm.getPhone())){
-//                throw new HealthOTWechatException(HealthOTWechatErrorCode.VALIDATE_CODE_ERROE.getCode(),
-//                        HealthOTWechatErrorCode.VALIDATE_CODE_ERROE.getMessage());
-//            }
+            if (!checkValidateCode(userForm.getValidateCode(),userForm.getPhone())){
+                throw new HealthOTWechatException(HealthOTWechatErrorCode.VALIDATE_CODE_ERROE.getCode(),
+                        HealthOTWechatErrorCode.VALIDATE_CODE_ERROE.getMessage());
+            }
 
             /**查询用户是否存在*/
             boolean isExist = userFacadeService.userIsExist(userForm.getPhone());
