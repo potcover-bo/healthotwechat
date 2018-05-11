@@ -29,17 +29,15 @@ CREATE TABLE `blood_sugar` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- 身体指数表
-CREATE TABLE `blood_sugar` (
+CREATE TABLE `body_data` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `phone` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号码 用户关联用户',
-  `blood_sugar_value` varchar(5) NOT NULL DEFAULT '' COMMENT '血糖值',
-  `meal_condition` varchar(3) NOT NULL DEFAULT '' COMMENT '1代表饭前 2 代表饭后',
-  `medicine_condition` varchar(3) NOT NULL DEFAULT '' COMMENT '1代表服药前  2代表服药后',
-  `save_health_record` varchar(3) DEFAULT NULL COMMENT '1代表录入健康档案  2 代表不录入健康档案',
-  `measure_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '测量时间',
+  `phone` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号码 用于关联用户',
+  `weight` varchar(4) NOT NULL DEFAULT '' COMMENT '用户体重',
+  `today_step_count` varchar(7) NOT NULL DEFAULT '' COMMENT '用户当天运动步数',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `openid_index` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='身体数据';
 
 -- 监护人表
 CREATE TABLE `custody_user` (
