@@ -23,7 +23,10 @@ public enum HealthOTWechatErrorCode {
     SLEEPING_DATA_ENTRY_ERROE("10006","录入睡眠数据出错"),
     MOOD_DATA_ENTRY_ERROE("10007","录入心情数据出错"),
     MEDICINE_DATA_ENTRY_ERROE("10008","录入服药数据出错"),
-    USER_REGISTER_ERROE("10009","用户注册出错")
+    USER_REGISTER_ERROE("10009","用户注册出错"),
+    VALIDATE_CODE_ERROE("10010","验证码过期或验证码错误"),
+    USER_ISEXIST_ERROE("10011","用户已经存在"),
+    USER_ERROE("10012","用户或者密码错误")
     ;
 
     private String code;

@@ -34,5 +34,11 @@ public interface UserMapper {
     User finfUserByPhone(String phone);
 
 
-
+    /**
+     * 修改密码
+     * @param user
+     * @return
+     */
+    @Update("UPDATE user SET password = #{password} WHERE phone = #{phone}")
+    int updatePassword(User user);
 }

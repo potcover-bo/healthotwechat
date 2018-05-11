@@ -39,7 +39,11 @@ public class  UserFacadeService {
     }
 
 
-
+    /**
+     * 进行注册
+     * @param userForm
+     * @return
+     */
     @Transactional
     public int register(UserForm userForm){
 
@@ -52,9 +56,9 @@ public class  UserFacadeService {
 
         }catch (Exception e){
             log.error("注册异常={}",e.getMessage());
+            throw e;
         }
 
-        return -1;
     }
 
     /**
@@ -69,5 +73,37 @@ public class  UserFacadeService {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 根据手机号码查询用户
+     * @param phone
+     * @return
+     */
+    public User findUserByPhone(String phone){
+        return userService.findUserByPhone(phone);
+    }
+
+
+    /**
+     * 根据手机号码修改密码
+     * @param phone
+     * @param password
+     * @return
+     */
+    @Transactional
+    public int updatePassword(String phone,String password){
+        try{
+
+            User user = new User();
+            user.setPassword(password);
+            user.setPhone(phone);
+
+            return userService.updatePassword(user);
+
+        }catch (Exception e){
+            throw e;
+        }
+
     }
 }

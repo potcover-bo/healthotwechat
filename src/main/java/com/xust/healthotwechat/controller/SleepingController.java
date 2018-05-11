@@ -55,8 +55,8 @@ public class SleepingController {
 
     /**
      * 查询睡眠历史记录
-     * @param phone
-     * @return
+     * @param phone 手机号码
+     * @return resultvo对象
      */
     @GetMapping("/history")
     @ResponseBody

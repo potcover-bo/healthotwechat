@@ -36,5 +36,14 @@ public class UserService {
         return userMapper.finfUserByPhone(phone);
     }
 
+    /**
+     * 修改密码
+     * @param user
+     * @return
+     */
+    public int updatePassword(User user){
+        return userMapper.updatePassword(user);
+    }
+
 
 }
