@@ -4,9 +4,14 @@ import com.google.gson.Gson;
 import com.xust.healthotwechat.VO.AjaxResultVo;
 import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.SleepingDto;
+import com.xust.healthotwechat.entity.User;
+import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
+import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.SleepingFacadeService;
+import com.xust.healthotwechat.facade.UserFacadeService;
 import com.xust.healthotwechat.form.SleepingForm;
 import com.xust.healthotwechat.utils.AjaxResultVOUtils;
+import com.xust.healthotwechat.utils.EncryptUtils;
 import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +33,9 @@ public class SleepingController {
 
     @Autowired
     private SleepingFacadeService sleepingFacadeService;
+
+    @Autowired
+    private UserFacadeService userFacadeService;
 
     @PostMapping("/entry")
     public String entry(@Valid SleepingForm sleepingForm,
@@ -77,4 +85,42 @@ public class SleepingController {
 
         return ResultVOUtils.success(historyList);
     }
+
+
+
+    /**
+     * 查询监护人历史记录
+     * @param phone
+     * @param password
+     * @return
+     */
+    @PostMapping("/custody")
+    public ResultVO<List<SleepingDto>> custodyHistory(@RequestParam("phone") String phone,
+                                                  @RequestParam("password")String password){
+
+
+        try {
+
+            /**根据手机号码和密码验证用户是否正确*/
+            User user = userFacadeService.findUserByPhone(phone);
+
+            password = EncryptUtils.encrypt(password);
+
+            if (null == user || !password.equals(user.getPassword())){
+                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_ERROE.getCode(),
+                        HealthOTWechatErrorCode.USER_ERROE.getMessage());
+            }
+
+            return  history(phone);
+
+
+
+        }catch (Exception e){
+            log.error("【查询监护人异常】={}",e.getMessage());
+            return ResultVOUtils.error(60005,e.getMessage());
+
+        }
+
+    }
+
 }

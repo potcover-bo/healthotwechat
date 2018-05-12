@@ -4,9 +4,14 @@ import com.google.gson.Gson;
 import com.xust.healthotwechat.VO.AjaxResultVo;
 import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.BloodPressureDto;
+import com.xust.healthotwechat.entity.User;
+import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
+import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.BloodPressureFacadeService;
+import com.xust.healthotwechat.facade.UserFacadeService;
 import com.xust.healthotwechat.form.BloodPressureForm;
 import com.xust.healthotwechat.utils.AjaxResultVOUtils;
+import com.xust.healthotwechat.utils.EncryptUtils;
 import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +35,8 @@ public class BloodPressureController {
     @Autowired
     private BloodPressureFacadeService bloodPressureFacadeService;
 
+    @Autowired
+    private UserFacadeService userFacadeService;
 
     /**
      * 录入血压
@@ -94,4 +101,45 @@ public class BloodPressureController {
         return ResultVOUtils.success(historyList);
 
     }
+
+
+    /**
+     * 查询监护人历史记录
+     * @param phone
+     * @param password
+     * @return
+     */
+    @PostMapping("/custody")
+    public ResultVO<List<BloodPressureDto>> custodyHistory(@RequestParam("phone") String phone,
+                                                           @RequestParam("password")String password){
+
+
+        try {
+
+            /**根据手机号码和密码验证用户是否正确*/
+            User user = userFacadeService.findUserByPhone(phone);
+
+            password = EncryptUtils.encrypt(password);
+
+            if (null == user || !password.equals(user.getPassword())){
+                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_ERROE.getCode(),
+                        HealthOTWechatErrorCode.USER_ERROE.getMessage());
+            }
+
+            return  getData(phone);
+
+
+
+        }catch (Exception e){
+            log.error("【查询监护人异常】={}",e.getMessage());
+            return ResultVOUtils.error(60001,e.getMessage());
+
+        }
+
+    }
+
+
+
+
+
 }
