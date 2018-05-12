@@ -17,7 +17,7 @@ public class AjaxResultVOUtils {
      */
     public static AjaxResultVo success(String message){
         AjaxResultVo ajaxResultVo = new AjaxResultVo();
-        ajaxResultVo.setCode(200);
+        ajaxResultVo.setCode(666);
         ajaxResultVo.setUrl("index.html");
         ajaxResultVo.setMessage(message);
         return ajaxResultVo;

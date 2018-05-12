@@ -2,6 +2,8 @@ package com.xust.healthotwechat.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by evildoerdb_ on 2018/5/4
  *
@@ -9,8 +11,10 @@ import lombok.Data;
  */
 
 @Data
-public class CustodyUser {
+public class CustodyUser implements Serializable {
 
+
+    private static final long serialVersionUID = -6222960264354512655L;
     /**id*/
     private Integer id;
 

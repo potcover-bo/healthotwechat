@@ -2,6 +2,7 @@ package com.xust.healthotwechat.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,8 +13,10 @@ import java.util.Date;
  */
 
 @Data
-public class Mood {
+public class Mood implements Serializable {
 
+
+    private static final long serialVersionUID = -4734849749611598391L;
     /**id*/
     private Integer id;
 

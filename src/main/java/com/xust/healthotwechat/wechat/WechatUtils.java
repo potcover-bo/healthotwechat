@@ -76,7 +76,7 @@ public class WechatUtils {
 
         ViewButton button14 = generateViewButton("身体指数","view","http://dou.natapp1.cc/index.html");
 
-        ViewButton button15 = generateViewButton("睡眠和服药","view","http://dou.natapp1.cc/index.html");
+        ViewButton button15 = generateViewButton("睡眠","view","http://118.25.21.148:8080/form.html");
 
 
         /**加入一级子菜单列表*/

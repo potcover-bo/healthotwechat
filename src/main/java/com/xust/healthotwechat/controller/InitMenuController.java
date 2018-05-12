@@ -38,8 +38,10 @@ public class InitMenuController implements ApplicationRunner {
 
         if(menu.getErrcode().equals("0")){
             System.out.println("哈哈哈 成功了");
+        }else {
+            System.out.println("23333333333");
         }
-        System.out.println("23333333333");
+
     }
 
     @Override
@@ -47,5 +49,7 @@ public class InitMenuController implements ApplicationRunner {
 
         System.out.println("欢迎使用健康管理项目");
         System.out.println("项目启动了。。。。哈哈哈");
+
+
     }
 }

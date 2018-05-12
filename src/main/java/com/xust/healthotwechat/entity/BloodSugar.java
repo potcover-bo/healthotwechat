@@ -2,6 +2,7 @@ package com.xust.healthotwechat.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,8 +12,10 @@ import java.util.Date;
  */
 
 @Data
-public class BloodSugar {
+public class BloodSugar implements Serializable {
 
+
+    private static final long serialVersionUID = 7845452343394231968L;
     /**id*/
     private Integer id;
 

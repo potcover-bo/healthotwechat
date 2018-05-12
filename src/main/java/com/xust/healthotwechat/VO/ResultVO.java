@@ -2,6 +2,8 @@ package com.xust.healthotwechat.VO;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by evildoerdb_ on 2018/5/10
  *
@@ -9,7 +11,10 @@ import lombok.Data;
  */
 
 @Data
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
+
+
+    private static final long serialVersionUID = -848790058528268861L;
 
     /**返回状态码*/
     private Integer code;
