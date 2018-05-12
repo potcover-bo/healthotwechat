@@ -3,13 +3,19 @@ package com.xust.healthotwechat.form;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.io.Serializable;
+
 /**
  * Created by evildoerdb_ on 2018/5/8
  *
  * 血压form
  */
 @Data
-public class BloodPressureForm {
+public class BloodPressureForm implements Serializable {
+
+
+    private static final long serialVersionUID = 5445059021977552227L;
+
 
     @NotEmpty(message = "phone不能为空")
     private String phone;

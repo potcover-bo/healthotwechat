@@ -3,13 +3,18 @@ package com.xust.healthotwechat.form;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.io.Serializable;
+
 /**
  * Created by evildoerdb_ on 2018/5/10
  *
  * 用户form表单
  */
 @Data
-public class UserForm {
+public class UserForm implements Serializable {
+
+
+    private static final long serialVersionUID = 4265991455296214515L;
 
     @NotEmpty(message = "手机号码不能为空")
     private String phone;

@@ -1,12 +1,15 @@
 package com.xust.healthotwechat.controller;
 
 import com.google.gson.Gson;
+import com.xust.healthotwechat.VO.AjaxResultVo;
 import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.entity.User;
 import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
 import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.UserFacadeService;
 import com.xust.healthotwechat.form.UserForm;
+import com.xust.healthotwechat.form.UserLoginForm;
+import com.xust.healthotwechat.utils.AjaxResultVOUtils;
 import com.xust.healthotwechat.utils.EncryptUtils;
 import com.xust.healthotwechat.utils.ResultVOUtils;
 import com.xust.healthotwechat.utils.SmsUtils;
@@ -16,11 +19,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +46,52 @@ public class UserController {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+
+
+    @RequestMapping("/login")
+    @ResponseBody
+    public String login(@Valid UserLoginForm userLoginForm,
+                        BindingResult bindingResult, HttpSession session){
+
+        Gson gson = new Gson();
+
+        AjaxResultVo ajaxResultVo;
+
+        try {
+
+            if (bindingResult.hasErrors()){
+                throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
+            }
+
+            /**密码验证*/
+            User user = userFacadeService.findUserByPhone(userLoginForm.getPhone());
+            String password = EncryptUtils.encrypt(userLoginForm.getPassword());
+            if(null == user || !user.getPassword().equals(password)){
+                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_ERROE.getCode(),
+                        HealthOTWechatErrorCode.USER_ERROE.getMessage());
+            }
+            session.setAttribute("user",userLoginForm.getPhone());
+
+            ajaxResultVo = AjaxResultVOUtils.success();
+
+        }catch (Exception e){
+            log.error("【登录异常】={}",userLoginForm.getPhone()+e.getMessage());
+            ajaxResultVo = AjaxResultVOUtils.error(e.getMessage());
+        }
+
+        return gson.toJson(ajaxResultVo);
+
+    }
+
+
+
+
+
+
+
+
+
 
     /**
      * 注册

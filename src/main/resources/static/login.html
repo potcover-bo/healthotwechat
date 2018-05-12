@@ -2,9 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登录</title>
+    <title>登录页面</title>
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        function login() {
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/user/login" ,//url
+                data : $('#haha').serialize(),
+                success: function (result) {
+                    if (result.code == 666) {
+
+                        var redirectUrl = result.url;
+                        window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+
+                    }else {
+                        var redirectUrl = result.url;
+                        var message = result.message;
+                        alert(message)
+                        window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+                    }
+                },
+                error : function(result) {
+                    alert(result.toString())
+                }
+
+            });
+        }
+    </script>
 </head>
 <body>
-<h1>登录</h1>
+
+
+<form method="post" id="haha">
+    手机号码：<input name="phone" type="text">
+    密码：<input name="password" type="password">
+    <!--<input value="提交" type="submit">-->
+    <input type="button" value="登录" onclick="login()">
+</form>
 </body>
 </html>
