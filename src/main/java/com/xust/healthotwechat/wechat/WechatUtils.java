@@ -1,6 +1,8 @@
 package com.xust.healthotwechat.wechat;
 
 import com.google.gson.Gson;
+import com.xust.healthotwechat.config.MenuNameConfig;
+import com.xust.healthotwechat.config.MenuUrlConfig;
 import com.xust.healthotwechat.config.WechatConfig;
 import com.xust.healthotwechat.config.WechatUrlConfig;
 import com.xust.healthotwechat.utils.HttpUtils;
@@ -42,10 +44,10 @@ public class WechatUtils {
      * 创建菜单
      * @return
      */
-    public MenuCreateModel createMenu(String token){
+    public MenuCreateModel createMenu(String token, MenuNameConfig menuNameConfig, MenuUrlConfig menuUrlConfig){
         Gson gson = new Gson();
         /**初始化菜单*/
-        String json = gson.toJson(initMenu());
+        String json = gson.toJson(initMenu(menuNameConfig,menuUrlConfig));
         return  HttpUtils.doPost(wechatUrlConfig.getMenuCreateUrl().replace("ACCESS_TOKEN",token),json,MenuCreateModel.class);
     }
 
@@ -55,28 +57,28 @@ public class WechatUtils {
     /**
      * 初始化菜单
      */
-    public  WechatMenu initMenu(){
+    public  WechatMenu initMenu(MenuNameConfig menuNameConfig,MenuUrlConfig menuUrlConfig){
         WechatMenu menu = new WechatMenu();
 
         List<Button> sub_button = new ArrayList<>();
 
         /**一级菜单名字*/
         Button button1 = new Button();
-        button1.setName("健康数据");
+        button1.setName(menuNameConfig.getFirstLevelName());
 
         //一级子菜单列表
         List<Button> sub_button1 = new ArrayList<>();
 
         /**一级子菜单*/
-        ViewButton button11 = generateViewButton("录入血压","view","http://dou.natapp1.cc/index.html");
+        ViewButton button11 = generateViewButton(menuNameConfig.getFirstLevelFirstName(),"view",menuUrlConfig.getFirstLevelFirstUrl());
 
-        ViewButton button12 = generateViewButton("录入血糖","view","http://dou.natapp1.cc/index.html");
+        ViewButton button12 = generateViewButton(menuNameConfig.getFirstLevelSecondName(),"view",menuUrlConfig.getFirstLevelSecondUrl());
 
-        ViewButton button13 = generateViewButton("录入心情","view","http://dou.natapp1.cc/index.html");
+        ViewButton button13 = generateViewButton(menuNameConfig.getFirstLevelThirdName(),"view",menuUrlConfig.getFirstLevelThirdUrl());
 
-        ViewButton button14 = generateViewButton("身体指数","view","http://dou.natapp1.cc/index.html");
+        ViewButton button14 = generateViewButton(menuNameConfig.getFirstLevelFourthName(),"view",menuUrlConfig.getFirstLevelFourthUrl());
 
-        ViewButton button15 = generateViewButton("睡眠","view","http://118.25.21.148:8080/form.html");
+        ViewButton button15 = generateViewButton(menuNameConfig.getFirstLevelFifthName(),"view",menuUrlConfig.getFirstLevelFifthUrl());
 
 
         /**加入一级子菜单列表*/
@@ -93,21 +95,21 @@ public class WechatUtils {
         /**********************/
         /**二级菜单名字*/
         Button button2 = new Button();
-        button2.setName("历史记录");
+        button2.setName(menuNameConfig.getSecondeLevelName());
 
         //二级子菜单列表
         List<Button> sub_button2 = new ArrayList<>();
 
         /**二级子菜单*/
-        ViewButton button21 = generateViewButton("血压曲线","view","http://dou.natapp1.cc/index.html");
+        ViewButton button21 = generateViewButton(menuNameConfig.getSecondeLevelFirstName(),"view",menuUrlConfig.getSecondeLevelFirstUrl());
 
-        ViewButton button22 = generateViewButton("血糖曲线","view","http://www.github.com");
+        ViewButton button22 = generateViewButton(menuNameConfig.getSecondeLevelSecondName(),"view",menuUrlConfig.getSecondeLevelSecondUrl());
 
-        ViewButton button23 = generateViewButton("心情","view","http://www.baidu.com");
+        ViewButton button23 = generateViewButton(menuNameConfig.getSecondeLevelThirdName(),"view",menuUrlConfig.getSecondeLevelThirdUrl());
 
-        ViewButton button24 = generateViewButton("身体指数","view","http://www.baidu.com");
+        ViewButton button24 = generateViewButton(menuNameConfig.getSecondeLevelFourthName(),"view",menuUrlConfig.getSecondeLevelFourthUrl());
 
-        ViewButton button25 = generateViewButton("睡眠","view","http://www.baidu.com");
+        ViewButton button25 = generateViewButton(menuNameConfig.getSecondeLevelFifthName(),"view",menuUrlConfig.getSecondeLevelFifthUrl());
 
 
         /**加入二级子菜单列表*/
@@ -125,15 +127,16 @@ public class WechatUtils {
         /************/
         /**三级button名字*/
         Button button3 = new Button();
-        button3.setName("个人中心");
+        button3.setName(menuNameConfig.getThirdLevelName());
 
         //三级子菜单列表
         List<Button> sub_button3 = new ArrayList<>();
-        ViewButton button31 = generateViewButton("我的账号","view","http://dou.natapp1.cc/index.html");
-        ClickButton button32 = new ClickButton();
-        button32.setName("关于我们");
-        button32.setType("click");
-        button32.setKey("V1001_GOOD");
+        ViewButton button31 = generateViewButton(menuNameConfig.getThirdLevelFirstName(),"view",menuUrlConfig.getThirdLevelFirstUrl());
+        ViewButton button32 = generateViewButton(menuNameConfig.getThirdLevelSecondName(),"view",menuUrlConfig.getThirdLevelSecondUrl());
+//        ClickButton button32 = new ClickButton();
+//        button32.setName("关于我们");
+//        button32.setType("click");
+//        button32.setKey("V1001_GOOD");
 
         sub_button3.add(button31);
         sub_button3.add(button32);

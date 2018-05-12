@@ -1,5 +1,7 @@
 package com.xust.healthotwechat.controller;
 
+import com.xust.healthotwechat.config.MenuNameConfig;
+import com.xust.healthotwechat.config.MenuUrlConfig;
 import com.xust.healthotwechat.wechat.WechatUtils;
 import com.xust.healthotwechat.wechat.model.AccessTokenModel;
 import com.xust.healthotwechat.wechat.model.MenuCreateModel;
@@ -25,6 +27,12 @@ public class InitMenuController implements ApplicationRunner {
     @Autowired
     private WechatUtils wechatUtils;
 
+    @Autowired
+    private MenuNameConfig menuNameConfig;
+
+    @Autowired
+    private MenuUrlConfig menuUrlConfig;
+
     @ResponseBody
     @RequestMapping("/config")
     public void config(){
@@ -34,7 +42,7 @@ public class InitMenuController implements ApplicationRunner {
         AccessTokenModel accessTokenModel =wechatUtils.getAccessToken();
 
         /**创建菜单*/
-        MenuCreateModel menu = wechatUtils.createMenu(accessTokenModel.getAccess_token());
+        MenuCreateModel menu = wechatUtils.createMenu(accessTokenModel.getAccess_token(),menuNameConfig,menuUrlConfig);
 
         if(menu.getErrcode().equals("0")){
             System.out.println("哈哈哈 成功了");
@@ -49,6 +57,8 @@ public class InitMenuController implements ApplicationRunner {
 
         System.out.println("欢迎使用健康管理项目");
         System.out.println("项目启动了。。。。哈哈哈");
+
+
 
 
     }
