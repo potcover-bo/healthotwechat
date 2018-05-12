@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * 用户controller
  */
 
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/user")
 public class UserController {
@@ -50,7 +50,6 @@ public class UserController {
 
 
     @RequestMapping("/login")
-    @ResponseBody
     public String login(@Valid UserLoginForm userLoginForm,
                         BindingResult bindingResult, HttpSession session){
 
@@ -71,6 +70,8 @@ public class UserController {
                 throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_ERROE.getCode(),
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
+
+            //加入session
             session.setAttribute("user",userLoginForm.getPhone());
 
             ajaxResultVo = AjaxResultVOUtils.success();
@@ -100,9 +101,12 @@ public class UserController {
      * @return  返回登录页面
      */
     @RequestMapping("/register")
-    public ModelAndView register(@Valid UserForm userForm,
-                                 BindingResult bindingResult,
-                                 Map<String,Object> map){
+    public String register(@Valid UserForm userForm,
+                                 BindingResult bindingResult){
+
+        Gson gson = new Gson();
+        AjaxResultVo resultVo;
+
 
         try{
             /**用户校验出错*/
@@ -127,16 +131,16 @@ public class UserController {
 
             /**进行注册*/
             userFacadeService.register(userForm);
-            map.put("message","注册成功");
-            map.put("url","login");
+
+            resultVo = AjaxResultVOUtils.success("login.html","成功");
+
 
 
         }catch (Exception e){
-            map.put("message",e.getMessage());
-            map.put("url","register");
-            return new ModelAndView("common/error",map);
+            log.error("【注册异常】={}",e.getMessage());
+            resultVo = AjaxResultVOUtils.error("register.html",e.getMessage());
         }
-        return new ModelAndView("common/success",map);
+        return gson.toJson(resultVo);
     }
 
 
@@ -153,10 +157,10 @@ public class UserController {
             /**生成六位随机验证码*/
             String validateCode = SmsUtils.verificationCode();
 
+            //TODO  调用短信平台发送验证码
+
             /**redis中加入验证码 过期时间为两分钟*/
             redisTemplate.opsForValue().set(phone+"validateCode",validateCode,120,TimeUnit.SECONDS);
-
-            //TODO  调用短信平台发送验证码
 
         }catch (Exception e){
             log.error("【发送验证码失败】={}",e.getMessage());
@@ -196,10 +200,14 @@ public class UserController {
      * @return
      */
     @RequestMapping("updatepassword")
-    public ModelAndView changePassword(@RequestParam("phone") String phone,
+    public String changePassword(@RequestParam("phone") String phone,
                                    @RequestParam("oldPassword") String oldPassword,
-                                   @RequestParam("newPassword") String newPassword,
-                                   Map<String,Object> map){
+                                   @RequestParam("newPassword") String newPassword){
+
+        Gson gson = new Gson();
+
+        AjaxResultVo ajaxResultVo;
+
         try {
             /**先去查询密码是否正确*/
             oldPassword = EncryptUtils.encrypt(oldPassword);
@@ -215,18 +223,15 @@ public class UserController {
             newPassword = EncryptUtils.encrypt(newPassword);
             userFacadeService.updatePassword(phone,newPassword);
 
-            map.put("message","密码修改成功");
-            map.put("url","index.html");
+            ajaxResultVo = AjaxResultVOUtils.success("login.html","成功");
 
         }catch (RuntimeException e){
             log.error("【修改密码异常】={}",e.getMessage());
-            map.put("message",e.getMessage());
-            map.put("url","index.html");
-            return new ModelAndView("common/error",map);
+            ajaxResultVo = AjaxResultVOUtils.error("changePassword.html",e.getMessage());
 
         }
 
-        return new ModelAndView("common/success",map);
+        return gson.toJson(ajaxResultVo);
     }
 
 }

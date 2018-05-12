@@ -46,10 +46,32 @@ public class AjaxResultVOUtils {
     }
 
     /**
+     * 通用失败返回加消息
+     * @param message
+     * @return
+     */
+    public static AjaxResultVo success(String url,String message){
+        AjaxResultVo ajaxResultVo = new AjaxResultVo();
+        ajaxResultVo.setCode(233);
+        ajaxResultVo.setUrl(url);
+        ajaxResultVo.setMessage(message);
+        return ajaxResultVo;
+    }
+
+    /**
      * 通用失败返回不加消息
      * @return
      */
     public static AjaxResultVo error(){
         return error(null);
+    }
+
+
+    public static AjaxResultVo error(String url,String message){
+        AjaxResultVo ajaxResultVo = new AjaxResultVo();
+        ajaxResultVo.setCode(233);
+        ajaxResultVo.setUrl(url);
+        ajaxResultVo.setMessage(message);
+        return ajaxResultVo;
     }
 }
