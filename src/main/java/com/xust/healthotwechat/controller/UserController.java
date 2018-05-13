@@ -164,7 +164,7 @@ public class UserController {
             SmsUtils.sendSms(phone,validateCode);
 
             /**redis中加入验证码 过期时间为五分钟分钟*/
-            redisTemplate.opsForValue().set(phone+"validateCode",validateCode,300,TimeUnit.SECONDS);
+            //redisTemplate.opsForValue().set(phone+"_validateCode",validateCode,300,TimeUnit.SECONDS);
 
         }catch (Exception e){
             log.error("【发送验证码失败】={}",e.getMessage());
@@ -185,7 +185,7 @@ public class UserController {
     private boolean checkValidateCode(String code,String phone){
 
         /**从redis中获取验证码*/
-        String value = (String) redisTemplate.opsForValue().get(phone+"validateCode");
+        String value = (String) redisTemplate.opsForValue().get(phone+"_validateCode");
 
         /**如果验证码为空或者验证码错误*/
         if (null == value || !value.equals(code)){
