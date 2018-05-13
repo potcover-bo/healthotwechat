@@ -78,7 +78,7 @@ public class UserController {
 
         }catch (Exception e){
             log.error("【登录异常】={}",userLoginForm.getPhone()+e.getMessage());
-            ajaxResultVo = AjaxResultVOUtils.error(e.getMessage());
+            ajaxResultVo = AjaxResultVOUtils.error("login.html",e.getMessage());
         }
 
         return gson.toJson(ajaxResultVo);

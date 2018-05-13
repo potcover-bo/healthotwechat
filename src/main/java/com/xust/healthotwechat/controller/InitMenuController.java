@@ -48,7 +48,7 @@ public class InitMenuController implements ApplicationRunner {
         MenuCreateModel menu = wechatUtils.createMenu(accessTokenModel.getAccess_token(),menuNameConfig,menuUrlConfig);
 
         if(menu.getErrcode().equals("0")){
-            System.out.println("哈哈哈 成功了");
+            System.out.println("666 创建菜单成功");
         }else {
             System.out.println("23333333333");
         }
