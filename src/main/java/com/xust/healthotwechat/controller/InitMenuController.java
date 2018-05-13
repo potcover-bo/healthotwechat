@@ -1,7 +1,10 @@
 package com.xust.healthotwechat.controller;
 
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import com.xust.healthotwechat.config.MenuNameConfig;
 import com.xust.healthotwechat.config.MenuUrlConfig;
+import com.xust.healthotwechat.utils.SmsUtils;
 import com.xust.healthotwechat.wechat.WechatUtils;
 import com.xust.healthotwechat.wechat.model.AccessTokenModel;
 import com.xust.healthotwechat.wechat.model.MenuCreateModel;
@@ -57,8 +60,18 @@ public class InitMenuController implements ApplicationRunner {
 
         System.out.println("欢迎使用健康管理项目");
         System.out.println("项目启动了。。。。哈哈哈");
-
-
+//
+//        try {
+//            SendSmsResponse sendSmsResponse = SmsUtils.sendSms("18789449429","123456");
+//            System.out.println("code = " +sendSmsResponse.getCode());
+//            System.out.println("message = " +sendSmsResponse.getMessage());
+//            System.out.println("requestid = " + sendSmsResponse.getRequestId());
+//            System.out.println("bizid = " + sendSmsResponse.getBizId());
+//            System.out.println("发送成功");
+//        } catch (ClientException e) {
+//            System.out.println("发送失败");
+//            e.printStackTrace();
+//        }
 
 
     }

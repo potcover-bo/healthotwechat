@@ -154,13 +154,17 @@ public class UserController {
     public ResultVO<String> generateValidateCode(@RequestParam("phone") String phone){
 
         try {
+
+
+
             /**生成六位随机验证码*/
             String validateCode = SmsUtils.verificationCode();
 
-            //TODO  调用短信平台发送验证码
+            //调用短信平台发送验证码
+            SmsUtils.sendSms(phone,validateCode);
 
-            /**redis中加入验证码 过期时间为两分钟*/
-            redisTemplate.opsForValue().set(phone+"validateCode",validateCode,120,TimeUnit.SECONDS);
+            /**redis中加入验证码 过期时间为五分钟分钟*/
+            redisTemplate.opsForValue().set(phone+"validateCode",validateCode,300,TimeUnit.SECONDS);
 
         }catch (Exception e){
             log.error("【发送验证码失败】={}",e.getMessage());
