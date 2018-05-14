@@ -1,4 +1,4 @@
-package com.xust.healthotwechat.config;
+package com.xust.healthotwechat.filter;
 
 import org.springframework.core.annotation.Order;
 
@@ -7,8 +7,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by evildoerdb_ on 2018/5/13

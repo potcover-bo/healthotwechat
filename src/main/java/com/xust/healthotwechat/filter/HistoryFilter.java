@@ -1,4 +1,4 @@
-package com.xust.healthotwechat.config;
+package com.xust.healthotwechat.filter;
 
 import org.springframework.core.annotation.Order;
 
