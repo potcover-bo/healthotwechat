@@ -63,6 +63,10 @@ public class BloodSugarFacadeService {
             /**redis中加入标记表示当天已经录入过 key : openid+bloodSugar value: 录入时间 expire:当天剩余时间*/
             redisTemplate.opsForValue().set(key,DateUtils.nowDateFormat(),DateUtils.getRemainSeconds(),TimeUnit.SECONDS);
 
+            /**redis中加入标记表示三天内录入过*/
+            redisTemplate.opsForValue().set(bloodSugarForm.getPhone()+"_three_entry_bloodSugar",
+                    "bloodSugar",DateUtils.getRemainSeconds()+172800,TimeUnit.SECONDS);
+
             /**插入数据*/
             return bloodSugarService.insert(bloodSugar);
 

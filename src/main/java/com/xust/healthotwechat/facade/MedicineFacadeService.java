@@ -56,6 +56,10 @@ public class MedicineFacadeService {
             /**redis中加入标记表示用户当天已经录入*/
             redisTemplate.opsForValue().set(key,DateUtils.nowDateFormat(),DateUtils.getRemainSeconds(),TimeUnit.SECONDS);
 
+            /**redis中加入标记表示三天内录入过*/
+            redisTemplate.opsForValue().set(medicineForm.getPhone()+"_three_entry_medicine",
+                    "medicine",DateUtils.getRemainSeconds()+172800,TimeUnit.SECONDS);
+
             /**数据进行录入*/
             return medicineService.insert(medicine);
         }catch (Exception e){

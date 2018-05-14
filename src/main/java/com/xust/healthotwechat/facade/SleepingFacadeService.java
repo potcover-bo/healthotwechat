@@ -61,6 +61,10 @@ public class SleepingFacadeService {
             /**redis加入标记表示当天已经录入过*/
             redisTemplate.opsForValue().set(key,DateUtils.nowDateFormat(),DateUtils.getRemainSeconds(),TimeUnit.SECONDS);
 
+            /**redis中加入标记表示三天内录入过*/
+            redisTemplate.opsForValue().set(sleepingForm.getPhone()+"_three_entry_sleeping",
+                    "sleeping",DateUtils.getRemainSeconds()+172800,TimeUnit.SECONDS);
+
             /**录入数据*/
             return sleepingService.insert(sleeping);
 

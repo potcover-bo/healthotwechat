@@ -58,6 +58,10 @@ public class BodyDataFacadeService {
 
           redisTemplate.opsForValue().set(key,DateUtils.nowDateFormat(),DateUtils.getRemainSeconds(),TimeUnit.SECONDS);
 
+          /**redis中加入标记表示三天内录入过*/
+          redisTemplate.opsForValue().set(bodyDataForm.getPhone()+"_three_entry_bodyData",
+                  "bodyData",DateUtils.getRemainSeconds()+172800,TimeUnit.SECONDS);
+
           /**录入数据*/
          return bodyDataService.insert(bodyData);
       }catch (Exception e){

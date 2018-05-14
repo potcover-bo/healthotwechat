@@ -5,6 +5,8 @@ import com.xust.healthotwechat.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by evildoerdb_ on 2018/5/6
  *
@@ -43,6 +45,15 @@ public class UserService {
      */
     public int updatePassword(User user){
         return userMapper.updatePassword(user);
+    }
+
+
+    /**
+     * 查询所有用户的手机号码
+     * @return
+     */
+    public List<String> findAllPhone(){
+        return userMapper.findAllPhone();
     }
 
 

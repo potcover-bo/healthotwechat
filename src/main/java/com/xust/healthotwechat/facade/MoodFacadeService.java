@@ -61,6 +61,10 @@ public class MoodFacadeService {
             /**redis加入标记表示当天已经录入数据*/
             redisTemplate.opsForValue().set(key, DateUtils.nowDateFormat(),DateUtils.getRemainSeconds(),TimeUnit.SECONDS);
 
+            /**redis中加入标记表示三天内录入过*/
+            redisTemplate.opsForValue().set(moodForm.getPhone()+"_three_entry_mood",
+                    "mood",DateUtils.getRemainSeconds()+172800,TimeUnit.SECONDS);
+
             /**录入数据*/
             return moodService.insert(mood);
         }catch (Exception e){

@@ -3,6 +3,8 @@ package com.xust.healthotwechat.mapper;
 import com.xust.healthotwechat.entity.User;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * Created by evildoerdb_ on 2018/4/27
  *
@@ -41,4 +43,12 @@ public interface UserMapper {
      */
     @Update("UPDATE user SET password = #{password} WHERE phone = #{phone}")
     int updatePassword(User user);
+
+
+    /**
+     * 查询所有用户的手机号码
+     * @return
+     */
+    @Select("select phone from user")
+    List<String> findAllPhone();
 }

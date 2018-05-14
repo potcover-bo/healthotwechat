@@ -65,6 +65,10 @@ public class BloodPressureFacadeService {
             /**redis中加入标记表示当天已经录入过*/
             redisTemplate.opsForValue().set(key,DateUtils.nowDateFormat(),DateUtils.getRemainSeconds(),TimeUnit.SECONDS);
 
+            /**redis中加入标记表示三天内录入过*/
+            redisTemplate.opsForValue().set(bloodPressureForm.getPhone()+"_three_entry_bloodPressure",
+                    "bloodPressure",DateUtils.getRemainSeconds()+172800,TimeUnit.SECONDS);
+
             /**插入数据*/
             return bloodPressureService.intsert(bloodPressure);
 
