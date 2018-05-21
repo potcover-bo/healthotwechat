@@ -17,7 +17,7 @@ public class BloodPressureForm implements Serializable {
     private static final long serialVersionUID = 5445059021977552227L;
 
 
-    @NotEmpty(message = "phone不能为空")
+
     private String phone;
 
     @NotEmpty(message = "高压不能为空")

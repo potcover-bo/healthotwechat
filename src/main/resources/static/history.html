@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html id="html">
+<head>
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link type="text/css" rel="stylesheet" href="css/common.css" />
+<link type="text/css" rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+<div id="header" class="clearfix" >
+	<img src="img/箭头1.png" id="left"/>
+	<p>历史查询</p>
+</div>	
+<div id="container">
+	<ul id="itam" class="clearfix">
+		<li>
+			<p>血 压</p>
+			<img src="img/心率.png"/>
+		</li>
+		<li>
+			<p>血 糖</p>
+			<img src="img/血糖.png" />
+		</li>
+		<li>
+			<p>睡眠状况</p>
+			<img src="img/月亮.png" />
+		</li>
+		<li>
+			<p>心情</p>
+			<img src="img/心.png" />
+		</li>
+		<li>
+			<p>身体指数</p>
+			<img src="img/药店.png" />
+		</li>
+	</ul>
+</div>	
+<script type="text/javascript" src="js/new_file.js" ></script>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript">
+$("#left").click(function(){
+	window.location.href="index.html";
+})
+var oItam=document.getElementById("itam");
+var aLi1=oItam.getElementsByTagName("li");
+aLi1[0].onclick=function(){
+	window.location.href="history/history_bloodPressure.html";
+}
+aLi1[1].onclick=function(){
+	window.location.href="history/history_bloodSugar.html";
+}
+aLi1[2].onclick=function(){
+	window.location.href="history/history_sleeping.html";
+}
+aLi1[3].onclick=function(){
+	window.location.href="history/history_mood.html";
+}
+aLi1[4].onclick=function(){
+	window.location.href="history/history_bodyData.html";
+}
+$("#left").click(function(){
+	window.location.href="index.html";
+})
+</script>
+</body>
+</html>

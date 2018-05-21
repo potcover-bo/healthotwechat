@@ -17,7 +17,7 @@ public class BloodSugarForm implements Serializable {
     private static final long serialVersionUID = 9004620092969037000L;
 
 
-    @NotEmpty(message = "phone不能为空")
+
     private String phone;
 
     @NotEmpty(message = "血糖不能为空")

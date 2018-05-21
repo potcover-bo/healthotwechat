@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://local:3306/healthotwechat?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/healthotwechat?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: root123456
+    password: 123456
 
 #redis数据源
   redis:
@@ -39,7 +39,54 @@ wechat:
     openidUrl: https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE
 
 #日志
+#微信菜单名字配置
+menuName:
+  firstLevelName: 录入数据
+  secondeLevelName: 历史记录
+  thirdLevelName: 个人中心
 
+  #第一个菜单
+  firstLevelFirstName: 血压
+  firstLevelSecondName: 血糖
+  firstLevelThirdName: 身体指数
+  firstLevelFourthName: 睡眠
+  firstLevelFifthName: 心情
+
+  #第二个菜单
+  secondeLevelFirstName: 血压
+  secondeLevelSecondName: 血糖
+  secondeLevelThirdName: 身体指数
+  secondeLevelFourthName: 睡眠
+  secondeLevelFifthName: 心情
+
+  #第三个菜单
+  thirdLevelFirstName: 关于我们
+  thirdLevelSecondName: 账号设置
+
+
+#微信菜单url配置
+menuUrl:
+#  firstLevelUrl:
+#  secondeLevelUrl:
+#  thirdLevelUrl:
+
+  #第一个菜单
+  firstLevelFirstUrl: http://dou.natapp1.cc/entry/entry_bloodPressure.html
+  firstLevelSecondUrl: http://dou.natapp1.cc/entry/entry_bloodSugar.html
+  firstLevelThirdUrl: http://dou.natapp1.cc/entry/entry_bodyData.html
+  firstLevelFourthUrl: http://dou.natapp1.cc/entry/entry_sleeping.html
+  firstLevelFifthUrl: http://dou.natapp1.cc/entry/entry_mood.html
+
+  #第二个菜单
+  secondeLevelFirstUrl: http://dou.natapp1.cc/history/history_bloodPressure.html
+  secondeLevelSecondUrl: http://dou.natapp1.cc/history/history_bloodSugar.html
+  secondeLevelThirdUrl: http://dou.natapp1.cc/history/history_bodyData.html
+  secondeLevelFourthUrl: http://dou.natapp1.cc/history/history_sleeping.html
+  secondeLevelFifthUrl: http://dou.natapp1.cc/history/history_mood.html
+
+  #第三个菜单
+  thirdLevelFirstUrl: http://dou.natapp1.cc/about.html
+  thirdLevelSecondUrl: http://dou.natapp1.cc/index.html
 
 
 

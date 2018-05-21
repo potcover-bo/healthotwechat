@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -237,5 +238,18 @@ public class UserController {
 
         return gson.toJson(ajaxResultVo);
     }
+
+
+    @RequestMapping("/logout")
+    public ResultVO<String> logout(HttpServletRequest request){
+        try{
+            request.getSession().removeAttribute("user");
+        }catch (Exception e){
+           return AjaxResultVOUtils.error();
+
+        }
+        return AjaxResultVOUtils.success();
+    }
+
 
 }

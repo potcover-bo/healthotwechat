@@ -10,72 +10,65 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link type="text/css" rel="stylesheet" href="css/common.css" />
-<link type="text/css" rel="stylesheet" href="css/index.css" />
+<style type="text/css">
+#header{ position: relative; padding: 0.3rem 1rem 0.40rem 0.78rem; border-bottom: 0.06rem #dddddd solid; background-color: lightgreen;}
+#header p{ margin-left:40%; font-size:1.1rem; line-height: 1.8rem;}
+#container #top{ height:5.89rem; position: relative; background-color: lightgreen;}
+#container #top p{ position: absolute; bottom: 0.8rem; left:40%; font-size: 1rem;}
+#container #bottom{ padding:2rem 0 0 2rem ;}
+#container #bottom div{ padding-left: 12%; margin-bottom: 4rem;}
+#container #bottom input{ width: 6rem; height: 2rem; border-radius: 1rem; text-align: center; line-height: 2rem;}
+#container #bottom input:nth-of-type(1){ margin-right: 1.5rem;}
+#container ul li img{ float: left; width: 10%;}
+#container ul li div{ padding-top: 0.5rem; padding: 0.5rem; float: left; width: 75%; border-bottom: 0.04rem #B5B5B5 solid;}
+#container ul li div p{ font-size: 0.8rem;}
+</style>
 </head>
 <body>
 <div id="header" class="clearfix" >
-	<img src="img/箭头1.png"/>
-	<p>健 康</p>
+	<p>个人中心</p>
 </div>	
 <div id="container">
-	<ul id="itam" class="clearfix">
-		<li>
-			<p>血 压</p>
-			<img src="img/心率.png"/>
+	<div id="top">
+		<p>手机号</p>
+	</div>
+	<ul id="bottom">
+		<div id="L_R">
+			<input type="button" id="login" value="登录" />
+			<input type="button" id="register" value="注册" />
+		<!--<div id="R_C">
+			<input type="button" id="reset" value="修改密码" />
+			<input type="button" id="logout" value="注销" />
+		</div>-->
+		</div>
+		<li class="clearfix">
+			<img src="img/input.png" />
+			<div id="entry">
+				<p>数据录入</p>
+			</div>
 		</li>
-		<li>
-			<p>血 糖</p>
-			<img src="img/血糖.png" />
-		</li>
-		<li>
-			<p>用药情况</p>
-			<img src="img/药店.png" />
-		</li>
-		<li>
-			<p>睡眠状况</p>
-			<img src="img/月亮.png" />
-		</li>
-		<li>
-			<p>心情</p>
-			<img src="img/心.png" />
+		<li class="clearfix">
+			<img src="img/search.png" />
+			<div id="history">
+				<p>历史查询</p>
+			</div>
 		</li>
 	</ul>
 </div>
-<ul id="manu" class="clearfix">
-	<li><a>健康中心</a></li>
-	<li><a>个人中心</a></li>
-</ul>	
-<script type="text/javascript" src="js/new_file.js" ></script>
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript">
-var oManu=document.getElementById("manu");
-var aLi=oManu.getElementsByTagName("li");
-var aA =oManu.getElementsByTagName("a");
-
-aLi[1].onclick=function(){
-	window.location.href="main.html";
-}
-window.onload=function(){
-	aA[0].style.color ="#ffffff";
-	aA[0].style.backgroundColor="pink";
-}
-var oItam=document.getElementById("itam");
-var aLi1=oItam.getElementsByTagName("li");
-aLi1[0].onclick=function(){
-	window.location.href="input_BloodPressure.html";
-}
-aLi1[1].onclick=function(){
-	window.location.href="input_BloodSuger.html";
-}
-aLi1[2].onclick=function(){
-	window.location.href="input_Medicin.html";
-}
-aLi1[3].onclick=function(){
-	window.location.href="input_Sleep.html";
-}
-aLi1[4].onclick=function(){
-	window.location.href="input_Mond.html";
-}
+$("#login").click(function(){
+	window.location.href="login.html";
+})
+$("#register").click(function(){
+	window.location.href="register.html";
+})
+$("#entry").click(function(){
+	window.location.href="entry.html";
+})
+$("#history").click(function(){
+	window.location.href="history.html";
+})
 </script>
 </body>
 </html>

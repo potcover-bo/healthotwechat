@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -46,11 +47,14 @@ public class BloodPressureController {
      */
     @PostMapping("/entry")
     public String entryBloodPressure(@Valid BloodPressureForm bloodPressureForm,
-                                           BindingResult bindingResult){
+                                           BindingResult bindingResult,
+                                     HttpServletRequest request){
 
         Gson gson = new Gson();
 
         AjaxResultVo resultVo;
+
+        String sessionPhone = (String) request.getSession().getAttribute("user");
 
         /**参数校验出错*/
         if (bindingResult.hasErrors()){
@@ -58,6 +62,7 @@ public class BloodPressureController {
             throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
 
+        bloodPressureForm.setPhone(sessionPhone);
 
         try {
 
@@ -81,12 +86,23 @@ public class BloodPressureController {
      * @return
      */
     @GetMapping("/history")
-    public ResultVO<List<BloodPressureDto>> getData(@RequestParam("phone") String phone){
+    public ResultVO<List<BloodPressureDto>> getData(@RequestParam("phone") String phone, HttpServletRequest request){
 
 
 
 
         List<BloodPressureDto> historyList;
+        if (request !=null){
+            String sessionPhone = (String) request.getSession().getAttribute("user");
+            if (!sessionPhone.equals(phone)){
+                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
+                        HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
+            }
+        }
+
+
+
+
         try {
 
             historyList = bloodPressureFacadeService.findBloodPressureList(phone);
@@ -126,7 +142,7 @@ public class BloodPressureController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-            return  getData(phone);
+            return  getData(phone,null);
 
 
 

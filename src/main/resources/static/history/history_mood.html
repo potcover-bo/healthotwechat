@@ -1,10 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html id="html">
 <head>
-    <meta charset="UTF-8">
-    <title>心情历史记录</title>
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link type="text/css" rel="stylesheet" href="../css/common.css" />
+<style type="text/css">
+#header{ position: relative; height: 5.45rem; padding: 0.3rem 1rem 0.9rem 0.78rem; border-bottom: 0.06rem #dddddd solid;}
+#header img{float: left; margin-top: 0.45rem; width: 3.7%; height: 0.93rem;}
+#header p{ position: absolute; left: 3.6%; top: 3.3rem; line-height: 1.69rem; font-size: 1.69rem;}
+#container input{border: 0.029rem #D3D3D3 solid; height: 1.4rem; margin-bottom: 1.5rem;}
+#container #care{ display: none;}
+#sbt{ display: block; margin: auto; width: 30%; height: 2rem;}
+#container{  
+    padding: 1rem 1rem 0 1rem; 
+    text-align: center;
+    }  
+#container img{width:100%; height: 10rem; margin-bottom: 2rem;}   
+#can1{
+	width: 25.52rem;  
+    height: 15.29rem;  
+    margin-bottom: 2rem; 
+}
+#suggest { width: 100%; padding-bottom: 0.67rem; padding-left: 6.8%; margin-bottom: 1.3rem;}
+#suggest p{ font-size: 1rem;}
+</style>
 </head>
 <body>
-    <h1>心情历史记录</h1>
+<div id="header" class="clearfix" >
+	<img src="../img/箭头1.png" id="left"/></br>
+	<p>心情曲线</p>
+</div>
+<div id="container">
+	<img src="../img/mood.jpg" />
+	<div id="checked">
+		<span>是否查询监护人的信息</span>
+		<label><input type="radio" name="care" id="yes" value="yes"/>是</label>
+		<label><input type="radio" name="care" id="none" value="no" />否</label>
+	</div>
+	<div id="care">
+		<span>被监护人的账号：</span>
+		<input type="text" /><br />
+		<span>被监护人的密码：</span>
+		<input type="password" /><br />
+		<input type="submit" value="提交" id="sbt" />
+	</div>
+	<canvas id="can1" width="800" height="600"></canvas>
+</div>
+<div id="suggest">
+	<p>建议：</p>
+</div>
+<script type="text/javascript" src="../js/new_file.js" ></script>
+<script src="../js/jquery.min.js"></script>
+<script>
+$('input:radio[name="care"]').click(function(){
+	var val=$(this).val();
+	if(val=="yes"){
+		$("#care").css("display","block");
+	}
+	else{
+		$("#care").css("display","none");
+	}
+})
+$("#left").click(function(){
+	window.location.href="../history.html";
+})
+var can1 = document.getElementById("can1");  
+var ctx = can1.getContext("2d");  
+nums= [268,1236,1273,1545,1988];
+datas = ["11.1","11.3","11.10","11.17","11.24"]; 
+//画出坐标线  
+function drawBorder(){  
+    ctx.beginPath();  
+    ctx.moveTo(100,50);  
+    ctx.lineTo(100,550);  
+    ctx.moveTo(100,550);  
+    ctx.lineTo(600,550);  
+    ctx.closePath();  
+    ctx.stroke();  
+}  
+//画出折线  
+function drawLine(nums){ 
+    for (i = 0;i < nums.length-1;i ++){  
+        //起始坐标  
+        var numsY = 550-nums[i]/500*100;  
+        var numsX = i*100+150;  
+        //终止坐标  
+        var numsNY = 550-nums[i+1]/500*100;  
+        var numsNX = (i+1)*100+150;  
+        ctx.beginPath();  
+        ctx.moveTo(numsX,numsY);  
+        ctx.lineTo(numsNX,numsNY);  
+        ctx.lineWidth = 6;  
+        ctx.strokeStyle = "#80aa33";  
+        ctx.closePath();  
+        ctx.stroke();  
+    }  
+}
+//绘制折线点的菱形和数值，横坐标值，纵坐标值  
+function drawBlock(nums){  
+    for (i = 0;i <= nums.length;i ++){  
+        var numsY = 550-nums[i]/500*100;  
+        var numsX = i*100+150;  
+        ctx.beginPath();  
+        // 画出折线上的方块  
+        ctx.moveTo(numsX-4,numsY);  
+        ctx.lineTo(numsX,numsY-4);  
+        ctx.lineTo(numsX+4,numsY);  
+        ctx.lineTo(numsX,numsY+4);  
+        ctx.fill();  
+        ctx.font = "15px scans-serif";  
+        ctx.fillStyle = "black";  
+        //折线上的点值  
+        var text = ctx.measureText(nums[i]);  
+        ctx.fillText(nums[i],numsX-text.width,numsY-10);  
+        //绘制纵坐标  
+        var colText = ctx.measureText((nums.length-i)*500);  
+        ctx.fillText((nums.length-i)*500,90-colText.width,i*100+55);  
+        //绘制横坐标并判断  
+        if (i < 5){  
+            var rowText = ctx.measureText(datas[i]);  
+            ctx.fillText(datas[i],numsX-rowText.width/2,570);  
+        }else if(i == 5) {  
+            return;  
+        }  
+        ctx.closePath();  
+        ctx.stroke();  
+    }  
+}  
+drawBorder();  
+drawLine(nums);
+drawBlock(nums);
+</script>  
 </body>
 </html>

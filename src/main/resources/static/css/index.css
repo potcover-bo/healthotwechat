@@ -11,7 +11,4 @@
 #container ul li:nth-of-type(3){ background-color: #77b9a9;}
 #container ul li:nth-of-type(4){ background-color: #305d72; margin-left: 8.5%;}
 #container ul li:nth-of-type(5){ background-color: lightpink;}
-#manu{ height: 2.9rem; width: 100%; background-color: gainsboro; position: fixed; bottom: 0; left: 0;}
-#manu li{ width: 50%; float: left;}
-#manu li:nth-of-type(1){ border-right: 0.06rem lightgray solid;}
-#manu li a{ display: block; line-height: 2.9rem; text-align: center; font-size: 1.1rem; color: #FFFFFF;}
+#container ul li:nth-of-type(6){ background-color: greenyellow; margin-left: 8.5%}

@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html id="html">
 <head>
-    <meta charset="UTF-8">
-    <title>录入睡眠</title>
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link type="text/css" rel="stylesheet" href="../css/common.css" />
+<style type="text/css">
+#header{ position: relative; height: 5.45rem; padding: 0.3rem 1rem 0.9rem 0.78rem; border-bottom: 0.06rem #dddddd solid;}
+#header img{float: left; margin-top: 0.45rem; width: 3.7%; height: 0.93rem;}
+#header p{ position: absolute; left: 3.6%; top: 3.3rem; line-height: 1.69rem; font-size: 1.69rem;}
+#input{ width: 100%; padding: 1rem 1rem 0 1rem; font-size: 1rem;}
+#input img{ width:100%; height: 10rem; margin-bottom: 2rem;}
+#input input{ width: auto; border: 0.029rem #D3D3D3 solid; height: 1.4rem; margin-bottom: 1.5rem;}
+#input #care{ display: none;}
+#sbt{ display: block; margin: auto; width: 30%; height: 2rem;}
+</style>
 </head>
 <body>
-    <h1>录入睡眠</h1>
+<div id="header" class="clearfix" >
+	<img src="../img/箭头1.png" id="left"/></br>
+	<p>睡眠数据</p>
+</div>
+<div id="input">
+	<img src="../img/sleep.jpg" />
+	<div id="checked">
+		<span>是否录入监护人的信息</span>
+		<label><input type="radio" name="care" id="yes" value="yes"/>是</label>
+		<label><input type="radio" name="care" id="none" value="no" />否</label>
+	</div>
+	<div id="care">
+		<span>被监护人的账号：</span>
+		<input type="text" /><br />
+		<span>被监护人的密码：</span>
+		<input type="password" /><br />
+	</div>
+	<span>午睡睡眠时间：</span>
+	<input type="text" /><br />
+	<span>夜晚睡眠时间：</span>
+	<input type="text" />
+</div>
+<input type="submit" value="提交" id="sbt" />
+<script src="../js/new_file.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script>
+$('input:radio[name="care"]').click(function(){
+	var val=$(this).val();
+	if(val=="yes"){
+		$("#care").css("display","block");
+	}
+	else{
+		$("#care").css("display","none");
+	}
+})
+$("#sbt").click(function(){
+	window.location.href="../entry.html";
+})
+$("#left").click(function(){
+	window.location.href="../entry.html";
+})
+</script>
 </body>
 </html>
+

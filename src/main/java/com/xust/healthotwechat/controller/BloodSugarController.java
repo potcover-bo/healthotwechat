@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -41,16 +42,21 @@ public class BloodSugarController {
 
     @PostMapping("/entry")
     public String entry(@Valid BloodSugarForm bloodSugarForm,
-                        BindingResult bindingResult){
+                        BindingResult bindingResult,
+                        HttpServletRequest request){
 
         Gson gson = new Gson();
 
         AjaxResultVo resultVo;
 
+        String phone = (String) request.getSession().getAttribute("user");
+
         /**参数校验出错*/
         if(bindingResult.hasErrors()){
             throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
+
+        bloodSugarForm.setPhone(phone);
 
         try {
             bloodSugarFacadeService.entryBloodSugar(bloodSugarForm);
@@ -72,11 +78,20 @@ public class BloodSugarController {
      * @return
      */
     @GetMapping("/history")
-    public ResultVO<List<BloodSugarDto>> getData(@RequestParam("phone") String phone){
+    public ResultVO<List<BloodSugarDto>> getData(@RequestParam("phone") String phone,HttpServletRequest request){
 
 
 
         List<BloodSugarDto> historyList ;
+
+        if (request !=null){
+            String sessionPhone = (String) request.getSession().getAttribute("user");
+            if (!sessionPhone.equals(phone)){
+                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
+                        HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
+            }
+        }
+
         try {
 
             historyList = bloodSugarFacadeService.findBloodSugarListByOpenid(phone);
@@ -120,7 +135,7 @@ public class BloodSugarController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-            return  getData(phone);
+            return  getData(phone,null);
 
 
 

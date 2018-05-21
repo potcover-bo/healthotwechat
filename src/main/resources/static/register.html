@@ -1,10 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html id="html">
 <head>
-    <meta charset="UTF-8">
-    <title>注册</title>
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link type="text/css" rel="stylesheet" href="css/common.css" />
+<link type="text/css" rel="stylesheet" href="css/register.css" />
 </head>
 <body>
-<h1>注册</h1>
+<div id="header" class="clearfix" >
+	<img src="img/箭头1.png"/>
+	<p>注 册</p>
+</div>
+<div id="register">
+	<span>用户名：</span>
+	<input type="text" placeholder="请输入您的账号" /><br />
+	<span>手机号：</span>
+	<input type="text" placeholder="请输入您的手机号" />
+	<input type="button" value="发送验证码" id="sent" /><br />
+	<span>验证码：</span>
+	<input type="text"/><br />
+	<span>密码：</span>
+	<input type="password"/><br />
+	<span>请确认密码：</span>
+	<input type="password"/><br />
+	<span>昵称：</span>
+	<input type="text" /><br>
+	<span>性别：</span>
+	<label><input type="radio" name="sex" id="none" value="man" />男</label>
+	<label><input type="radio" name="sex" id="none" value="woman"/>女</label><br />
+	<div id="checked">
+	<span>是否有需要监护的人:</span>
+	<label><input type="radio" name="care" id="yes" value="yes"/>是</label>
+	<label><input type="radio" name="care" id="none" value="no" />否</label>
+	</div>
+	<div id="care">
+		<span>被监护人的账号：</span>
+		<input type="text" /><br />
+		<span>被监护人的密码：</span>
+		<input type="password" /><br />
+	</div>
+	<input type="submit" value="提交" id="sbt" />
+</div>
+<script src="js/new_file.js"></script>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript">	
+$('input:radio[name="care"]').click(function(){
+	var val=$(this).val();
+	if(val=="yes"){
+		$("#care").css("display","block");
+	}
+	else{
+		$("#care").css("display","none");
+	}
+})
+
+$("#sent").click(function(){
+	$.ajax({
+		type:"get",
+		url:"text/1.txt",
+		async:true,
+		dataType:"json",
+		data:{
+				"phone":$("#sent").val
+			},
+		success:function(data){
+			if(data.sent=="true"){
+				alert("发送成功！");
+			}
+			else{
+				alert("发送失败！");
+			}
+		}
+	});
+})
+
+$("#sbt").click(function(){
+	var oRegister=document.getElementById("register");
+	var aInput=oRegister.getElementsByTagName("input");
+	$.ajax({
+		type:"get",
+		url:"",
+		async:true,
+		dataType:"json",
+		data:{
+				"useername":aInput[0].val(),
+				"phone":aInput[1].val(),
+				"verificationCode":aInput[3].val(),
+				"password":aInput[4].val(),
+				"nickname":aInput[6].val(),
+				"sex":$('input:radio[name="sex"]:checked').val(),
+				"care":$('input:radio[name="sex"]:checked').val(),
+				"custody_username":aInput[11].val(),
+				"custodyPassword":aInput[12].val(),
+			 },
+		success:function(data){
+			if(data.isRegister=="true")
+		        {
+		            location="login.html";
+			        alert("注册成功");
+		        }
+		    else                                                                                      
+		        {
+		        	alert("密码或用户名错误！");
+		        } 
+		},
+		error:function(){
+			alert("服务器出错！");
+		},
+	})
+	return false;
+})
+
+</script>
 </body>
 </html>

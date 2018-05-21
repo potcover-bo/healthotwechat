@@ -1,48 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>登录页面</title>
-
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript">
-        function login() {
-
-            $.ajax({
-                //几个参数需要注意一下
-                type: "POST",//方法类型
-                dataType: "json",//预期服务器返回的数据类型
-                url: "/user/login" ,//url
-                data : $('#haha').serialize(),
-                success: function (result) {
-                    if (result.code == 666) {
-
-                        var redirectUrl = result.url;
-                        window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
-
-                    }else {
-                        var redirectUrl = result.url;
-                        var message = result.message;
-                        alert(message)
-                        window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
-                    }
-                },
-                error : function(result) {
-                    alert(result.toString())
-                }
-
-            });
-        }
-    </script>
+<html id="html">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/login.css" />
+		<meta name="keywords" content="" />
+<meta name="description" content="" /> 
+<!--描述和关键词-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<!--width  ----  viewport的宽度（width=device-width意思是：宽度等于设备宽度）
+initial-scale ----- 初始的缩放比例
+minimum-scale ----- 允许用户缩放到的最小比例
+maximum-scale ----- 允许用户缩放到的最大比例
+user-scalable ----- 用户是否可以手动缩放-->
+<meta name="format-detection" content="telephone=no" />
+<!--一般情况下，IOS和Android系统都会默认某长度内的数字为电话号码，即使不加也是会默认显示为电话的，因此，取消这个很有必要！-->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!--它表示：允许全屏模式浏览，隐藏浏览器导航栏-->
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!--它指定的iphone中safari顶端的状态条的样式
+默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）-->
 </head>
-<body>
-
-
-<form method="post" id="haha">
-    手机号码：<input name="phone" type="text">
-    密码：<input name="password" type="password">
-    <!--<input value="提交" type="submit">-->
-    <input type="button" value="登录" onclick="login()">
-</form>
-</body>
+	<body>
+		<div class="head">
+			<div class="top">
+			      <span class="span">用户登录</span>
+			      <img src="img/log.png" style="width:6.70rem;height:6.904rem"/>
+		    </div>
+		</div>
+		<div class="mid">
+		    <form method="post" action="#" class="form">
+		    	  <label for="user">
+		    	  	<input type="text" name="user" id="user" placeholder="请输入用户手机号"/>
+		    	  </label>
+		    	  <label for="pass">
+		    	  	<input type="password" name="pass" id="pass" placeholder="请输入密码"/> 
+		    	  </label>
+		    	  <button  type="submit" id="load" name="load">登录</button>
+		    	  <div class="forget">
+		    	        <a href="register.html">立即注册</a>
+		    	  </div>
+		    </form>
+		</div>
+		<!--<div class="footer">
+			<div class="third-load">
+				<a href="#">第三方登录</a>
+			</div>
+			<div class="third-app">
+				<a href="#"><img src="img/微信.png" style="width:2.963rem;height:2.963rem"/></a>
+				<a href="#"><img src="img/qq.png" style="width:2.963rem;height:2.963rem"/></a>
+				<a href="#"><img src="img/微博.png" style="width:2.963rem;height:2.963rem"/></a>
+			</div>
+		</div>-->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/new_file.js" ></script>
+		<script type="text/javascript" src="js/login-ajax.js" ></script>
+	</body>
 </html>

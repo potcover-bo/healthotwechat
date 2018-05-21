@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -37,16 +38,21 @@ public class MedicineController {
      */
     @PostMapping("/entry")
     public String entry(@Valid MedicineForm medicineForm,
-                              BindingResult bindingResult){
+                        BindingResult bindingResult,
+                        HttpServletRequest request){
 
         Gson gson = new Gson();
 
         AjaxResultVo resultVo;
+        String phone = (String) request.getSession().getAttribute("user");
 
         /**表单校验异常*/
         if (bindingResult.hasErrors()){
             throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
+
+
+        medicineForm.setPhone(phone);
 
         try {
 

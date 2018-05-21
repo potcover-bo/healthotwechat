@@ -1,29 +1,31 @@
 $("#load").click(function ()
             {
 	          $.ajax({
-		      type:"get",
-		      url:"http://localhost:8080/weddingmall/servlet/UserLoginServlet",
-		      data:{
-			            "userName":$("#user").val(),
-			            "userPassword":$("#pass").val(),
-		          }, 
-		      dataType:"json",
-		      success:function (data)
-		           {
-			             if(data.isLogin=="true")
-			          {
-			             location="index.html";
-				         alert("登录成功");
-			          }
-			            else                                                                                      
-			          {
-			          	 alert("密码或用户名错误！");
-			          } 
-		           },
-		          error:function ()
-		         {
-		             	alert("服务器出错");
-		         },
+	          	type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/user/login" ,//url
+                data : {
+                	"phone":$("#user").val(),
+                	"password":$("#pass").val(),
+                },
+                success: function (result) {
+                    if (result.code == 666) {
+
+                        var redirectUrl = result.url;
+                        window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+
+                    }else {
+                        var redirectUrl = result.url;
+                        var message = result.message;
+                        alert(message)
+                        window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+                    }
+                },
+                error : function(result) {
+                    alert(result.toString())
+                },
+	          	
+
 	            })
 	            return false;
             })
