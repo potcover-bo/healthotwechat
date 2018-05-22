@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html id="html">
 <head>
-<title></title>
+<title>录入血压</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,54 +31,34 @@
 <div id="container">
 	<div id="input">
 		<img src="../img/blood.jpg"/>
-		<div id="checked">
-			<span>是否录入监护人的信息</span>
-			<label><input type="radio" name="care" id="yes" value="yes"/>是</label>
-			<label><input type="radio" name="care" id="none" value="no" />否</label>
-		</div>
-		<div id="care">
-			<span>被监护人的账号：</span>
-			<input type="text" /><br />
-			<span>被监护人的密码：</span>
-			<input type="password" /><br />
-		</div>
-		<div>
+		<form id="commit" method="post">
 			<span>高压：</span>
-			<input type="text" /><br />
+			<input type="text" name="highPressure"/><br />
 			<span>低压：</span>
-			<input type="text" /><br />
+			<input type="text"  name="lowPressure"/><br />
 			<span>什么时间测量的血压值:</span>
-			<input type="radio" name="food" value="1" />饭前
-			<input type="radio" name="food" value="2" />饭后<br />
+			<input type="radio" name="mealCondition" value="1" />饭前
+			<input type="radio" name="mealCondition" value="2" />饭后<br />
 			<span>什么时间测量的血压值:</span>
-			<input type="radio" name="medicine" value="1" />药前
-			<input type="radio" name="medicine" value="2" />药后<br />
+			<input type="radio" name="medicineCondition" value="1" />药前
+			<input type="radio" name="medicineCondition" value="2" />药后<br />
 			<span>保存到健康管理档案吗</span>
-			<input type="radio" name="yes_no" value="1" />保存
-			<input type="radio" name="yes_no" value="2" />不保存
-		</div>
+			<input type="radio" name="saveHealthRecord" value="1" />保存
+			<input type="radio" name="saveHealthRecord" value="2" />不保存
+		</form>
 	</div>
 	<input type="submit" value="提交" id="sbt" />	
 </div>
 <script src="../js/new_file.js"></script>
 <script src="../js/jquery.min.js"></script>
 <script>
-$('input:radio[name="care"]').click(function(){
-	var val=$(this).val();
-	if(val=="yes"){
-		$("#care").css("display","block");
-	}
-	else{
-		$("#care").css("display","none");
-	}
-})
 $("#sbt").click(function(){
 	$.ajax({
                 //几个参数需要注意一下
                 type: "POST",//方法类型
                 dataType: "json",//预期服务器返回的数据类型
-                url: "/user/login" ,//url
-                data : $('#haha').serialize(),
+                url: "/bloodpressure/entry",//url
+                data : $("#commit").serialize(),
                 success: function (result) {
                     if (result.code == 666) {
 

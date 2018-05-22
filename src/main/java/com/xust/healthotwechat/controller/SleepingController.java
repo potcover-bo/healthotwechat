@@ -47,14 +47,17 @@ public class SleepingController {
 
         AjaxResultVo resultVo;
 
-        String phone = (String) request.getSession().getAttribute("user");
 
-        if (bindingResult.hasErrors()){
-            throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
-        }
-
-        sleepingForm.setPhone(phone);
         try {
+
+
+            String phone = (String) request.getSession().getAttribute("user");
+
+            if (bindingResult.hasErrors()){
+                throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
+            }
+
+            sleepingForm.setPhone(phone);
 
             sleepingFacadeService.entry(sleepingForm);
             resultVo = AjaxResultVOUtils.success();
@@ -78,16 +81,19 @@ public class SleepingController {
 
         List<SleepingDto> historyList;
 
-        if (request !=null){
-            String sessionPhone = (String) request.getSession().getAttribute("user");
-            if (!sessionPhone.equals(phone)){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                        HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-            }
-        }
+
 
 
         try {
+
+            if (request !=null){
+                String sessionPhone = (String) request.getSession().getAttribute("user");
+                if (!sessionPhone.equals(phone)){
+                    throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
+                            HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
+                }
+            }
+
             historyList = sleepingFacadeService.findSleepingListByOpenid(phone);
 
         }catch (Exception e){
@@ -96,7 +102,7 @@ public class SleepingController {
         }
 
 
-        return ResultVOUtils.success(historyList);
+        return ResultVOUtils.success(historyList,"睡眠曲线比较稳定");
     }
 
 

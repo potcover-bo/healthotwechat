@@ -47,16 +47,19 @@ public class BodyDataController {
         Gson gson = new Gson();
 
         AjaxResultVo resultVo;
-        String phone = (String) request.getSession().getAttribute("user");
 
-        /**如果参数校验出错*/
-        if(bindingResult.hasErrors()){
-            throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
-        }
-
-        bodyDataForm.setPhone(phone);
 
         try {
+
+
+            String phone = (String) request.getSession().getAttribute("user");
+
+            /**如果参数校验出错*/
+            if(bindingResult.hasErrors()){
+                throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
+            }
+
+            bodyDataForm.setPhone(phone);
 
             bodyDataFacadeService.entry(bodyDataForm);
             resultVo = AjaxResultVOUtils.success();
@@ -82,15 +85,15 @@ public class BodyDataController {
 
         List<BodyDataDto> historyList;
 
-
-        if (request !=null){
-            String sessionPhone = (String) request.getSession().getAttribute("user");
-            if (!sessionPhone.equals(phone)){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                        HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-            }
-        }
         try {
+
+            if (request !=null){
+                String sessionPhone = (String) request.getSession().getAttribute("user");
+                if (!sessionPhone.equals(phone)){
+                    throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
+                            HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
+                }
+            }
 
             /**查询历史记录*/
             historyList = bodyDataFacadeService.findBodyDataListByOpenid(phone);

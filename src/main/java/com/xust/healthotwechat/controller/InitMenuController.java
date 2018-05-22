@@ -1,11 +1,8 @@
 package com.xust.healthotwechat.controller;
 
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
-import com.aliyuncs.exceptions.ClientException;
 import com.xust.healthotwechat.config.MenuNameConfig;
 import com.xust.healthotwechat.config.MenuUrlConfig;
 import com.xust.healthotwechat.quartz.*;
-import com.xust.healthotwechat.utils.SmsUtils;
 import com.xust.healthotwechat.wechat.WechatUtils;
 import com.xust.healthotwechat.wechat.model.AccessTokenModel;
 import com.xust.healthotwechat.wechat.model.MenuCreateModel;
@@ -19,8 +16,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 

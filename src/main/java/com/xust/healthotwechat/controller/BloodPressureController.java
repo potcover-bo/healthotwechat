@@ -54,17 +54,20 @@ public class BloodPressureController {
 
         AjaxResultVo resultVo;
 
-        String sessionPhone = (String) request.getSession().getAttribute("user");
 
-        /**参数校验出错*/
-        if (bindingResult.hasErrors()){
-            log.error("【录入血压】参数不正确 bloodPressureForm={}",bloodPressureForm);
-            throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
-        }
-
-        bloodPressureForm.setPhone(sessionPhone);
 
         try {
+
+
+            String sessionPhone = (String) request.getSession().getAttribute("user");
+
+            /**参数校验出错*/
+            if (bindingResult.hasErrors()){
+                log.error("【录入血压】参数不正确 bloodPressureForm={}",bloodPressureForm);
+                throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
+            }
+
+            bloodPressureForm.setPhone(sessionPhone);
 
             bloodPressureFacadeService.entryBloodPressure(bloodPressureForm);
             resultVo = AjaxResultVOUtils.success();
@@ -92,18 +95,17 @@ public class BloodPressureController {
 
 
         List<BloodPressureDto> historyList;
-        if (request !=null){
-            String sessionPhone = (String) request.getSession().getAttribute("user");
-            if (!sessionPhone.equals(phone)){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                        HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-            }
-        }
-
-
 
 
         try {
+
+            if (request !=null){
+                String sessionPhone = (String) request.getSession().getAttribute("user");
+                if (!sessionPhone.equals(phone)){
+                    throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
+                            HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
+                }
+            }
 
             historyList = bloodPressureFacadeService.findBloodPressureList(phone);
 

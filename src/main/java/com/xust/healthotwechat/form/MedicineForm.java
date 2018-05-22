@@ -16,7 +16,7 @@ public class MedicineForm implements Serializable {
 
     private static final long serialVersionUID = -8206691619650199920L;
 
-    @NotEmpty(message = "phone不能为空")
+
     private String phone;
 
     private String morningMedicine;

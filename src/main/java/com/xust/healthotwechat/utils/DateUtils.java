@@ -47,7 +47,7 @@ public class DateUtils {
      * @return
      */
     public static String dateToString(Date date){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
         return simpleDateFormat.format(date);
     }
 }

@@ -32,6 +32,23 @@ public class ResultVOUtils {
         return success(null);
     }
 
+
+    /**
+     * 成功响应返回  带参数
+     * @param object
+     * @return
+     */
+    public static ResultVO success(Object object,String message){
+        ResultVO resultVO = new ResultVO();
+
+        resultVO.setCode(0);
+        resultVO.setMessage(message);
+        resultVO.setData(object);
+        return resultVO;
+    }
+
+
+
     /**
      * 失败的响应返回 加跳转的url
      * @param code
@@ -55,7 +72,7 @@ public class ResultVOUtils {
      */
     public static  ResultVO error(Integer code,String message){
 
-        return error(code,message);
+        return error(code,message,null);
     }
 
 

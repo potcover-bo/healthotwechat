@@ -16,18 +16,13 @@ import com.xust.healthotwechat.utils.SmsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -97,8 +92,8 @@ public class UserController {
 
     /**
      * 注册
-     * @param userForm
-     * @param bindingResult
+     * @param userForm  用户表单提交对象
+     * @param bindingResult 参数校验结果对象
      * @return  返回登录页面
      */
     @RequestMapping("/register")
@@ -147,10 +142,10 @@ public class UserController {
 
     /**
      * 生成验证码
-     * @param phone
+     * @param phone 用户手机号码
      * @return
      */
-    @RequestMapping("generateValidateCode")
+    @RequestMapping("/generateValidateCode")
     @Transactional
     public ResultVO<String> generateValidateCode(@RequestParam("phone") String phone){
 
@@ -165,7 +160,7 @@ public class UserController {
             SmsUtils.sendSms(phone,validateCode);
 
             /**redis中加入验证码 过期时间为五分钟分钟*/
-            //redisTemplate.opsForValue().set(phone+"_validateCode",validateCode,300,TimeUnit.SECONDS);
+            redisTemplate.opsForValue().set(phone+"_validateCode",validateCode,300,TimeUnit.SECONDS);
 
         }catch (Exception e){
             log.error("【发送验证码失败】={}",e.getMessage());
@@ -204,14 +199,15 @@ public class UserController {
      * @param newPassword
      * @return
      */
-    @RequestMapping("updatepassword")
-    public String changePassword(@RequestParam("phone") String phone,
+    @RequestMapping("/updatepassword")
+    public String changePassword(HttpServletRequest request,
                                    @RequestParam("oldPassword") String oldPassword,
                                    @RequestParam("newPassword") String newPassword){
 
         Gson gson = new Gson();
 
         AjaxResultVo ajaxResultVo;
+        String phone = (String) request.getSession().getAttribute("phone");
 
         try {
             /**先去查询密码是否正确*/
@@ -240,6 +236,11 @@ public class UserController {
     }
 
 
+    /**
+     * 注销当前账号
+     * @param request
+     * @return
+     */
     @RequestMapping("/logout")
     public ResultVO<String> logout(HttpServletRequest request){
         try{
@@ -249,6 +250,21 @@ public class UserController {
 
         }
         return AjaxResultVOUtils.success();
+    }
+
+
+    /**
+     * 判断是否已经登录
+     * @param request
+     * @return
+     */
+    @RequestMapping("/isLogin")
+    public String isLogin(HttpServletRequest request){
+        String phone = (String) request.getSession().getAttribute("user");
+        if (phone == null){
+            return  null;
+        }
+        return phone;
     }
 
 

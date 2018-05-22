@@ -17,7 +17,6 @@
 #input{ width: 100%; padding: 1rem 1rem 0 1rem; font-size: 1rem;}
 #input img{ width:100%; height: 10rem; margin-bottom: 2rem;}
 #input input{border: 0.029rem #D3D3D3 solid; height: 1.4rem; margin-bottom: 1.5rem;}
-/*#input input:nth-of-type(1){ width: 50%; }*/
 #input #care{ display: none;}
 #sbt{ display: block; margin: auto; width: 30%; height: 2rem;}
 </style>
@@ -27,52 +26,54 @@
 	<img src="../img/箭头1.png" id="left"/></br>
 	<p>血糖数据</p>
 </div>
-<div id="input">
-	<img src="../img/suger.jpg" />
-	<div id="checked">
-			<span>是否录入监护人的信息</span>
-			<label><input type="radio" name="care" id="yes" value="yes"/>是</label>
-			<label><input type="radio" name="care" id="none" value="no" />否</label>
-	</div>
-	<div id="care">
-		<span>被监护人的账号：</span>
-		<input type="text" /><br />
-		<span>被监护人的密码：</span>
-		<input type="password" /><br />
-	</div>
-	<div>
+<form id="input" method="post">
+		<img src="../img/suger.jpg" />
 		<span>血糖值：</span>
-		<input type="text" /><br />
+		<input type="text" name="bloodSugarValue" /><br />
 		<span>什么时间测量的血压值:</span>
-		<input type="radio" name="food" value="1" />饭前
-		<input type="radio" name="food" value="2" />饭后<br />
+		<input type="radio" name="mealCondition" value="1" />饭前
+		<input type="radio" name="mealCondition" value="2" />饭后<br />
 		<span>什么时间测量的血压值:</span>
-		<input type="radio" name="medicine" value="1" />药前
-		<input type="radio" name="medicine" value="2" />药后<br />
+		<input type="radio" name="medicineCondition" value="1" />药前
+		<input type="radio" name="medicineCondition" value="2" />药后<br />
 		<span>保存到健康管理档案吗</span>
-		<input type="radio" name="yes_no" value="1" />保存
-		<input type="radio" name="yes_no" value="2" />不保存
-	</div>
-</div>
+		<input type="radio" name="saveHealthRecord" value="1" />保存
+		<input type="radio" name="saveHealthRecord" value="2" />不保存
+</form>
 <input type="submit" value="提交" id="sbt" />
+
 <script src="../js/new_file.js"></script>
 <script src="../js/jquery.min.js"></script>
 <script>
-$('input:radio[name="care"]').click(function(){
-	var val=$(this).val();
-	if(val=="yes"){
-		$("#care").css("display","block");
-	}
-	else{
-		$("#care").css("display","none");
-	}
-})
-$("#sbt").click(function(){
-	window.location.href="../entry.html";
-})
-$("#left").click(function(){
-	window.location.href="../entry.html";
-})
+    $("#sbt").click(function(){
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/bloodsugar/entry",//url
+            data : $("#input").serialize(),
+            success: function (result) {
+                if (result.code == 666) {
+
+                    var redirectUrl = result.url;
+                    window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+
+                }else {
+                    var redirectUrl = result.url;
+                    var message = result.message;
+                    alert(message)
+                    window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+                }
+            },
+            error : function(XMLHttpRequest) {
+                alert(XMLHttpRequest.readyState);
+            }
+
+        });
+    })
+    $("#left").click(function(){
+        window.location.href="../entry.html";
+    })
 </script>
 </body>
 </html>

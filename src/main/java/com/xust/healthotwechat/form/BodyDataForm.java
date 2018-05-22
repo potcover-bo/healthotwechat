@@ -16,7 +16,7 @@ public class BodyDataForm implements Serializable {
 
     private static final long serialVersionUID = 6699789197716618513L;
 
-    @NotEmpty(message = "phone不能为空")
+
     private String phone;
 
     @NotEmpty(message = "体重不能为空")

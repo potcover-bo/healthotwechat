@@ -44,17 +44,20 @@ public class MedicineController {
         Gson gson = new Gson();
 
         AjaxResultVo resultVo;
-        String phone = (String) request.getSession().getAttribute("user");
 
-        /**表单校验异常*/
-        if (bindingResult.hasErrors()){
-            throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
-        }
-
-
-        medicineForm.setPhone(phone);
 
         try {
+
+
+            String phone = (String) request.getSession().getAttribute("user");
+
+            /**表单校验异常*/
+            if (bindingResult.hasErrors()){
+                throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
+            }
+
+
+            medicineForm.setPhone(phone);
 
             medicineFacadeService.entry(medicineForm);
             resultVo = AjaxResultVOUtils.success();

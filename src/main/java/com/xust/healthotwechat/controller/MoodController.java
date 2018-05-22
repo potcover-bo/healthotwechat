@@ -55,15 +55,16 @@ public class MoodController {
 
         AjaxResultVo resultVo;
 
-        String phone = (String) request.getSession().getAttribute("user");
 
-        if(bindingResult.hasErrors()){
-            throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
-        }
-
-
-        moodForm.setPhone(phone);
         try {
+
+
+            String phone = (String) request.getSession().getAttribute("user");
+            moodForm.setPhone(phone);
+
+            if(bindingResult.hasErrors()){
+                throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
+            }
 
             moodFacadeService.entry(moodForm);
             resultVo = AjaxResultVOUtils.success();

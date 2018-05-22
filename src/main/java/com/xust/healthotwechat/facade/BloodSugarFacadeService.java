@@ -49,7 +49,7 @@ public class BloodSugarFacadeService {
 
 
         try {
-            String key = bloodSugarForm.getPhone()+"bloodSugar";
+            String key = bloodSugarForm.getPhone()+"_bloodSugar";
 
             /**用户当天已经录入过血压*/
             if(redisTemplate.opsForValue().get(key) != null){

@@ -15,7 +15,7 @@
 #header img{float: left; margin-top: 0.45rem; width: 3.7%; height: 0.93rem;}
 #header p{ position: absolute; left: 3.6%; top: 3.3rem; line-height: 1.69rem; font-size: 1.69rem;}
 #container input{border: 0.029rem #D3D3D3 solid; height: 1.4rem; margin-bottom: 1.5rem;}
-#container #care{ display: none;}
+#container #commit{ display: none;}
 #sbt{ display: block; margin: auto; width: 30%; height: 2rem;}
 #container{  
     padding: 1rem 1rem 0 1rem; 
@@ -43,13 +43,13 @@
 		<label><input type="radio" name="care" id="yes" value="yes"/>是</label>
 		<label><input type="radio" name="care" id="none" value="no" />否</label>
 	</div>
-	<div id="care">
+	<form id="commit">
 		<span>被监护人的账号：</span>
 		<input type="text" /><br />
 		<span>被监护人的密码：</span>
 		<input type="password" /><br />
-		<input type="submit" value="提交" id="sbt" />
-	</div>
+	</form>
+	<input type="submit" value="提交" id="sbt" />
 	<canvas id="can1" width="800" height="600"></canvas>
 </div>
 <div id="suggest">
@@ -58,13 +58,39 @@
 <script type="text/javascript" src="../js/new_file.js" ></script>
 <script src="../js/jquery.min.js"></script>
 <script>
+$("#sbt").click(function(){
+	$.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/mood/entry",//url
+            data : $('#care').serialize(),
+            success: function (result) {
+                if (result.code == 666) {
+
+                    var redirectUrl = result.url;
+                    window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+
+                }else {
+                    var redirectUrl = result.url;
+                    var message = result.message;
+                    alert(message)
+                    window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+                    }
+                },
+                error : function(result) {
+                    alert(result.toString())
+                }
+
+    });
+})
 $('input:radio[name="care"]').click(function(){
 	var val=$(this).val();
 	if(val=="yes"){
-		$("#care").css("display","block");
+		$("#commit").css("display","block");
 	}
 	else{
-		$("#care").css("display","none");
+		$("#commit").css("display","none");
 	}
 })
 $("#left").click(function(){

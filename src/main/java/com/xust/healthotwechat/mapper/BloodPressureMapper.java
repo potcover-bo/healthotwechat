@@ -24,7 +24,7 @@ public interface BloodPressureMapper {
 
     /**根据openid查询最近十条记录*/
     @Select("select phone,high_pressure,low_pressure,measure_time from blood_pressure where phone = #{phone} " +
-            "order by measure_time desc limit 10")
+            "order by measure_time asc limit 10")
     @Results({
             @Result(property = "phone", column = "phone"),
             @Result(property = "highPressure", column = "high_pressure"),

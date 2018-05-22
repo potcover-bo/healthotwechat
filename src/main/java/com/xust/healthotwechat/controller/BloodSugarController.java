@@ -15,7 +15,6 @@ import com.xust.healthotwechat.utils.EncryptUtils;
 import com.xust.healthotwechat.utils.ResultVOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,7 @@ import java.util.List;
  * 血糖controller
  *
  */
-@Controller
+@RestController
 @RequestMapping("/bloodsugar")
 @Slf4j
 public class BloodSugarController {
@@ -49,16 +48,20 @@ public class BloodSugarController {
 
         AjaxResultVo resultVo;
 
-        String phone = (String) request.getSession().getAttribute("user");
 
-        /**参数校验出错*/
-        if(bindingResult.hasErrors()){
-            throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
-        }
-
-        bloodSugarForm.setPhone(phone);
 
         try {
+
+
+            String sessionPhone = (String) request.getSession().getAttribute("user");
+
+            /**参数校验出错*/
+            if(bindingResult.hasErrors()){
+                throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
+            }
+
+            bloodSugarForm.setPhone(sessionPhone);
+
             bloodSugarFacadeService.entryBloodSugar(bloodSugarForm);
             resultVo = AjaxResultVOUtils.success();
 
@@ -84,15 +87,15 @@ public class BloodSugarController {
 
         List<BloodSugarDto> historyList ;
 
-        if (request !=null){
-            String sessionPhone = (String) request.getSession().getAttribute("user");
-            if (!sessionPhone.equals(phone)){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                        HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-            }
-        }
-
         try {
+
+            if (request !=null){
+                String sessionPhone = (String) request.getSession().getAttribute("user");
+                if (!sessionPhone.equals(phone)){
+                    throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
+                            HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
+                }
+            }
 
             historyList = bloodSugarFacadeService.findBloodSugarListByOpenid(phone);
 

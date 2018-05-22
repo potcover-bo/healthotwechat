@@ -26,43 +26,46 @@
 	<img src="../img/箭头1.png" id="left"/></br>
 	<p>睡眠数据</p>
 </div>
-<div id="input">
+<form id="commit" method="post">
 	<img src="../img/sleep.jpg" />
-	<div id="checked">
-		<span>是否录入监护人的信息</span>
-		<label><input type="radio" name="care" id="yes" value="yes"/>是</label>
-		<label><input type="radio" name="care" id="none" value="no" />否</label>
-	</div>
-	<div id="care">
-		<span>被监护人的账号：</span>
-		<input type="text" /><br />
-		<span>被监护人的密码：</span>
-		<input type="password" /><br />
-	</div>
 	<span>午睡睡眠时间：</span>
-	<input type="text" /><br />
+	<input type="text" name="noonTime"/><br />
 	<span>夜晚睡眠时间：</span>
-	<input type="text" />
-</div>
+	<input type="text" name="nightTime"/>
+</form>
 <input type="submit" value="提交" id="sbt" />
 <script src="../js/new_file.js"></script>
 <script src="../js/jquery.min.js"></script>
 <script>
-$('input:radio[name="care"]').click(function(){
-	var val=$(this).val();
-	if(val=="yes"){
-		$("#care").css("display","block");
-	}
-	else{
-		$("#care").css("display","none");
-	}
-})
-$("#sbt").click(function(){
-	window.location.href="../entry.html";
-})
-$("#left").click(function(){
-	window.location.href="../entry.html";
-})
+    $("#sbt").click(function(){
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/sleeping/entry",//url
+            data : $("#commit").serialize(),
+            success: function (result) {
+                if (result.code == 666) {
+
+                    var redirectUrl = result.url;
+                    window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+
+                }else {
+                    var redirectUrl = result.url;
+                    var message = result.message;
+                    alert(message)
+                    window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
+                }
+            },
+            error : function() {
+                alert("服务器出错")
+            }
+
+        });
+    })
+    $("#left").click(function(){
+        window.location.href="../entry.html";
+    })
 </script>
 </body>
 </html>

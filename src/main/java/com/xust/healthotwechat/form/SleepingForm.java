@@ -17,7 +17,7 @@ public class SleepingForm implements Serializable {
 
     private static final long serialVersionUID = 5094811170270159511L;
 
-    @NotEmpty(message = "phone不能为空")
+
     private String phone;
 
     @NotEmpty(message = "中午睡眠时间不能为空")

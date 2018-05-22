@@ -17,7 +17,7 @@ public class MoodForm implements Serializable {
     private static final long serialVersionUID = 1115732548646044217L;
 
 
-    @NotEmpty(message = "phone不能为空")
+
     private String phone;
 
     @NotEmpty(message = "早上心情不能为空")
