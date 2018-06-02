@@ -26,8 +26,8 @@ public class SmsUtils {
     static final String domain = "dysmsapi.aliyuncs.com";
 
     //此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAIV1WCi89OIbsl";
-    static final String accessKeySecret = "CEFPlxAu7JQIBpIgErecx1YO1zNJGk";
+    static final String accessKeyId = "accessKeyID";
+    static final String accessKeySecret = "se";
 
     /**
      * 发送验证码
@@ -96,7 +96,7 @@ public class SmsUtils {
         //必填:短信签名-可在短信控制台中找到
         request.setSignName("用户健康管理");
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_134319193");
+        request.setTemplateCode("XXX");
         //模板
         request.setTemplateParam("{\"code\":\"" + name + "\"}");
 
@@ -140,7 +140,7 @@ public class SmsUtils {
         //必填:短信签名-可在短信控制台中找到
         request.setSignName("用户健康管理");
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_135792584");
+        request.setTemplateCode("XXX");
         //模板
         request.setTemplateParam("{\"data\":\"" + data + "\"}");
 
@@ -184,7 +184,7 @@ public class SmsUtils {
         //必填:短信签名-可在短信控制台中找到
         request.setSignName("用户健康管理");
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_135807575");
+        request.setTemplateCode("XXX");
         //模板
         request.setTemplateParam("{\"data\":\"" + data + "\"}");
 
