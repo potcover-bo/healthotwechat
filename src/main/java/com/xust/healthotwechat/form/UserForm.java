@@ -37,5 +37,4 @@ public class UserForm implements Serializable {
     @NotEmpty(message = "用户年龄不能为空")
     private String age;
 
-    private String custodyPhone;
 }

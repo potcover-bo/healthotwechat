@@ -23,7 +23,7 @@ public interface SleepingMapper {
 
     /**根据openid查询历史记录*/
     @Select("select phone,noon_time,night_time,create_time from sleeping where phone = #{phone} " +
-            "order by create_time asc limit 10")
+            "order by create_time desc limit 7")
     @Results({
             @Result(property = "phone", column = "phone"),
             @Result(property = "noonTime", column = "noon_time"),

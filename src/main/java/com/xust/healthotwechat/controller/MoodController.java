@@ -67,7 +67,7 @@ public class MoodController {
             }
 
             moodFacadeService.entry(moodForm);
-            resultVo = AjaxResultVOUtils.success();
+            resultVo = AjaxResultVOUtils.success("录入成功");
 
         }catch (Exception e){
             /**数据录入异常*/
@@ -84,29 +84,44 @@ public class MoodController {
      * @return
      */
     @GetMapping("/history")
-    public ResultVO<List<MoodDto>> history(@RequestParam("phone")String phone,HttpServletRequest request){
+    public ResultVO<List<MoodDto>> history(HttpServletRequest request){
 
         List<MoodDto> historyList;
+        
+        String message;
 
-        if (request !=null){
-            String sessionPhone = (String) request.getSession().getAttribute("user");
-            if (!sessionPhone.equals(phone)){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                        HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-            }
-        }
+
 
 
         try {
-            historyList = moodFacadeService.findMoodListByOpenid(phone);
 
+            
+
+            String phone = (String) request.getSession().getAttribute("user");
+            historyList = moodFacadeService.findMoodListByOpenid(phone);
+            
+            message = getMessage(historyList);
 
         }catch (Exception e){
             log.error("查询心情历史记录={}",e.getMessage());
             return ResultVOUtils.error(60004,e.getMessage());
         }
 
-        return ResultVOUtils.success(historyList);
+        return ResultVOUtils.success(historyList,message);
+    }
+
+    private String getMessage(List<MoodDto> historyList) {
+
+        String message;
+
+        for (MoodDto moodDto : historyList){
+            if (moodDto.getMorningMood().equals("3") || moodDto.getNoonMood().equals("3") || moodDto.getNightMood().equals("3")){
+                message = "您最近心情不太好，请注意笑口常开哦";
+                return message;
+            }
+        }
+        message ="您最近心情不错，请注意保持哦";
+        return message;
     }
 
 
@@ -133,7 +148,7 @@ public class MoodController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-            return  history(phone,null);
+            return  history(null);
 
 
 

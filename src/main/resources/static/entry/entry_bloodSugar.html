@@ -29,16 +29,17 @@
 <form id="input" method="post">
 		<img src="../img/suger.jpg" />
 		<span>血糖值：</span>
-		<input type="text" name="bloodSugarValue" /><br />
-		<span>什么时间测量的血压值:</span>
+		<input type="text" name="bloodSugarValue" />
+		<span>单位：mmol/L</span><br />
+		<span>饭前、饭后测量:</span>
 		<input type="radio" name="mealCondition" value="1" />饭前
 		<input type="radio" name="mealCondition" value="2" />饭后<br />
-		<span>什么时间测量的血压值:</span>
+		<span>服药前、服药后测量:</span>
 		<input type="radio" name="medicineCondition" value="1" />药前
 		<input type="radio" name="medicineCondition" value="2" />药后<br />
-		<span>保存到健康管理档案吗</span>
-		<input type="radio" name="saveHealthRecord" value="1" />保存
-		<input type="radio" name="saveHealthRecord" value="2" />不保存
+		<!--<span>保存到健康管理档案吗</span>-->
+		<!--<input type="radio" name="saveHealthRecord" value="1" />保存-->
+		<!--<input type="radio" name="saveHealthRecord" value="2" />不保存-->
 </form>
 <input type="submit" value="提交" id="sbt" />
 
@@ -56,6 +57,7 @@
                 if (result.code == 666) {
 
                     var redirectUrl = result.url;
+                    alert(result.message);
                     window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
 
                 }else {

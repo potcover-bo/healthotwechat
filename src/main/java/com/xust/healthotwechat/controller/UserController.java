@@ -45,13 +45,15 @@ public class UserController {
 
 
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public String login(@Valid UserLoginForm userLoginForm,
-                        BindingResult bindingResult, HttpSession session){
+                        BindingResult bindingResult, HttpServletRequest request){
 
         Gson gson = new Gson();
 
         AjaxResultVo ajaxResultVo;
+
+        HttpSession session = request.getSession();
 
         try {
 
@@ -70,7 +72,7 @@ public class UserController {
             //加入session
             session.setAttribute("user",userLoginForm.getPhone());
 
-            ajaxResultVo = AjaxResultVOUtils.success();
+            ajaxResultVo = AjaxResultVOUtils.success("index.html","登录成功");
 
         }catch (Exception e){
             log.error("【登录异常】={}",userLoginForm.getPhone()+e.getMessage());
@@ -145,9 +147,9 @@ public class UserController {
      * @param phone 用户手机号码
      * @return
      */
-    @RequestMapping("/generateValidateCode")
-    @Transactional
-    public ResultVO<String> generateValidateCode(@RequestParam("phone") String phone){
+    @GetMapping("/generateValidateCode")
+    public String generateValidateCode(@RequestParam("phone") String phone){
+        Gson gson = new Gson();
 
         try {
 
@@ -164,10 +166,10 @@ public class UserController {
 
         }catch (Exception e){
             log.error("【发送验证码失败】={}",e.getMessage());
-           return ResultVOUtils.error(233,"发送验证码失败，请重新发送");
+           return gson.toJson(ResultVOUtils.error(233,"发送验证码失败，请重新发送"));
         }
 
-        return ResultVOUtils.success();
+        return gson.toJson(ResultVOUtils.success());
 
     }
 
@@ -199,15 +201,17 @@ public class UserController {
      * @param newPassword
      * @return
      */
-    @RequestMapping("/updatepassword")
-    public String changePassword(HttpServletRequest request,
-                                   @RequestParam("oldPassword") String oldPassword,
-                                   @RequestParam("newPassword") String newPassword){
+    @PostMapping("/updatepassword")
+    @ResponseBody
+    public String changePassword(@RequestParam("newPassword") String newPassword,
+                                 @RequestParam("oldPassword") String oldPassword,
+                                 HttpServletRequest request){
 
         Gson gson = new Gson();
 
         AjaxResultVo ajaxResultVo;
-        String phone = (String) request.getSession().getAttribute("phone");
+
+        String phone = (String) request.getSession().getAttribute("user");
 
         try {
             /**先去查询密码是否正确*/
@@ -219,16 +223,16 @@ public class UserController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-
             /** 先对密码进行加密 再去数据库修改密码*/
             newPassword = EncryptUtils.encrypt(newPassword);
             userFacadeService.updatePassword(phone,newPassword);
 
-            ajaxResultVo = AjaxResultVOUtils.success("login.html","成功");
+            ajaxResultVo = AjaxResultVOUtils.success("login.html","密码修改成功");
+            request.getSession().removeAttribute("user");
 
         }catch (RuntimeException e){
             log.error("【修改密码异常】={}",e.getMessage());
-            ajaxResultVo = AjaxResultVOUtils.error("changePassword.html",e.getMessage());
+            ajaxResultVo = AjaxResultVOUtils.error("index.html",e.getMessage());
 
         }
 
@@ -258,13 +262,14 @@ public class UserController {
      * @param request
      * @return
      */
-    @RequestMapping("/isLogin")
-    public String isLogin(HttpServletRequest request){
+    @RequestMapping(value = "/isLogin",method = RequestMethod.GET)
+    public ResultVO<String> isLogin(HttpServletRequest request){
+
         String phone = (String) request.getSession().getAttribute("user");
         if (phone == null){
-            return  null;
+            return  ResultVOUtils.error(233,"请登录");
         }
-        return phone;
+        return ResultVOUtils.success(666,phone,"成功");
     }
 
 

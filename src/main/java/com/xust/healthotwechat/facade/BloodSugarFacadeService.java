@@ -86,7 +86,7 @@ public class BloodSugarFacadeService {
      * @return
      */
     public List<BloodSugarDto> findBloodSugarListByOpenid(String phone){
-        List<BloodSugarDto> historyList = new ArrayList<>();
+        List<BloodSugarDto> historyList;
 
         try {
 

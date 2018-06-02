@@ -60,7 +60,7 @@ public class SleepingController {
             sleepingForm.setPhone(phone);
 
             sleepingFacadeService.entry(sleepingForm);
-            resultVo = AjaxResultVOUtils.success();
+            resultVo = AjaxResultVOUtils.success("录入成功");
 
 
         }catch (Exception e){
@@ -77,34 +77,42 @@ public class SleepingController {
      * @return resultvo对象
      */
     @GetMapping("/history")
-    public ResultVO<List<SleepingDto>> history(@RequestParam("phone")String phone,HttpServletRequest request){
+    public ResultVO<List<SleepingDto>> history(HttpServletRequest request){
 
         List<SleepingDto> historyList;
 
-
+        String message;
 
 
         try {
 
-            if (request !=null){
-                String sessionPhone = (String) request.getSession().getAttribute("user");
-                if (!sessionPhone.equals(phone)){
-                    throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                            HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-                }
-            }
 
+
+            String phone = (String) request.getSession().getAttribute("user");
             historyList = sleepingFacadeService.findSleepingListByOpenid(phone);
+            message = getMessage(historyList);
+
 
         }catch (Exception e){
             log.error("查询睡眠情况={}",e.getMessage());
             return ResultVOUtils.error(60005,e.getMessage());
         }
 
-
-        return ResultVOUtils.success(historyList,"睡眠曲线比较稳定");
+        return ResultVOUtils.success(historyList,message);
     }
 
+    private String getMessage(List<SleepingDto> historyList) {
+        String message;
+
+        for (SleepingDto sleepingDto : historyList){
+            if (Integer.parseInt(sleepingDto.getNightTime())<8){
+                message = "您最近睡眠时间有点少，请注意休息";
+                return message;
+            }
+        }
+        message = "您最近睡眠不错，请继续保持哦";
+        return message;
+    }
 
 
     /**
@@ -130,7 +138,7 @@ public class SleepingController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-            return  history(phone,null);
+            return  history(null);
 
 
 

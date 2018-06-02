@@ -29,14 +29,13 @@ public class  UserFacadeService {
     @Autowired
     private UserConvertService userConvertService;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
 
 
-    public boolean login(String username,String password){
 
-        return true;
-    }
+//    public boolean login(String username,String password){
+//
+//        return true;
+//    }
 
 
     /**
@@ -68,7 +67,8 @@ public class  UserFacadeService {
      */
     public boolean userIsExist(String phone){
 
-        User user = userService.findUserByPhone(phone);
+//        User user = userService.findUserByPhone(phone);
+        User user = findUserByPhone(phone);
         if(user !=null ){
             return true;
         }
@@ -81,6 +81,7 @@ public class  UserFacadeService {
      * @return
      */
     public User findUserByPhone(String phone){
+
         return userService.findUserByPhone(phone);
     }
 

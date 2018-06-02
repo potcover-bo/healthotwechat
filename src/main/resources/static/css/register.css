@@ -2,8 +2,7 @@
 #header img{float: left; margin-top: 0.45rem; width: 3.7%; height: 0.93rem;}
 #header p{ margin-left:46%; font-size:1.1rem; line-height: 1.8rem;}
 #register{ width: 100%; padding: 1.8rem 0 0 1rem; font-size: 1rem;}
-#register span{}
 #register input{ width: 50%; border: 0.029rem #D3D3D3 solid; height: 1.4rem; margin-bottom: 1.5rem;}
-#register #none,#register #yes,#register #sent{ width: auto; margin-right: 0.5rem;}
-#register #care{ display: none;}
-#register #sbt{ margin-left:18%; margin-top: 1.5rem; height: 2rem;}
+#register #man,#register #woman,#register #sent{ width: auto; margin-right: 0.5rem;}
+#register #sbt{ display: block; margin-left:18%; margin-top: 1.5rem; height: 2rem; background-color: lightgreen;
+    color: #ffffff; font-size: 0.5rem}

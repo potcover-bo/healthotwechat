@@ -29,6 +29,5 @@ public class BloodSugarForm implements Serializable {
     @NotEmpty(message = "服药情况不能为空")
     private String medicineCondition;
 
-    @NotEmpty(message = "是否保存健康档案不能为空")
     private String saveHealthRecord;
 }

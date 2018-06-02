@@ -63,7 +63,8 @@ public class BloodPressureFacadeService {
             BloodPressure bloodPressure = bloodPressureConvertService.formToEntity(bloodPressureForm);
 
             /**redis中加入标记表示当天已经录入过*/
-            redisTemplate.opsForValue().set(key,DateUtils.nowDateFormat(),DateUtils.getRemainSeconds(),TimeUnit.SECONDS);
+            redisTemplate.opsForValue().set(key,DateUtils.nowDateFormat(),
+                    DateUtils.getRemainSeconds(),TimeUnit.SECONDS);
 
             /**redis中加入标记表示三天内录入过*/
             redisTemplate.opsForValue().set(bloodPressureForm.getPhone()+"_three_entry_bloodPressure",
@@ -89,7 +90,7 @@ public class BloodPressureFacadeService {
      */
     public List<BloodPressureDto> findBloodPressureList(String phone){
 
-        List<BloodPressureDto> historyList = new ArrayList<>();
+        List<BloodPressureDto> historyList;
 
         try {
 

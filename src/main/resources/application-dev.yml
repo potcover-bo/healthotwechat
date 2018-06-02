@@ -49,20 +49,21 @@ menuName:
   #第一个菜单
   firstLevelFirstName: 血压
   firstLevelSecondName: 血糖
-  firstLevelThirdName: 身体指数
+  firstLevelThirdName: 体重
   firstLevelFourthName: 睡眠
   firstLevelFifthName: 心情
 
   #第二个菜单
   secondeLevelFirstName: 血压
   secondeLevelSecondName: 血糖
-  secondeLevelThirdName: 身体指数
+  secondeLevelThirdName: 体重
   secondeLevelFourthName: 睡眠
   secondeLevelFifthName: 心情
 
   #第三个菜单
   thirdLevelFirstName: 关于我们
   thirdLevelSecondName: 账号设置
+  thirdLevelThirdName: 知识源地
 
 
 #微信菜单url配置
@@ -88,11 +89,13 @@ menuUrl:
   #第三个菜单
   thirdLevelFirstUrl: http://dou.natapp1.cc/about.html
   thirdLevelSecondUrl: http://dou.natapp1.cc/index.html
+  thirdLevelThirdUrl: http://dou.natapp1.cc/knowledge.html
 
 
 # 日志位置
 logging:
   path:
+  #path: /Users/evildoerdb_/code_file
 
 
 

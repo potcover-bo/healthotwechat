@@ -60,7 +60,7 @@ public class MedicineController {
             medicineForm.setPhone(phone);
 
             medicineFacadeService.entry(medicineForm);
-            resultVo = AjaxResultVOUtils.success();
+            resultVo = AjaxResultVOUtils.success("录入人成功");
 
 
         }catch (Exception e){

@@ -28,7 +28,7 @@ public interface BloodSugarMapper {
      * @return
      */
     @Select("select phone,blood_sugar_value,measure_time from blood_sugar where phone = #{phone} " +
-            "order by measure_time asc limit 10")
+            "order by measure_time desc limit 7")
     @Results({
             @Result(property = "phone", column = "phone"),
             @Result(property = "bloodSugarValue", column = "blood_sugar_value"),

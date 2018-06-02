@@ -82,7 +82,7 @@ public class BodyDataFacadeService {
 
         List<BodyData> bodyDataList = bodyDataService.findBodyDataList(phone);
 
-        List<BodyDataDto> bodyDataDtoList = new ArrayList<>();
+        List<BodyDataDto> bodyDataDtoList ;
         try {
             if(bodyDataList == null || bodyDataList.size() == 0){
                 throw new HealthOTWechatException(HealthOTWechatErrorCode.DATA_NO_EXIST.getCode(),

@@ -1,5 +1,6 @@
 package com.xust.healthotwechat.controller;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.google.gson.Gson;
 import com.xust.healthotwechat.VO.AjaxResultVo;
 import com.xust.healthotwechat.VO.ResultVO;
@@ -13,6 +14,7 @@ import com.xust.healthotwechat.form.BloodSugarForm;
 import com.xust.healthotwechat.utils.AjaxResultVOUtils;
 import com.xust.healthotwechat.utils.EncryptUtils;
 import com.xust.healthotwechat.utils.ResultVOUtils;
+import com.xust.healthotwechat.utils.SmsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -42,7 +44,7 @@ public class BloodSugarController {
     @PostMapping("/entry")
     public String entry(@Valid BloodSugarForm bloodSugarForm,
                         BindingResult bindingResult,
-                        HttpServletRequest request){
+                        HttpServletRequest request) throws ClientException {
 
         Gson gson = new Gson();
 
@@ -63,7 +65,15 @@ public class BloodSugarController {
             bloodSugarForm.setPhone(sessionPhone);
 
             bloodSugarFacadeService.entryBloodSugar(bloodSugarForm);
-            resultVo = AjaxResultVOUtils.success();
+            resultVo = AjaxResultVOUtils.success("录入成功");
+
+            if (Double.parseDouble(bloodSugarForm.getBloodSugarValue())>6.1){
+                SmsUtils.sendSmsResponse1(sessionPhone,bloodSugarForm.getBloodSugarValue());
+            }
+
+            if (Double.parseDouble(bloodSugarForm.getBloodSugarValue())<3.8){
+                SmsUtils.sendSmsResponse1(sessionPhone,bloodSugarForm.getBloodSugarValue());
+            }
 
 
         }catch (HealthOTWechatException e){
@@ -81,23 +91,19 @@ public class BloodSugarController {
      * @return
      */
     @GetMapping("/history")
-    public ResultVO<List<BloodSugarDto>> getData(@RequestParam("phone") String phone,HttpServletRequest request){
+    public ResultVO<List<BloodSugarDto>> getData(HttpServletRequest request){
 
 
 
         List<BloodSugarDto> historyList ;
+        String message;
 
         try {
 
-            if (request !=null){
-                String sessionPhone = (String) request.getSession().getAttribute("user");
-                if (!sessionPhone.equals(phone)){
-                    throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                            HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-                }
-            }
 
+            String phone = (String) request.getSession().getAttribute("user");
             historyList = bloodSugarFacadeService.findBloodSugarListByOpenid(phone);
+            message = getMessage(historyList);
 
 
 
@@ -107,12 +113,23 @@ public class BloodSugarController {
 
             return ResultVOUtils.error(60002,e.getMessage());
         }
-        return ResultVOUtils.success(historyList);
+
+        return ResultVOUtils.success(historyList,message);
     }
 
+    private String getMessage(List<BloodSugarDto> historyList) {
 
+        String message;
+        for (BloodSugarDto bloodSugarDto : historyList){
 
-
+            if (Double.parseDouble(bloodSugarDto.getBloodSugarValue())>=6.1 || Double.parseDouble(bloodSugarDto.getBloodSugarValue())<=3.8){
+                message = "您最近的血糖值不太稳定，请根据情况及时到医院就诊";
+                return message;
+            }
+        }
+        message ="您最近的血糖值较为稳定，请继续保持哦";
+        return message;
+    }
 
 
     /**
@@ -138,7 +155,7 @@ public class BloodSugarController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-            return  getData(phone,null);
+            return  getData(null);
 
 
 

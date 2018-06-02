@@ -94,4 +94,9 @@ public class MenuUrlConfig {
      * 第三个二级第二个子菜单Url
      */
     private String thirdLevelSecondUrl;
+
+    /**
+     * 第三个二级第二个子菜单Url
+     */
+    private String thirdLevelThirdUrl;
 }

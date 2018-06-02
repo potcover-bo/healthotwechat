@@ -18,7 +18,7 @@ public class AjaxResultVOUtils {
     public static AjaxResultVo success(String message){
         AjaxResultVo ajaxResultVo = new AjaxResultVo();
         ajaxResultVo.setCode(666);
-        ajaxResultVo.setUrl("index.html");
+        ajaxResultVo.setUrl("entry.html");
         ajaxResultVo.setMessage(message);
         return ajaxResultVo;
     }
@@ -32,27 +32,16 @@ public class AjaxResultVOUtils {
     }
 
 
-    /**
-     * 通用失败返回加消息
-     * @param message
-     * @return
-     */
-    public static AjaxResultVo error(String message){
-        AjaxResultVo ajaxResultVo = new AjaxResultVo();
-        ajaxResultVo.setCode(233);
-        ajaxResultVo.setUrl("index.html");
-        ajaxResultVo.setMessage(message);
-        return ajaxResultVo;
-    }
+
 
     /**
-     * 通用失败返回加消息
+     * 通用成功返回加消息
      * @param message
      * @return
      */
     public static AjaxResultVo success(String url,String message){
         AjaxResultVo ajaxResultVo = new AjaxResultVo();
-        ajaxResultVo.setCode(233);
+        ajaxResultVo.setCode(666);
         ajaxResultVo.setUrl(url);
         ajaxResultVo.setMessage(message);
         return ajaxResultVo;
@@ -71,6 +60,20 @@ public class AjaxResultVOUtils {
         AjaxResultVo ajaxResultVo = new AjaxResultVo();
         ajaxResultVo.setCode(233);
         ajaxResultVo.setUrl(url);
+        ajaxResultVo.setMessage(message);
+        return ajaxResultVo;
+    }
+
+
+    /**
+     * 通用失败返回加消息
+     * @param message
+     * @return
+     */
+    public static AjaxResultVo error(String message){
+        AjaxResultVo ajaxResultVo = new AjaxResultVo();
+        ajaxResultVo.setCode(233);
+        ajaxResultVo.setUrl("entry.html");
         ajaxResultVo.setMessage(message);
         return ajaxResultVo;
     }

@@ -80,7 +80,7 @@ public class MoodFacadeService {
      * @return
      */
     public List<MoodDto> findMoodListByOpenid(@Param("phone")String phone){
-        List<MoodDto> historyList = new ArrayList<>();
+        List<MoodDto> historyList;
 
         try {
 

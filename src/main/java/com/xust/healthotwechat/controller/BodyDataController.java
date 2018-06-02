@@ -62,7 +62,7 @@ public class BodyDataController {
             bodyDataForm.setPhone(phone);
 
             bodyDataFacadeService.entry(bodyDataForm);
-            resultVo = AjaxResultVOUtils.success();
+            resultVo = AjaxResultVOUtils.success("录入成功");
 
         }catch (Exception e){
             log.error("身体数据录入异常={}",bodyDataForm.getPhone()+e.getMessage());
@@ -79,24 +79,21 @@ public class BodyDataController {
      * @return
      */
     @GetMapping("/history")
-    public ResultVO<List<BodyDataDto>> history(@RequestParam("phone")String phone,HttpServletRequest request){
+    public ResultVO<List<BodyDataDto>> history(HttpServletRequest request){
 
 
 
         List<BodyDataDto> historyList;
+        String message;
 
         try {
 
-            if (request !=null){
-                String sessionPhone = (String) request.getSession().getAttribute("user");
-                if (!sessionPhone.equals(phone)){
-                    throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                            HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-                }
-            }
 
+            String phone = (String) request.getSession().getAttribute("user");
             /**查询历史记录*/
             historyList = bodyDataFacadeService.findBodyDataListByOpenid(phone);
+
+            message = getMessage(historyList);
 
         }catch (Exception e){
             log.error("【查询身体数据异常】={}",e.getMessage());
@@ -104,10 +101,28 @@ public class BodyDataController {
             return ResultVOUtils.error(60003,e.getMessage());
         }
 
-        return ResultVOUtils.success(historyList);
+        return ResultVOUtils.success(historyList,message);
     }
 
+    private String getMessage(List<BodyDataDto> historyList) {
 
+        String message;
+        Integer count=0;
+
+        for (BodyDataDto bodyDataDto : historyList){
+            count+=Integer.parseInt(bodyDataDto.getWeight());
+        }
+        count/=historyList.size();
+        for (BodyDataDto bodyDataDto : historyList){
+            if (Math.abs(count-Integer.parseInt(bodyDataDto.getWeight()))>=10){
+                message = "您最近的体重不太稳定，请注意";
+            }
+        }
+        message ="您最近的体重较为稳定，请继续保持";
+        return message;
+
+
+    }
 
 
     /**
@@ -133,7 +148,7 @@ public class BodyDataController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-            return  history(phone,null);
+            return  history(null);
 
 
 

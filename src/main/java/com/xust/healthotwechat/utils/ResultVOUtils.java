@@ -46,6 +46,19 @@ public class ResultVOUtils {
         resultVO.setData(object);
         return resultVO;
     }
+    /**
+     * 成功响应返回  带参数
+     * @param object
+     * @return
+     */
+    public static ResultVO success(Integer code,Object object,String message){
+        ResultVO resultVO = new ResultVO();
+
+        resultVO.setCode(code);
+        resultVO.setMessage(message);
+        resultVO.setData(object);
+        return resultVO;
+    }
 
 
 

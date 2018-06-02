@@ -13,6 +13,7 @@ import com.xust.healthotwechat.form.BloodPressureForm;
 import com.xust.healthotwechat.utils.AjaxResultVOUtils;
 import com.xust.healthotwechat.utils.EncryptUtils;
 import com.xust.healthotwechat.utils.ResultVOUtils;
+import com.xust.healthotwechat.utils.SmsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -56,6 +57,8 @@ public class BloodPressureController {
 
 
 
+
+
         try {
 
 
@@ -70,7 +73,14 @@ public class BloodPressureController {
             bloodPressureForm.setPhone(sessionPhone);
 
             bloodPressureFacadeService.entryBloodPressure(bloodPressureForm);
-            resultVo = AjaxResultVOUtils.success();
+            resultVo = AjaxResultVOUtils.success("录入成功");
+
+            if (Integer.parseInt(bloodPressureForm.getHighPressure())>=150){
+                SmsUtils.sendSmsResponse(sessionPhone,bloodPressureForm.getHighPressure());
+            }
+            if (Integer.parseInt(bloodPressureForm.getLowPressure())<=65){
+                SmsUtils.sendSmsResponse(sessionPhone,bloodPressureForm.getLowPressure());
+            }
 
 
         }catch (Exception e){
@@ -89,25 +99,20 @@ public class BloodPressureController {
      * @return
      */
     @GetMapping("/history")
-    public ResultVO<List<BloodPressureDto>> getData(@RequestParam("phone") String phone, HttpServletRequest request){
+    public ResultVO<List<BloodPressureDto>> getData(HttpServletRequest request){
 
 
 
 
         List<BloodPressureDto> historyList;
 
-
+        String message;
         try {
 
-            if (request !=null){
-                String sessionPhone = (String) request.getSession().getAttribute("user");
-                if (!sessionPhone.equals(phone)){
-                    throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_PHONE_ERROR.getCode(),
-                            HealthOTWechatErrorCode.USER_PHONE_ERROR.getMessage());
-                }
-            }
 
+            String phone = (String) request.getSession().getAttribute("user");
             historyList = bloodPressureFacadeService.findBloodPressureList(phone);
+             message= getMessage(historyList);
 
 
         } catch (Exception e){
@@ -115,9 +120,22 @@ public class BloodPressureController {
             log.error("【查询历史记录异常】={}",e.getMessage());
             return ResultVOUtils.error(60001,e.getMessage());
         }
+        return ResultVOUtils.success(historyList,message);
 
-        return ResultVOUtils.success(historyList);
+    }
 
+    private String getMessage(List<BloodPressureDto> historyList) {
+
+        String message;
+        for (BloodPressureDto bloodPressureDto :historyList){
+
+            if (Integer.parseInt(bloodPressureDto.getHighPressure())>=150 || Integer.parseInt(bloodPressureDto.getLowPressure())<=65){
+                message="您最近一周血压偏高，请根据情况及时就医";
+                return message;
+            }
+        }
+        message = "您最近血压曲线较为稳定，请注意保持哦";
+        return message;
     }
 
 
@@ -144,7 +162,7 @@ public class BloodPressureController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-            return  getData(phone,null);
+            return  getData(null);
 
 
 

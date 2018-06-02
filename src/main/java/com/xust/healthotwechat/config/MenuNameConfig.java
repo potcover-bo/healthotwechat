@@ -94,6 +94,11 @@ public class MenuNameConfig {
      */
     private String thirdLevelSecondName;
 
+    /**
+     * 第三个二级第二个子菜单名字
+     */
+    private String thirdLevelThirdName;
+
 
 
 

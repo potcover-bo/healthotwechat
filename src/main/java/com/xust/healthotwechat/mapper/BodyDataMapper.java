@@ -25,7 +25,7 @@ public interface BodyDataMapper {
      * @return
      */
     @Select("select phone,weight,today_step_count,create_time from body_data where phone = #{phone} " +
-            " order by create_time asc limit 10")
+            " order by create_time desc limit 7")
     @Results({
             @Result(property = "phone", column = "phone"),
             @Result(property = "weight", column = "weight"),

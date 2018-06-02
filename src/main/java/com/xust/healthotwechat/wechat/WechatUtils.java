@@ -133,13 +133,12 @@ public class WechatUtils {
         List<Button> sub_button3 = new ArrayList<>();
         ViewButton button31 = generateViewButton(menuNameConfig.getThirdLevelFirstName(),"view",menuUrlConfig.getThirdLevelFirstUrl());
         ViewButton button32 = generateViewButton(menuNameConfig.getThirdLevelSecondName(),"view",menuUrlConfig.getThirdLevelSecondUrl());
-//        ClickButton button32 = new ClickButton();
-//        button32.setName("关于我们");
-//        button32.setType("click");
-//        button32.setKey("V1001_GOOD");
+        ViewButton button33 = generateViewButton(menuNameConfig.getThirdLevelThirdName(),"view",menuUrlConfig.getThirdLevelThirdUrl());
+
 
         sub_button3.add(button31);
         sub_button3.add(button32);
+        sub_button3.add(button33);
 
         button3.setSub_button(sub_button3);
 

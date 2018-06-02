@@ -22,7 +22,7 @@ public interface MoodMapper {
 
     /**查询历史记录*/
     @Select("select phone,morning_mood,noon_mood,night_mood,create_time from mood " +
-            "where phone = #{phone} order by create_time asc limit 10")
+            "where phone = #{phone} order by create_time desc limit 7")
     @Results({
             @Result(column = "phone",property = "phone"),
             @Result(column = "morning_mood",property = "morningMood"),

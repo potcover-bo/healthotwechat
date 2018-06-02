@@ -17,7 +17,6 @@
 #input{ width: 100%; padding: 1rem 1rem 0 1rem; font-size: 1rem;}
 #input img{ width:100%; height: 10rem; margin-bottom: 2rem;}
 #input input{ width: auto; border: 0.029rem #D3D3D3 solid; height: 1.4rem; margin-bottom: 1.5rem;}
-#input #care{ display: none;}
 #sbt{ display: block; margin: auto; width: 30%; height: 2rem;}
 </style>
 </head>
@@ -26,12 +25,14 @@
 	<img src="../img/箭头1.png" id="left"/></br>
 	<p>睡眠数据</p>
 </div>
-<form id="commit" method="post">
+<form id="input" method="post">
 	<img src="../img/sleep.jpg" />
 	<span>午睡睡眠时间：</span>
-	<input type="text" name="noonTime"/><br />
+	<input type="text" name="noonTime"/>
+	<span>单位：h</span><br />
 	<span>夜晚睡眠时间：</span>
 	<input type="text" name="nightTime"/>
+	<span>单位：h</span>
 </form>
 <input type="submit" value="提交" id="sbt" />
 <script src="../js/new_file.js"></script>
@@ -43,11 +44,12 @@
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型
             url: "/sleeping/entry",//url
-            data : $("#commit").serialize(),
+            data : $("#input").serialize(),
             success: function (result) {
                 if (result.code == 666) {
 
                     var redirectUrl = result.url;
+                    alert(result.message);
                     window.location.href=  "http://dou.natapp1.cc/"+redirectUrl;
 
                 }else {
