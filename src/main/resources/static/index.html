@@ -63,6 +63,7 @@
 </div>
 <script src="js/new_file.js"></script>
 <script src="js/jquery.min.js"></script>
+<script src="js/alert.js"></script>
 <script>
     $(document).ready(function(){
         $.ajax({
@@ -108,7 +109,9 @@
                         $("#login").val("登录");
                         $("#register").val("注册");
 
-                        // window.location.href="http://dou.natapp1.cc/index.html";
+                        alert(result.message);
+                        window.location.href="login.html";
+
                     }else{
                         alert(result.message);
                     }

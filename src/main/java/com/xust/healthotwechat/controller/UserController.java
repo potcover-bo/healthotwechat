@@ -253,7 +253,7 @@ public class UserController {
            return AjaxResultVOUtils.error();
 
         }
-        return AjaxResultVOUtils.success();
+        return AjaxResultVOUtils.success("注销成功");
     }
 
 
