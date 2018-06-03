@@ -1,16 +1,16 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/healthotwechat?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/databsename?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password:
+    username: username
+    password: password
 
 #redis数据源
   redis:
     database: 0
     host: 127.0.0.1
     port: 6379
-    password:
+    password: password
     pool:
       max-active: 8
       max-wait: -1
@@ -95,7 +95,7 @@ menuUrl:
 # 日志位置
 logging:
   path:
-  #path: /Users/evildoerdb_/code_file
+  #path: 
 
 
 
