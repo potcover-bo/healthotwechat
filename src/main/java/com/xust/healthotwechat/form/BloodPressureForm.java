@@ -35,5 +35,5 @@ public class BloodPressureForm implements Serializable {
     @NotEmpty(message = "服药不能为空")
     private String medicineCondition;
 
-    private String saveHealthRecord;
+    private String saveHealthRecord="2";
 }

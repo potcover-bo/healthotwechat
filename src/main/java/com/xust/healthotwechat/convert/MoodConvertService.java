@@ -42,20 +42,77 @@ public class MoodConvertService {
      * @param moodList
      * @return
      */
-    public List<MoodDto> entityToDto(List<Mood> moodList){
-        List<MoodDto> historyList = new ArrayList<>(moodList.size());
+    public /*List<MoodDto>*/MoodDto entityToDto(List<Mood> moodList){
+        //List<MoodDto> historyList = new ArrayList<>(moodList.size());
+        MoodDto moodDto = new MoodDto();
+        double times = moodList.size() * 3;
 
+        double good = 0;
+        double general =0;
+        double poor = 0;
+
+
+//        for (Mood mood : moodList){
+//            MoodDto moodDto = new MoodDto();
+//
+//            moodDto.setMorningMood(mood.getMorningMood());
+//            moodDto.setNoonMood(mood.getNoonMood());
+//            moodDto.setNightMood(mood.getNightMood());
+//
+//            moodDto.setCreateTime(DateUtils.dateToString(mood.getCreateTime()));
+//
+//            historyList.add(moodDto);
+//        }
         for (Mood mood : moodList){
-            MoodDto moodDto = new MoodDto();
+            //MoodDto moodDto = new MoodDto();
 
-            moodDto.setMorningMood(mood.getMorningMood());
-            moodDto.setNoonMood(mood.getNoonMood());
-            moodDto.setNightMood(mood.getNightMood());
+            switch (mood.getMorningMood()){
+                case "1":
+                    good++;
+                    break;
+                case "2":
+                    general++;
+                    break;
+                case "3":
+                    poor++;
+                    break;
+                default:
+                    break;
+            }
 
-            moodDto.setCreateTime(DateUtils.dateToString(mood.getCreateTime()));
+            switch (mood.getNoonMood()){
+                case "1":
+                    good++;
+                    break;
+                case "2":
+                    general++;
+                    break;
+                case "3":
+                    poor++;
+                    break;
+                default:
+                    break;
+            }
 
-            historyList.add(moodDto);
+            switch (mood.getNightMood()){
+                case "1":
+                    good++;
+                    break;
+                case "2":
+                    general++;
+                    break;
+                case "3":
+                    poor++;
+                    break;
+                default:
+                    break;
+            }
+
+
         }
-        return historyList;
+        moodDto.setGood((int)(good/times * 100));
+        moodDto.setGeneral((int)(general/times * 100));
+        moodDto.setPoor((int)(poor/times * 100));
+        return moodDto;
     }
 }

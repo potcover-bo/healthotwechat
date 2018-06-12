@@ -79,8 +79,9 @@ public class MoodFacadeService {
      * @param phone
      * @return
      */
-    public List<MoodDto> findMoodListByOpenid(@Param("phone")String phone){
-        List<MoodDto> historyList;
+    public /*List<MoodDto>*/MoodDto findMoodListByOpenid(@Param("phone")String phone){
+        //List<MoodDto> historyList;
+        MoodDto moodDto;
 
         try {
 
@@ -93,7 +94,7 @@ public class MoodFacadeService {
             }
 
             /**将数据进行转换*/
-            historyList = moodConvertService.entityToDto(moodList);
+            moodDto = moodConvertService.entityToDto(moodList);
 
 
         }catch (Exception e){
@@ -101,6 +102,6 @@ public class MoodFacadeService {
             throw e;
         }
 
-        return historyList;
+        return moodDto;
     }
 }

@@ -52,10 +52,10 @@ public class BloodSugarFacadeService {
             String key = bloodSugarForm.getPhone()+"_bloodSugar";
 
             /**用户当天已经录入过血压*/
-            if(redisTemplate.opsForValue().get(key) != null){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.ALREADY_ENTRY_DATA.getCode(),
-                        HealthOTWechatErrorCode.ALREADY_ENTRY_DATA.getMessage());
-            }
+//            if(redisTemplate.opsForValue().get(key) != null){
+//                throw new HealthOTWechatException(HealthOTWechatErrorCode.ALREADY_ENTRY_DATA.getCode(),
+//                        HealthOTWechatErrorCode.ALREADY_ENTRY_DATA.getMessage());
+//            }
 
             /**数据转换*/
             BloodSugar bloodSugar = bloodSugarConvertService.formToEntity(bloodSugarForm);

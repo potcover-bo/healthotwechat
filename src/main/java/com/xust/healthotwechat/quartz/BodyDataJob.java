@@ -32,7 +32,7 @@ public class BodyDataJob implements Job {
         //获取所有用户手机号
         List<String> phoneList = userService.findAllPhone();
         for (String phone : phoneList){
-            //如果redis中的数据过去
+            //如果redis中的数据过期
             if (redisTemplate.opsForValue().get(phone+"_three_entry_bodyData") == null){
                 try {
                     //发送短信

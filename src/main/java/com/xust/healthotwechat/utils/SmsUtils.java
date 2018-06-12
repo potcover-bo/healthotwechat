@@ -15,19 +15,14 @@ import com.aliyuncs.profile.IClientProfile;
 public class SmsUtils {
 
 
-
-
-
-
-
     //产品名称:云通信短信API产品,开发者无需替换
     static final String product = "Dysmsapi";
     //产品域名,开发者无需替换
     static final String domain = "dysmsapi.aliyuncs.com";
 
     //此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "accessKeyID";
-    static final String accessKeySecret = "se";
+    static final String accessKeyId = "accessKeyId";
+    static final String accessKeySecret = "accessKeySecret";
 
     /**
      * 发送验证码
@@ -122,7 +117,7 @@ public class SmsUtils {
      * @return
      * @throws ClientException
      */
-    public static SendSmsResponse sendSmsResponse(String phone,String data) throws ClientException {
+    public static SendSmsResponse sendSmsResponse(String person,String phone,String data) throws ClientException {
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
@@ -140,9 +135,9 @@ public class SmsUtils {
         //必填:短信签名-可在短信控制台中找到
         request.setSignName("用户健康管理");
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("XXX");
+        request.setTemplateCode("SMS_137425124");
         //模板
-        request.setTemplateParam("{\"data\":\"" + data + "\"}");
+        request.setTemplateParam("{\"person\":\"" + person + "\",\"data\":\""+data+"\"}");
 
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
         //request.setSmsUpExtendCode("90997");
@@ -166,7 +161,7 @@ public class SmsUtils {
      * @return
      * @throws ClientException
      */
-    public static SendSmsResponse sendSmsResponse1(String phone,String data) throws ClientException {
+    public static SendSmsResponse sendBloodSugar(String  person,String phone,String data) throws ClientException {
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
@@ -184,9 +179,9 @@ public class SmsUtils {
         //必填:短信签名-可在短信控制台中找到
         request.setSignName("用户健康管理");
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("XXX");
+        request.setTemplateCode("SMS_137420115");
         //模板
-        request.setTemplateParam("{\"data\":\"" + data + "\"}");
+        request.setTemplateParam("{\"person\":\"" + person + "\",\"data\":\""+data+"\"}");
 
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
         //request.setSmsUpExtendCode("90997");

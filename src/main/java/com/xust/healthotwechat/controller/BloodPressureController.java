@@ -55,10 +55,6 @@ public class BloodPressureController {
 
         AjaxResultVo resultVo;
 
-
-
-
-
         try {
 
 
@@ -69,18 +65,23 @@ public class BloodPressureController {
                 log.error("【录入血压】参数不正确 bloodPressureForm={}",bloodPressureForm);
                 throw  new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
             }
+            User user = userFacadeService.findUserByPhone(sessionPhone);
 
             bloodPressureForm.setPhone(sessionPhone);
+
+            if (Integer.parseInt(bloodPressureForm.getHighPressure())>=150){
+                SmsUtils.sendSmsResponse(user.getCustodyRelationship(),user.getCustodyPhone(),bloodPressureForm.getHighPressure());
+                bloodPressureForm.setSaveHealthRecord("1");
+            }
+            if (Integer.parseInt(bloodPressureForm.getLowPressure())<=65){
+                SmsUtils.sendSmsResponse(user.getCustodyRelationship(),user.getCustodyPhone(),bloodPressureForm.getLowPressure());
+                bloodPressureForm.setSaveHealthRecord("1");
+            }
 
             bloodPressureFacadeService.entryBloodPressure(bloodPressureForm);
             resultVo = AjaxResultVOUtils.success("录入成功");
 
-            if (Integer.parseInt(bloodPressureForm.getHighPressure())>=150){
-                SmsUtils.sendSmsResponse(sessionPhone,bloodPressureForm.getHighPressure());
-            }
-            if (Integer.parseInt(bloodPressureForm.getLowPressure())<=65){
-                SmsUtils.sendSmsResponse(sessionPhone,bloodPressureForm.getLowPressure());
-            }
+
 
 
         }catch (Exception e){
@@ -112,7 +113,7 @@ public class BloodPressureController {
 
             String phone = (String) request.getSession().getAttribute("user");
             historyList = bloodPressureFacadeService.findBloodPressureList(phone);
-             message= getMessage(historyList);
+            message= getMessage(historyList);
 
 
         } catch (Exception e){

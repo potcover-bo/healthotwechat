@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="header" class="clearfix" >
-	<img src="img/箭头1.png"/>
+	<img src="img/箭头1.png" id="left"/>
 	<p>注 册</p>
 </div>
 <form id="register">
@@ -34,6 +34,10 @@
 	<label><input type="radio" name="sex" id="woman" value="2"/>女</label><br />
 	<span>年龄：</span>
 	<input type="text" name="age"/><br />
+	<span>监护人手机号码：</span>
+	<input type="text" name="custodyPhone"/><br />
+	<span>与监护人关系：</span>
+	<input type="text" name="custodyRelationship"/><br />
 	<input type="submit" value="提交" id="sbt" />
 </form>
 <script src="js/new_file.js"></script>
@@ -90,6 +94,10 @@ $("#sbt").click(function(){
 		},
 	})
 	return false;
+})
+
+$("#left").click(function(){
+    window.location.href="index.html";
 })
 
 </script>

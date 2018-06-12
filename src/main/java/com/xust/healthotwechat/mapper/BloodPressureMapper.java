@@ -22,7 +22,7 @@ public interface BloodPressureMapper {
     int insert(BloodPressure bloodPressure);
 
 
-    /**根据openid查询最近十条记录*/
+    /**根据手机号码查询最近十条记录*/
     @Select("select phone,high_pressure,low_pressure,measure_time from blood_pressure where phone = #{phone} " +
             "order by measure_time desc limit 7")
     @Results({

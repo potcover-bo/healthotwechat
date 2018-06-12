@@ -54,10 +54,10 @@ public class BloodPressureFacadeService {
             String key = bloodPressureForm.getPhone()+"bloodPressure";
 
             /**用户当天已经录入过血压*/
-            if(redisTemplate.opsForValue().get(key)!=null){
-                throw new HealthOTWechatException(HealthOTWechatErrorCode.ALREADY_ENTRY_DATA.getCode(),
-                                        HealthOTWechatErrorCode.ALREADY_ENTRY_DATA.getMessage());
-            }
+//            if(redisTemplate.opsForValue().get(key)!=null){
+//                throw new HealthOTWechatException(HealthOTWechatErrorCode.ALREADY_ENTRY_DATA.getCode(),
+//                                        HealthOTWechatErrorCode.ALREADY_ENTRY_DATA.getMessage());
+//            }
 
             /**数据转换*/
             BloodPressure bloodPressure = bloodPressureConvertService.formToEntity(bloodPressureForm);

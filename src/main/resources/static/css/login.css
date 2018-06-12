@@ -65,6 +65,11 @@ body
 	display: flex;
 	justify-content: center;
 }
+.register
+{
+	display: flex;
+	justify-content: center;
+}
 .form a,.third-load a
 {
 	font-size: 0.71rem;

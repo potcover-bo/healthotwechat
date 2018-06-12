@@ -27,7 +27,8 @@ public enum HealthOTWechatErrorCode {
     VALIDATE_CODE_ERROE("10010","验证码过期或验证码错误"),
     USER_ISEXIST_ERROE("10011","用户已经存在"),
     USER_ERROE("10012","用户或者密码错误"),
-    USER_PHONE_ERROR("10013","请输入正确的手机号")
+    USER_PHONE_ERROR("10013","请输入正确的手机号"),
+    USER_ALREADY_ISEXIST_ERROE("10011","用户不存在"),
     ;
 
     private String code;

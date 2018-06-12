@@ -42,5 +42,8 @@ public class User implements Serializable {
 
     /**监护人手机号码*/
     private String custodyPhone;
+    
+    /**与监护人关系*/
+    private String custodyRelationship;
 
 }

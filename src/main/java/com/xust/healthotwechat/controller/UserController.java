@@ -7,6 +7,7 @@ import com.xust.healthotwechat.entity.User;
 import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
 import com.xust.healthotwechat.exception.HealthOTWechatException;
 import com.xust.healthotwechat.facade.UserFacadeService;
+import com.xust.healthotwechat.form.ForgetForm;
 import com.xust.healthotwechat.form.UserForm;
 import com.xust.healthotwechat.form.UserLoginForm;
 import com.xust.healthotwechat.utils.AjaxResultVOUtils;
@@ -82,13 +83,6 @@ public class UserController {
         return gson.toJson(ajaxResultVo);
 
     }
-
-
-
-
-
-
-
 
 
 
@@ -169,7 +163,7 @@ public class UserController {
            return gson.toJson(ResultVOUtils.error(233,"发送验证码失败，请重新发送"));
         }
 
-        return gson.toJson(ResultVOUtils.success());
+        return gson.toJson(ResultVOUtils.success(null,"验证码发送成功"));
 
     }
 
@@ -273,4 +267,39 @@ public class UserController {
     }
 
 
+
+    @PostMapping("/forgetpassword")
+    @ResponseBody
+    public String forget(@Valid ForgetForm forgetForm, BindingResult bindingResult){
+        Gson gson = new Gson();
+        AjaxResultVo ajaxResultVo;
+        try{
+
+            /**用户校验出错*/
+            if (bindingResult.hasErrors()){
+                throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
+            }
+
+            /**校验验证码是否正确*/
+            if (!checkValidateCode(forgetForm.getValidateCode(),forgetForm.getPhone())){
+                throw new HealthOTWechatException(HealthOTWechatErrorCode.VALIDATE_CODE_ERROE.getCode(),
+                        HealthOTWechatErrorCode.VALIDATE_CODE_ERROE.getMessage());
+            }
+            /**查询用户是否存在*/
+            boolean isExist = userFacadeService.userIsExist(forgetForm.getPhone());
+
+            /**用户已经存在*/
+            if (!isExist){
+                throw new HealthOTWechatException(HealthOTWechatErrorCode.USER_ALREADY_ISEXIST_ERROE.getCode(),
+                        HealthOTWechatErrorCode.USER_ALREADY_ISEXIST_ERROE.getMessage());
+            }
+            userFacadeService.updatePassword(forgetForm.getPhone(),EncryptUtils.encrypt(forgetForm.getPassword()));
+            ajaxResultVo = AjaxResultVOUtils.success("login.html","密码重置成功");
+        }catch (Exception e){
+            log.error("【注册异常】={}",e.getMessage());
+            ajaxResultVo = AjaxResultVOUtils.error("register.html",e.getMessage());
+        }
+
+        return gson.toJson(ajaxResultVo);
+    }
 }

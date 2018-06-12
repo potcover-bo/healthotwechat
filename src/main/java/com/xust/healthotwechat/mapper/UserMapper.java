@@ -17,12 +17,12 @@ public interface UserMapper {
 
     /**插入一条记录*/
     @Insert("insert into user(phone,idcard,headimgurl,username,password," +
-            "sex,age,custody_phone) " +
+            "sex,age,custody_phone,custody_relationship) " +
             "values(#{phone},#{idcard},#{headimgurl},#{username},#{password}," +
-            "#{sex},#{age},#{custodyPhone})")
+            "#{sex},#{age},#{custodyPhone},#{custodyRelationship})")
     int insert(User user);
 
-    @Select("select phone,idcard,headimgurl,username,password,sex,age,custody_phone from user where phone = #{phone}")
+    @Select("select phone,idcard,headimgurl,username,password,sex,age,custody_phone,custody_relationship from user where phone = #{phone}")
     @Results({
             @Result(column = "phone",property = "phone"),
             @Result(column = "idcard",property = "idcard"),
@@ -32,6 +32,7 @@ public interface UserMapper {
             @Result(column = "sex",property = "sex"),
             @Result(column = "age",property = "age"),
             @Result(column = "custody_phone",property = "custodyPhone"),
+            @Result(column = "custody_relationship",property = "custodyRelationship"),
     })
     User finfUserByPhone(String phone);
 

@@ -11,15 +11,21 @@ import lombok.Data;
 @Data
 public class MoodDto {
 
-    /**早上心情*/
-    private String morningMood;
+//    /**早上心情*/
+//    private String morningMood;
+//
+//    /**中午心情*/
+//    private String noonMood;
+//
+//    /**晚上心情*/
+//    private String nightMood;
+//
+//    /**创建时间*/
+//    private String createTime;
 
-    /**中午心情*/
-    private String noonMood;
+    private Integer good;
 
-    /**晚上心情*/
-    private String nightMood;
+    private Integer general;
 
-    /**创建时间*/
-    private String createTime;
+    private Integer poor;
 }

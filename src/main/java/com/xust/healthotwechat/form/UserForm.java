@@ -37,4 +37,10 @@ public class UserForm implements Serializable {
     @NotEmpty(message = "用户年龄不能为空")
     private String age;
 
+    @NotEmpty(message = "监护人手机号码不能为空")
+    private String custodyPhone;
+
+    @NotEmpty(message = "与监护人关系不能为空")
+    private String custodyRelationship;
+
 }

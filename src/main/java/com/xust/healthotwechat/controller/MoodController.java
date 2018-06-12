@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.xust.healthotwechat.VO.AjaxResultVo;
 import com.xust.healthotwechat.VO.ResultVO;
 import com.xust.healthotwechat.dto.MoodDto;
+import com.xust.healthotwechat.entity.Mood;
 import com.xust.healthotwechat.entity.User;
 import com.xust.healthotwechat.exception.HealthOTWechatErrorCode;
 import com.xust.healthotwechat.exception.HealthOTWechatException;
@@ -84,45 +85,52 @@ public class MoodController {
      * @return
      */
     @GetMapping("/history")
-    public ResultVO<List<MoodDto>> history(HttpServletRequest request){
+    public /*ResultVO<List<MoodDto>>*/ResultVO<MoodDto> history(HttpServletRequest request){
 
-        List<MoodDto> historyList;
-        
+        //List<MoodDto> historyList;
+        MoodDto moodDto;
         String message;
-
-
-
 
         try {
 
             
 
             String phone = (String) request.getSession().getAttribute("user");
-            historyList = moodFacadeService.findMoodListByOpenid(phone);
+            moodDto = moodFacadeService.findMoodListByOpenid(phone);
             
-            message = getMessage(historyList);
+            message = getMessage(moodDto);
 
         }catch (Exception e){
             log.error("查询心情历史记录={}",e.getMessage());
             return ResultVOUtils.error(60004,e.getMessage());
         }
 
-        return ResultVOUtils.success(historyList,message);
+        return ResultVOUtils.success(moodDto,message);
     }
 
-    private String getMessage(List<MoodDto> historyList) {
-
+    private String getMessage(MoodDto moodDto) {
         String message;
-
-        for (MoodDto moodDto : historyList){
-            if (moodDto.getMorningMood().equals("3") || moodDto.getNoonMood().equals("3") || moodDto.getNightMood().equals("3")){
-                message = "您最近心情不太好，请注意笑口常开哦";
-                return message;
-            }
+        if (moodDto.getPoor()>= 50){
+            message = "您最近心情不太好，请注意笑口常开哦";
+        }else {
+            message ="您最近心情不错，请注意保持哦";
         }
-        message ="您最近心情不错，请注意保持哦";
         return message;
     }
+
+//    private String getMessage(List<MoodDto> historyList) {
+//
+//        String message;
+//
+//        for (MoodDto moodDto : historyList){
+//            if (moodDto.getMorningMood().equals("3") || moodDto.getNoonMood().equals("3") || moodDto.getNightMood().equals("3")){
+//                message = "您最近心情不太好，请注意笑口常开哦";
+//                return message;
+//            }
+//        }
+//        message ="您最近心情不错，请注意保持哦";
+//        return message;
+//    }
 
 
     /**
@@ -148,7 +156,7 @@ public class MoodController {
                         HealthOTWechatErrorCode.USER_ERROE.getMessage());
             }
 
-            return  history(null);
+            return  null;
 
 
 

@@ -67,7 +67,6 @@ public class  UserFacadeService {
      */
     public boolean userIsExist(String phone){
 
-//        User user = userService.findUserByPhone(phone);
         User user = findUserByPhone(phone);
         if(user !=null ){
             return true;

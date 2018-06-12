@@ -48,24 +48,13 @@ public class InitMenuController implements ApplicationRunner {
 
         System.out.println("欢迎使用健康管理项目");
         System.out.println("项目启动了。。。。哈哈哈");
-//
-//        try {
-//            SendSmsResponse sendSmsResponse = SmsUtils.sendSms("18789449429","123456");
-//            System.out.println("code = " +sendSmsResponse.getCode());
-//            System.out.println("message = " +sendSmsResponse.getMessage());
-//            System.out.println("requestid = " + sendSmsResponse.getRequestId());
-//            System.out.println("bizid = " + sendSmsResponse.getBizId());
-//            System.out.println("发送成功");
-//        } catch (ClientException e) {
-//            System.out.println("发送失败");
-//            e.printStackTrace();
-//        }
+
 
         //初始化菜单
         //initWechatMenu();
 
         //开启定时任务
-        //startJob();
+        startJob();
 
 
     }
@@ -113,7 +102,7 @@ public class InitMenuController implements ApplicationRunner {
 
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
 
-        scheduler.start();;
+        scheduler.start();
         scheduler.scheduleJob(job,trigger);
 
     }

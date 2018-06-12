@@ -20,8 +20,6 @@ import java.util.List;
 @Slf4j
 public class SleepingJob implements Job {
 
-
-
     @Autowired
     private RedisTemplate redisTemplate;
 

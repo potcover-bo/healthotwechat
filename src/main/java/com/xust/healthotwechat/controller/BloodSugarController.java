@@ -63,17 +63,22 @@ public class BloodSugarController {
             }
 
             bloodSugarForm.setPhone(sessionPhone);
+            User user = userFacadeService.findUserByPhone(sessionPhone);
+
+            if (Double.parseDouble(bloodSugarForm.getBloodSugarValue())>6.1){
+                SmsUtils.sendBloodSugar(user.getCustodyRelationship(),user.getCustodyPhone(),bloodSugarForm.getBloodSugarValue());
+                bloodSugarForm.setSaveHealthRecord("1");
+            }
+
+            if (Double.parseDouble(bloodSugarForm.getBloodSugarValue())<3.8){
+                SmsUtils.sendBloodSugar(user.getCustodyRelationship(),user.getCustodyPhone(),bloodSugarForm.getBloodSugarValue());
+                bloodSugarForm.setSaveHealthRecord("1");
+            }
 
             bloodSugarFacadeService.entryBloodSugar(bloodSugarForm);
             resultVo = AjaxResultVOUtils.success("录入成功");
 
-            if (Double.parseDouble(bloodSugarForm.getBloodSugarValue())>6.1){
-                SmsUtils.sendSmsResponse1(sessionPhone,bloodSugarForm.getBloodSugarValue());
-            }
 
-            if (Double.parseDouble(bloodSugarForm.getBloodSugarValue())<3.8){
-                SmsUtils.sendSmsResponse1(sessionPhone,bloodSugarForm.getBloodSugarValue());
-            }
 
 
         }catch (HealthOTWechatException e){
