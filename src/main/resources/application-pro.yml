@@ -29,9 +29,9 @@ mapper:
 
 #微信配置
 wechat:
-  appid:  wx0061c96846bcbf03
-  secret: f4cc9ee4b4f35011a423bd9a7124ba9e
-  token:  evildoer_xiaoxu
+  appid:  APPID
+  secret: SECRET
+  token:  TOKEN
 
   url:
     accesstokenUrl: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
